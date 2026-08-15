@@ -1,0 +1,68 @@
+name: MauriMove search v3
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace search engine
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          start=s.find('/* SEARCH_PATCH_V2 */')
+          end=s.find('function picker', start)
+          if start < 0 or end < 0:
+              raise SystemExit('search block not found')
+          new=r'''/* SEARCH_PATCH_V3 */
+          const LOCAL_PLACES=[
+            {keys:['carrefour','carrefour flic','carrefour flic en flac','carrefour city','carrefour city flic en flac'],label:'Carrefour City Flic-en-Flac',address:'Pasadena Village, Coastal Road, Flic-en-Flac, Mauritius',lat:-20.2749,lon:57.3742},
+            {keys:['cascavelle','cascavelle shopping','cascavelle mall'],label:'Cascavelle Shopping Mall',address:'Cascavelle, Mauritius',lat:-20.2856,lon:57.4001},
+            {keys:['poste port louis','post office port louis','port louis post office'],label:'Post Office — Port Louis',address:'Port Louis, Mauritius',lat:-20.1609,lon:57.5012},
+            {keys:['port louis bus station','immigration square','victoria bus station'],label:'Port Louis Bus Station',address:'Port Louis, Mauritius',lat:-20.1640,lon:57.5010},
+            {keys:['c care tamarin','c care tamarin hospital'],label:'C-Care Tamarin',address:'Tamarin, Mauritius',lat:-20.3258,lon:57.3819}
+          ];
+          function localSearch(q,limit=7){
+            const n=norm(q); if(n.length<2)return [];
+            return LOCAL_PLACES.filter(x=>x.keys.some(k=>k.includes(n)||n.includes(k))).slice(0,limit);
+          }
+          async function photonSearch(q,limit=7){
+            try{
+              const u='https://photon.komoot.io/api/?q='+encodeURIComponent(q+' Mauritius')+'&limit='+limit+'&lang=fr';
+              const d=await get(u);
+              return (d.features||[]).map(f=>{const c=f.geometry?.coordinates,p=f.properties||{};if(!c)return null;const address=[p.street,p.district,p.city,p.state,p.country].filter(Boolean).join(', ');return {lat:+c[1],lon:+c[0],label:p.name||p.street||p.city||'Lieu',address:address||'Mauritius'}}).filter(Boolean).filter(x=>x.lat>-21&&x.lat<-19&&x.lon>57&&x.lon<58);
+            }catch(e){return []}
+          }
+          async function nominatimSearch(q,limit=7){
+            try{
+              const u='https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit='+limit+'&countrycodes=mu&q='+encodeURIComponent(q+', Mauritius');
+              const d=await get(u,{headers:{'Accept-Language':'fr'}});
+              return d.map(x=>({lat:+x.lat,lon:+x.lon,label:x.name||x.display_name.split(',')[0],address:x.display_name}));
+            }catch(e){return []}
+          }
+          async function geo(q,limit=7){
+            const local=localSearch(q,limit);
+            const remote=await photonSearch(q,limit);
+            const base=local.concat(remote);
+            const seen=new Set(),out=[];
+            for(const x of base){const key=Math.round(x.lat*1e5)+'|'+Math.round(x.lon*1e5);if(!seen.has(key)){seen.add(key);out.push(x)}}
+            if(out.length<limit){for(const x of await nominatimSearch(q,limit-out.length)){const key=Math.round(x.lat*1e5)+'|'+Math.round(x.lon*1e5);if(!seen.has(key)){seen.add(key);out.push(x)}}}
+            return out.slice(0,limit);
+          }
+          '''
+          p.write_text(s[:start]+new+'function picker'+s[end+len('function picker'):],encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Fix MauriMove search with local POI fallback'
+          git push
