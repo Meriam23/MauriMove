@@ -52,4 +52,43 @@
     const busText=bus===null?'Durée bus officielle indisponible pour ce tronçon':'~'+bus+' min · durée moyenne officielle NLTA';
     return '<div class="card best"><div class="big">⭐ Ligne '+esc(x.route.ref)+'</div><div class="small">'+esc(x.route.from||'')+(x.route.to?' → '+esc(x.route.to):'')+(x.route.operator?' · '+esc(x.route.operator):'')+'</div><div class="step"><div class="ico">🚶</div><div><b>'+esc(x.os.name||'Arrêt de bus')+'</b><div class="small">'+w1.min+' min · '+w1.m+' m depuis le départ</div></div></div><div class="step"><div class="ico">🚌</div><div><b>'+esc(x.os.name||'Arrêt de bus')+' → '+esc(x.ds.name||'Arrêt de bus')+'</b><div class="small">'+busText+'</div></div></div><div class="step"><div class="ico">🚶</div><div><b>'+esc(x.ds.name||'Arrêt de bus')+'</b><div class="small">'+w2.min+' min · '+w2.m+' m jusqu’à la destination</div></div></div><span class="pill">Correspondance : directe</span></div><div class="warn">'+(total===null?'⏱️ Durée totale non affichée : durée bus officielle manquante.':'⏱️ Durée indicative totale : <b>~'+total+' min</b>.')+' Aucun ETA temps réel n’est inventé.</div>';
   };
+
+  // Citymapper-style place picker: type a few letters and choose a precise result.
+  function normPlace(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim()}
+  function addPicker(input){
+    if(!input||input.dataset.pickerReady)return;
+    input.dataset.pickerReady='1';
+    const box=document.createElement('div');
+    box.className='mauri-suggestions';
+    Object.assign(box.style,{display:'none',background:'#fff',border:'1px solid #e4e7ec',borderRadius:'14px',margin:'5px 0',overflow:'hidden',boxShadow:'0 12px 30px rgba(0,0,0,.12)',maxHeight:'280px',overflowY:'auto',position:'relative',zIndex:'2000'});
+    input.parentElement.parentElement.appendChild(box);
+    let timer=null,controller=null;
+    async function search(){
+      const q=input.value.trim();
+      if(q.length<2){box.style.display='none';return}
+      if(controller)controller.abort();controller=new AbortController();
+      box.innerHTML='<div style="padding:12px;color:#667085;font-size:12px">🔎 Recherche de lieux à Maurice…</div>';box.style.display='block';
+      try{
+        const r=await fetch(NOM+'?format=jsonv2&addressdetails=1&limit=6&countrycodes=mu&q='+encodeURIComponent(q),{headers:{'Accept-Language':'fr'},signal:controller.signal});
+        const data=r.ok?await r.json():[];
+        const seen=new Set(),items=[];
+        data.forEach(x=>{const key=(+x.lat).toFixed(5)+','+(+x.lon).toFixed(5);if(!seen.has(key)){seen.add(key);items.push(x)}});
+        box.innerHTML='';
+        if(!items.length){box.innerHTML='<div style="padding:12px;color:#667085;font-size:12px">Aucun lieu trouvé à Maurice.</div>';return}
+        items.forEach(item=>{
+          const b=document.createElement('button');b.type='button';b.style.cssText='display:block;width:100%;text-align:left;border:0;background:#fff;padding:12px 14px;font-size:13px;color:#101828;border-bottom:1px solid #eee';
+          const name=item.name||String(item.display_name||q).split(',')[0];
+          const address=String(item.display_name||'Maurice').split(',').slice(1,3).join(', ').trim()||'Maurice';
+          b.innerHTML='<b>📍 '+esc(name)+'</b><div style="font-size:11px;color:#667085;margin-top:3px">'+esc(address)+'</div>';
+          b.onclick=()=>{input.value=item.display_name;input.dataset.selectedLat=item.lat;input.dataset.selectedLon=item.lon;input.dataset.selectedLabel=name;box.style.display='none';};
+          box.appendChild(b);
+        });
+      }catch(e){if(e.name!=='AbortError')box.innerHTML='<div style="padding:12px;color:#667085;font-size:12px">Recherche indisponible.</div>'}
+    }
+    input.addEventListener('input',()=>{delete input.dataset.selectedLat;delete input.dataset.selectedLon;clearTimeout(timer);timer=setTimeout(search,250)});
+    input.addEventListener('focus',()=>{if(input.value.trim().length>=2)search()});
+    input.addEventListener('keydown',e=>{if(e.key==='Escape')box.style.display='none';if(e.key==='Enter'&&box.style.display==='block'){const b=box.querySelector('button');if(b){e.preventDefault();b.click()}}});
+    document.addEventListener('click',e=>{if(!box.contains(e.target)&&e.target!==input)box.style.display='none'});
+  }
+  addPicker(document.getElementById('from'));addPicker(document.getElementById('to'));
 })();
