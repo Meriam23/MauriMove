@@ -21,6 +21,16 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Inject SegaMap runtime fixes
+        run: python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          tag='<script src="./segamap-fix.js?v=15"></script>'
+          if tag not in s:
+              s=s.replace('</body>', tag+'</body>')
+          p.write_text(s,encoding='utf-8')
+          PY
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
