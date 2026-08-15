@@ -1,0 +1,13 @@
+{
+  "name": "MauriMove",
+  "short_name": "MauriMove",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef1f5",
+  "theme_color": "#101828",
+  "description": "Planificateur de transport public à Maurice.",
+  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
