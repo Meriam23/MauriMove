@@ -12,62 +12,20 @@
       "direction_id": 0,
       "origin": "Quatre Bornes (Traffic Centre)",
       "destination": "Wolmar",
-      "service": {
-        "weekdays": {"first": "05:35", "last": "18:40"},
-        "saturdays": {"first": "05:35", "last": "18:40"},
-        "sundays_public_holidays": {"first": "06:10", "last": "18:20"}
-      },
-      "frequency_weekdays": [
-        {"from": "05:35", "to": "06:15", "minutes": 20},
-        {"from": "06:16", "to": "17:50", "minutes": 25},
-        {"from": "17:51", "to": "18:40", "minutes": 30}
-      ],
-      "stops": [
-        {"sequence": 0, "name": "Quatre Bornes (Traffic Centre)", "journey_minutes": 0},
-        {"sequence": 1, "name": "La Louise", "journey_minutes": 10},
-        {"sequence": 2, "name": "Palma (Government School)", "journey_minutes": 18},
-        {"sequence": 3, "name": "Palma (Junction Bassin Estate)", "journey_minutes": 20},
-        {"sequence": 4, "name": "Beaux Songes (Reservoir)", "journey_minutes": 22},
-        {"sequence": 5, "name": "Montee Bol (Junction Geoffroy Road)", "journey_minutes": 24},
-        {"sequence": 6, "name": "Bambous (Mangues Vert Doux)", "journey_minutes": 27},
-        {"sequence": 7, "name": "Bambous (Junction Black River / Geoffroy Roads)", "journey_minutes": 30},
-        {"sequence": 8, "name": "Bambous (Dragon Store)", "journey_minutes": 35},
-        {"sequence": 9, "name": "Junction Flic en Flac", "journey_minutes": 38},
-        {"sequence": 10, "name": "Junction Flic en Flac / Anna Estate Roads", "journey_minutes": 41},
-        {"sequence": 11, "name": "Flic en Flac (Government School)", "journey_minutes": 43},
-        {"sequence": 12, "name": "Flic en Flac (Golden Beach Restaurant)", "journey_minutes": 45},
-        {"sequence": 13, "name": "Wolmar", "journey_minutes": 50}
+      "service": {"weekdays":{"first":"05:35","last":"18:40"},"saturdays":{"first":"05:35","last":"18:40"},"sundays_public_holidays":{"first":"06:10","last":"18:20"}},
+      "frequency_weekdays":[{"from":"05:35","to":"06:15","minutes":20},{"from":"06:16","to":"17:50","minutes":25},{"from":"17:51","to":"18:40","minutes":30}],
+      "stops":[
+        {"sequence":0,"name":"Quatre Bornes (Traffic Centre)","journey_minutes":0},{"sequence":1,"name":"La Louise","journey_minutes":10},{"sequence":2,"name":"Palma (Government School)","journey_minutes":18},{"sequence":3,"name":"Palma (Junction Bassin Estate)","journey_minutes":20},{"sequence":4,"name":"Beaux Songes (Reservoir)","journey_minutes":22},{"sequence":5,"name":"Montee Bol (Junction Geoffroy Road)","journey_minutes":24},{"sequence":6,"name":"Bambous (Mangues Vert Doux)","journey_minutes":27},{"sequence":7,"name":"Bambous (Junction Black River / Geoffroy Roads)","journey_minutes":30},{"sequence":8,"name":"Bambous (Dragon Store)","journey_minutes":35},{"sequence":9,"name":"Junction Flic en Flac","journey_minutes":38},{"sequence":10,"name":"Junction Flic en Flac / Anna Estate Roads","journey_minutes":41},{"sequence":11,"name":"Flic en Flac (Government School)","journey_minutes":43},{"sequence":12,"name":"Flic en Flac (Golden Beach Restaurant)","journey_minutes":45},{"sequence":13,"name":"Wolmar","journey_minutes":50}
       ]
     },
     {
-      "direction_id": 1,
-      "origin": "Wolmar",
-      "destination": "Quatre Bornes (Traffic Centre)",
-      "service": {
-        "weekdays": {"first": "06:00", "last": "18:30"},
-        "saturdays": {"first": "06:00", "last": "18:30"},
-        "sundays_public_holidays": {"first": "06:30", "last": "18:20"}
-      },
-      "frequency_weekdays": [
-        {"from": "05:35", "to": "06:15", "minutes": 20},
-        {"from": "06:16", "to": "17:50", "minutes": 20},
-        {"from": "17:51", "to": "18:40", "minutes": 30}
-      ],
-      "stops": [
-        {"sequence": 0, "name": "Wolmar", "journey_minutes": 0},
-        {"sequence": 1, "name": "Flic en Flac (Golden Beach Restaurant)", "journey_minutes": 5},
-        {"sequence": 2, "name": "Flic en Flac (Government School)", "journey_minutes": 7},
-        {"sequence": 3, "name": "Junction Flic en Flac / Anna Estate Roads", "journey_minutes": 9},
-        {"sequence": 4, "name": "Junction Flic en Flac", "journey_minutes": 12},
-        {"sequence": 5, "name": "Bambous (Dragon Store)", "journey_minutes": 15},
-        {"sequence": 6, "name": "Bambous (Junction Black River / Geoffroy Roads)", "journey_minutes": 20},
-        {"sequence": 7, "name": "Bambous (Mangues Vert Doux)", "journey_minutes": 23},
-        {"sequence": 8, "name": "Montee Bol (Junction Geoffroy Road)", "journey_minutes": 26},
-        {"sequence": 9, "name": "Beaux Songes (Reservoir)", "journey_minutes": 28},
-        {"sequence": 10, "name": "Palma (Junction Bassin Estate)", "journey_minutes": 30},
-        {"sequence": 11, "name": "Palma (Government School)", "journey_minutes": 32},
-        {"sequence": 12, "name": "La Louise", "journey_minutes": 40},
-        {"sequence": 13, "name": "Quatre Bornes (Traffic Centre)", "journey_minutes": 50}
+      "direction_id":1,
+      "origin":"Wolmar",
+      "destination":"Quatre Bornes (Traffic Centre)",
+      "service":{"weekdays":{"first":"06:00","last":"18:30"},"saturdays":{"first":"06:00","last":"18:30"},"sundays_public_holidays":{"first":"06:30","last":"18:20"}},
+      "frequency_weekdays":null,
+      "stops":[
+        {"sequence":0,"name":"Wolmar","journey_minutes":0},{"sequence":1,"name":"Flic en Flac (Golden Beach Restaurant)","journey_minutes":5},{"sequence":2,"name":"Flic en Flac (Government School)","journey_minutes":7},{"sequence":3,"name":"Junction Flic en Flac / Anna Estate Roads","journey_minutes":9},{"sequence":4,"name":"Junction Flic en Flac","journey_minutes":12},{"sequence":5,"name":"Bambous (Dragon Store)","journey_minutes":15},{"sequence":6,"name":"Bambous (Junction Black River / Geoffroy Roads)","journey_minutes":20},{"sequence":7,"name":"Bambous (Mangues Vert Doux)","journey_minutes":23},{"sequence":8,"name":"Montee Bol (Junction Geoffroy Road)","journey_minutes":26},{"sequence":9,"name":"Beaux Songes (Reservoir)","journey_minutes":28},{"sequence":10,"name":"Palma (Junction Bassin Estate)","journey_minutes":30},{"sequence":11,"name":"Palma (Government School)","journey_minutes":32},{"sequence":12,"name":"La Louise","journey_minutes":40},{"sequence":13,"name":"Quatre Bornes (Traffic Centre)","journey_minutes":50}
       ]
     }
   ]
