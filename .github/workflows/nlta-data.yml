@@ -6,7 +6,9 @@ on:
   push:
     paths:
       - 'scripts/fetch_nlta.py'
+      - 'scripts/patch_runtime.py'
       - '.github/workflows/nlta-data.yml'
+      - 'index.html'
 permissions:
   contents: write
 jobs:
@@ -23,15 +25,17 @@ jobs:
         run: pip install pypdf
       - name: Download and parse NLTA official PDFs
         run: python scripts/fetch_nlta.py
-      - name: Commit generated data
+      - name: Apply runtime fixes
+        run: python scripts/patch_runtime.py
+      - name: Commit generated data and runtime
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/nlta-routes.json
+          git add data/nlta-routes.json index.html scripts/patch_runtime.py
           if git diff --cached --quiet; then
-            echo 'NLTA data unchanged.'
+            echo 'No generated changes.'
             exit 0
           fi
-          git commit -m 'Sync official NLTA bus route data'
+          git commit -m 'Update NLTA data and routing runtime'
           git pull --rebase origin main
           git push origin HEAD:main
