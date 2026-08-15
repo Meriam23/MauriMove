@@ -1,0 +1,20 @@
+{
+  "schema": "maurimove-transit-v1",
+  "purpose": "Internal normalized transit model, compatible in structure with GTFS concepts without claiming to be a complete GTFS feed.",
+  "entities": {
+    "agency": ["agency_id", "name", "source_url", "confidence"],
+    "route": ["route_id", "agency_id", "short_name", "long_name", "mode", "source_url", "confidence"],
+    "direction": ["route_id", "direction_id", "origin", "destination", "service", "frequency_weekdays"],
+    "stop": ["stop_id", "name", "lat", "lon", "source_ref", "confidence"],
+    "stop_time": ["route_id", "direction_id", "stop_sequence", "stop_id", "journey_minutes"],
+    "realtime": ["provider", "trip_id", "vehicle_id", "observed_at", "lat", "lon", "eta_seconds", "occupancy", "confidence"],
+    "feedback": ["id", "created_at", "type", "route_id", "stop_id", "reported_value", "source", "confidence"]
+  },
+  "rules": [
+    "Never fabricate stop coordinates: missing coordinates remain null until joined to an official geospatial source.",
+    "Never label scheduled journey minutes as realtime ETA.",
+    "Every operator dataset must retain a source URL and retrieval date.",
+    "Realtime data must be separated from static timetable data.",
+    "User reports are evidence, not authoritative timetable data."
+  ]
+}
