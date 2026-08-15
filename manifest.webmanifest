@@ -1,13 +1,13 @@
 {
-  "name": "MauriMove",
-  "short_name": "MauriMove",
+  "name": "SegaMap 🇲🇺",
+  "short_name": "SegaMap",
   "lang": "fr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#eef1f5",
-  "theme_color": "#101828",
+  "background_color": "#06143F",
+  "theme_color": "#06143F",
   "description": "Planificateur de transport public à Maurice.",
-  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "icons": [{"src":"segamap-logo.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
 }
