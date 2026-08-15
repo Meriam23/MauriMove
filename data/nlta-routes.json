@@ -1,1609 +1,1620 @@
 {
   "source": "National Land Transport Authority (NLTA), Mauritius",
   "source_page": "https://nlta.govmu.org/Pages/Procedures/Bus-Timetable.aspx",
-  "generated_utc": "2026-08-15T12:08:40.695611+00:00",
+  "generated_utc": "2026-08-15T12:21:21.008193+00:00",
+  "pdf_sources": [
+    "https://nlta.govmu.org/Documents/Downloads/Procedures%20Forms/Bus-TimeTable/time1p.pdf",
+    "https://nlta.govmu.org/Documents/Downloads/Procedures%20Forms/Bus-TimeTable/time3p.pdf",
+    "https://nlta.govmu.org/Documents/Downloads/Procedures%20Forms/Bus-TimeTable/timer1.pdf",
+    "https://nlta.govmu.org/Documents/Downloads/Procedures%20Forms/Bus-TimeTable/timer2.pdf",
+    "https://nlta.govmu.org/Documents/Downloads/Procedures%20Forms/Bus-TimeTable/timer3.pdf",
+    "https://nlta.govmu.org/Documents/Downloads/Procedures%20Forms/Bus-TimeTable/timer4.pdf",
+    "https://nlta.govmu.org/Documents/Downloads/Procedures%20Forms/Bus-TimeTable/timer5.pdf",
+    "https://nlta.govmu.org/Documents/Downloads/Procedures%20Forms/Bus-TimeTable/time2p.pdf"
+  ],
+  "route_count": 267,
   "routes": [
     {
       "route": "1",
       "operator": "RHT",
       "description": "Port Louis (Victoria Square) - Coromandel - Beau Bassin Rose Hill (Place Cardinal Margeot) 7 30",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "1A",
       "operator": "RHT",
       "description": "Port Louis (Victoria Square) - Coromandel - Hugnin Road Rose Hill (Market) 9 40",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "1B",
       "operator": "RHT",
       "description": "Port Louis (Victoria Square) - Coromandel - Cascadelle Vandermeersch - Rose Hill (Place Cardinal Margeot) 8 6",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "1C",
       "operator": "RHT",
       "description": "Port Louis (Victoria Square) - Coromandel - Barkly (Housing Estate) - Hugnin Road - Rose Hill (Market) 9",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "1D",
       "operator": "RHT",
       "description": "Port Louis (Victoria Square) - Coromandel - Mont Roches Saint Martin (Cemetery) 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "2",
       "operator": "UBS",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Phoenix - Curepipe (Jan Palach North) 14 85",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "2A",
       "operator": "UBS",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Phoenix - Curepipe - Forest Side 14",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "3",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Candos (Victoria Hospital) - Vacoas (Bus Station) 13 89",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "3A",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Candos (Victoria Hospital) - Vacoas - Phoenix (Indira Gandhi Cultural Centre) 14",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "3B",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Candos (Victoria Hospital) - Glen Park - Henrietta - Bord Cascade 16 15",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "3C",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Bassin 11 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "3D",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Candos (Victoria Hospital) - Glen Park - La Marie 16 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "4",
       "operator": "NTC",
       "description": "Quatre Bornes (Traffic Centre) - Candos (Victoria Hospital) Vacoas - Saint Paul - Castel - Curepipe (Jan Palach North) 7 25",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "4A",
       "operator": "NTC",
       "description": "Quatre Bornes (Traffic Centre) - Candos (Victoria Hospital) Vacoas - Floreal - Curepipe (Jan Palach North) 7 25",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "5",
       "operator": "IO/NTC",
       "description": "Quatre Bornes (Traffic Centre) - Beaux Songes - Bambous Riviere Noire - Le Morne - Baie du Cap 30 16 (IO) + 2 (NTC)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "5A",
       "operator": "IO/NTC",
       "description": "Baie du Cap - Chamarel (Saint Anne Church) 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "6",
       "operator": "NTC",
-      "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Souillac - Chemin Grenier - Riviere des Galets (Bus Station) 24 60 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Souillac - Chemin Grenier - Riviere des Galets (Bus Station) 24 60 3",
+      "source": "time2p.pdf"
     },
     {
       "route": "6A",
       "operator": "NTC",
-      "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Souillac - Chemin Grenier - Chamouny 23 2",
-      "source": "time3p.pdf"
+      "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Souillac - Chemin Grenier - Chamouny 23",
+      "source": "time2p.pdf"
     },
     {
       "route": "6B",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Souillac - Surinam - Martiniere 19",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "7",
       "operator": "NTC",
       "description": "Rose Belle (Jawaharlall Nehru Hospital) - Mare Tabac Camp Diable - Souillac - Chemin Grenier - Riviere des Galets (Bus Station) 24 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "8",
       "operator": "NTC",
       "description": "Souillac (Bus Station) - Chemin Grenier - Baie du Cap 13 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "8B",
       "operator": "NTC",
       "description": "Souillac (Bus Station) - Chemin Grenier - Baie du Cap Choisy 15",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "9",
       "operator": "IO",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Jawaharlall Nehru Hospital - Mare d'Albert - SSRI Airport - Mahebourg (Bus Station) 17 86 (Incl. 90 and 252)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "10",
       "operator": "IO",
       "description": "Mahebourg (Bus Station) - SSRI Airport - L'Escalier - Camp Diable - Souillac - Chemin Grenier- Riviere des Galets (Bus Station) 24 26",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "10A",
       "operator": "IO",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Union Park Jawaharlall Nehru Hospital - Mare d'Albert - L'Escalier - La Sourdine 19 19 11/11A IO Mahebourg (Bus Station) - Riche en Eau - Saint Hubert (Terminus)/Le Val 8 6",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "12",
       "operator": "IO",
       "description": "Port Louis (Victoria Square) - Mount Ory - Moka (Hospital) Bois Cheri Road - Saint Pierre (Traffic Centre) - Quartier Militaire - Sebastopol - Pellegrin 24 35 (Incl. 103/135)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "12A",
       "operator": "IO",
       "description": "Port Louis (Victoria Square) - Mount Ory - Moka (Hospital) Bois Cheri Road - Saint Pierre (Traffic Centre) - Quartier Militaire - Petit Paquet - Pellegrin 21",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "13",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Moka (Hospital) - Mount Ory - Bois Cheri Road Saint Pierre (Traffic Centre) 7 35 (Incl. 15/15A)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "13A",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Moka (Hospital) - Helvetia - Saint Pierre (Traffic Centre) - L'Avenir - Nouvelle Decouverte - Junction La Nicioliere Road / Eau Bouillie 11 23 (Incl. 105)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "13D",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Moka (Hospital) - Helvetia - Saint Pierre (Traffic Centre) - L'Avenir - Malinga - La Laura 8 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "14",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach South) - XVIth Mile - Midlands - Cluny Union Park - Jawaharlall Nehru Hospital - Rose Belle (Terminus) 14 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "14A",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach South) - XVIth Mile - Midlands - Camp du The - Pave Citron (Terminus) 15 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "14B",
       "operator": "NTC",
-      "description": "Curepipe (Jan Palach South) - La Vigie - Midlands 4 3 15/15B IO Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Camp de Masque - Central Flacq (Bus Station) / Belle Mare 24 (Included in Rte 13) No. of buses",
-      "source": "time3p.pdf"
+      "description": "Curepipe (Jan Palach South) - La Vigie - Midlands 4 3 15/15B IO Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Camp de Masque - Central Flacq (Bus Station) / Belle Mare 24 (Included in Rte 13) 4",
+      "source": "time2p.pdf"
     },
     {
       "route": "15A",
       "operator": "IO",
-      "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Saint Julien d'Hotman - Camp Thorel 15 (Included in Rte 13) 3",
-      "source": "time3p.pdf"
+      "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Saint Julien d'Hotman - Camp Thorel 15 (Included in Rte 13)",
+      "source": "time2p.pdf"
     },
     {
       "route": "15C",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Camp de Masque Petite Cabane 19",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "15D",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Moka (Hospital) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - L'Esperance (Extension to Cite Alma) 12 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "15F",
       "operator": "IO",
       "description": "Camp Thorel - Saint Julien d'Hotman - Mont Ida - Camp de Masque - Central Flacq (Bus Station) 10 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "16",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Sebastopol - Clavet - Bel Air - Central Flacq (Bus Station) 32 35",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "16A",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Petit Paquet - Pellegrin - Clavet - Bel Air - Central Flacq (Bus Station) 33",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "16D",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Camp de Masque Pave - Bel Air - Central Flacq (Bus Station) 30 17/17G IO Curepipe (Jan Palach North) - Valetta - Quartier Militaire Camp de Masque - Central Flacq (Bus Station) / Belle Mare 22 28",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "17A",
       "operator": "IO",
       "description": "Curepipe (Jan Palach North) - Valetta - Quartier Militaire Camp de Masque - Petite Cabane 17",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "17B",
       "operator": "IO",
       "description": "Curepipe (Jan Palach North) - Valetta - Upper Dagotiere (NHDC Housing Estate) 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "17C",
       "operator": "IO",
       "description": "Curepipe (Jan Palach North) - Valetta - Vuillemin - Quartier Militaire - Saint Julien d'Hotman - Camp Thorel 13",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "17D",
       "operator": "IO",
       "description": "Curepipe (Jan Palach North) - Valetta - Quartier Militaire L'Esperance 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "17E",
       "operator": "IO",
       "description": "L'Esperance - Quartier Militaire - Camp de Masque - Central Flacq (Bus Station) 12",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "17F",
       "operator": "IO",
       "description": "Upper Dagotiere (NHDC Housing Estate) - Valetta - Quartier Militaire - Camp de Masque - Central Flacq (Bus Station) 15",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "18",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Boulet Rouge - Bel Air - Grand Sable - Old Grand Port - Mahebourg (Bus Station) 26 22",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "19",
       "operator": "MBT",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Kitchin Long Mountain - Creve Coeur 10 15",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "20",
       "operator": "TBS",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal Triolet - Trou aux Biches - Mont Choisy (Public Beach)(Extension to Les Petits Gamins) 12 35",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "20A",
       "operator": "TBS",
-      "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal Triolet - Grande Pointe aux Piments 11 5 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal Triolet - Grande Pointe aux Piments 11 5 5",
+      "source": "time2p.pdf"
     },
     {
       "route": "20B",
       "operator": "TBS",
-      "description": "Triolet (Terminus) - Fond du Sac (Junction Forbach Road) 3 5 4",
-      "source": "time3p.pdf"
+      "description": "Triolet (Terminus) - Fond du Sac (Junction Forbach Road) 3 5",
+      "source": "time2p.pdf"
     },
     {
       "route": "20C",
       "operator": "TBS",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal SSRN Hospital - Triolet - Trou aux Biches - Mon Choisy Grand Baie - Pereybere - Pavillon - Cap Malheureux - Petit Raffray - Goodlands - Saint Antoine (Traffic Centre) 27 15",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "20D",
       "operator": "TBS",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal Triolet - Bon Air 9",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "21",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal SSRN Hospital - Plaine des Papayes - Petit Raffray Goodlands - Saint Antoine (Traffic Centre) 18 61 (Incl. 94/159/227)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "22",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - Belle Vue Harel - Goodlands - Saint Antoine (Traffic Centre) - Grand Gaube 18 38",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "23",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - The Mount - Piton - Poudre d'Or - Riviere du Rempart (Traffic Centre) (Extension to Hermitage) 20 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "23A",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - The Mount - Piton - L'Esperance Trebuchet - Poudre d'Or - Riviere du Rempart (Traffic Centre) 20",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "23B",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - The Mount - Piton - Poudre d'Or - Pointe des Lascars - Riviere du Rempart (Traffic Centre) 20",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "24",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - The Mount - Grande Rosalie - Petite Julie Barlow - Amaury - Riviere du Rempart (Traffic Centre) 17 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "26",
       "operator": "IO",
       "description": "Saint Antoine (Traffic Centre) - Poudre d'Or - Riviere du Rempart - Roches Noires - Poste Lafayette - Central Flacq (Bus Station) 16 18 (Incl. 53)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "27",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - Belle Vue Harel - Piton - Riviere du Rempart (Traffic Centre) 18 15",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "27A",
       "operator": "NTC",
       "description": "Riviere du Rempart (Traffic Centre) - Roches Noires Village (Siding Gaud) 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "27B",
       "operator": "NTC",
       "description": "Riviere du Rempart (Traffic Centre) - Plaine des Roches (Terminus) 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "28",
       "operator": "TBS",
       "description": "Triolet (Terminus) - Solitude - Morcellement Saint Andre Plaine des Papayes - Piton - L'Amitie - Riviere du Rempart (Traffic Centre) 16 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "28A",
       "operator": "TBS",
       "description": "Triolet (Terminus) - Solitude - Bon Air - Plaine des Papayes 6",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "29",
       "operator": "TBS",
       "description": "Riviere du Rempart (Traffic Centre) - L'Amitie - Piton - Plaine des Papayes - Lower Vale - Sottise - Grand Baie 15 30/30A UBS Curepipe (Jan Palach North) - Belle Rive - Dubreuil / via Midlands 9 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "31",
       "operator": "RHT",
-      "description": "Rose Hill (Place Cardinal Margeot) – Boundary Road (Saint Patrick Church) – Berthaud (Bus Station) 3 3 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Rose Hill (Place Cardinal Margeot) – Boundary Road (Saint Patrick Church) – Berthaud (Bus Station) 3 3 6",
+      "source": "time2p.pdf"
     },
     {
       "route": "32",
       "operator": "NTC",
-      "description": "Souillac (Bus Station) - Riambel - Riviere des Galets (Bus Station) 6 5",
-      "source": "time3p.pdf"
+      "description": "Souillac (Bus Station) - Riambel - Riviere des Galets (Bus Station) 6",
+      "source": "time2p.pdf"
     },
     {
       "route": "33",
       "operator": "UBS",
       "description": "Plaine Verte - Dr. Jeetoo Hospital - La Butte - Pailles (Domaine les Pailles) 5 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "33A",
       "operator": "UBS",
       "description": "Cite Vallijee (Bus Station) - La Butte - Dr. Jeetoo Hospital Plaine Verte - Terre Rouge (Morcellement Raffray) 5 15",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "33B",
       "operator": "UBS",
       "description": "Plaine Verte - Dr. Jeetoo Hospital - Cassis - Cite Vallijee (Bus Station) 4 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "34",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - La Flora - Bois Cheri 11 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "35",
       "operator": "NTC",
       "description": "Vacoas (Bus Station) - La Caverne - Hollyrood 2 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "36",
       "operator": "UBS",
       "description": "Port Louis (Transportation Centre) - Sainte Croix - Cite La Cure (Traffic Centre) 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "37",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Castel - Saint Paul - Vacoas Candos (Victoria Hospital) - Quatre Bornes - Camp Levieux (NHDC) - Mont Roches (Co-operative Store) 10 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "37A",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Floreal - Vacoas - Candos (Victoria Hospital) - Quatre Bornes - Camp Levieux (NHDC) Mont Roches (Co-operative Store) 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "39",
       "operator": "UBS",
       "description": "Rose Hill (Dar-es-Salaam Square) - Plaisance - Rose Hill (Dar-es-Salaam Square) 3 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "39A",
       "operator": "UBS",
       "description": "Rose Hill (Dar-es-Salaam Square) - Stanley - Plaisance Rose Hill (Dar-es-Salaam Square) 3 3 41/41A UBS Port Louis (Transportation Centre) - Plaine Verte - Vallee des Pretres / Upper Vallee des Pretres 5 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "42",
       "operator": "UBS",
       "description": "Port Louis (Transportation Centre) - Roche Bois - Baie du Tombeau - Terre Rouge 7 9",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "43",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Plaine Verte - Dr. Jeetoo Hospital - Victoria Square 4 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "44",
       "operator": "UBS",
       "description": "Curepipe (Jan Palach North) - La Brasserie - Bigara (Wireless Station) 3 5 45/45A UBS Rose Hill (Dar-es-Salaam Square) - Mont Roches - Petite Riviere - Albion (Mon Plaisir) / via Belle Vue 11 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "46",
       "operator": "IO",
       "description": "Mahebourg (Traffic Centre) - Pointe d'Esny - Blue Bay 4 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "47",
       "operator": "UBS",
       "description": "Port Louis (Transportation Centre) - Les Salines - Bain des Dames - Cite Vallijee (Bus Station) 2 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "48",
       "operator": "UBS",
       "description": "Port Louis (Transportation Centre) - Plaine Verte - Ste Croix Cite La Cure (Traffic Centre) 4 6",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "48A",
       "operator": "UBS",
-      "description": "Port Louis (Transportation Centre) - Plaine Verte - Cite La Cure (Traffic Centre) 3 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Transportation Centre) - Plaine Verte - Cite La Cure (Traffic Centre) 3 7",
+      "source": "time2p.pdf"
     },
     {
       "route": "49",
       "operator": "UBS",
-      "description": "Port Louis (Transportation Centre) - Vallee Pitot (Cite Rozemont) 2 6",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Transportation Centre) - Vallee Pitot (Cite Rozemont) 2",
+      "source": "time2p.pdf"
     },
     {
       "route": "50",
       "operator": "UBS",
       "description": "Port Louis (Transportation Centre) - Champs de Mars Tranquebar (Cite Madeleine) 2 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "51",
       "operator": "TBS",
       "description": "Port Louis (Transportation Centre) - G.R.N.W. - La Tour Koenig - Pointe aux Sables 6 39",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "52",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - G.R.N.W. - Cite Richelieu - Petite Riviere - Bambous - Medine 11 27 52A/52D NTC Port Louis (Transportation Centre) - G.R.N.W. - Cite Richelieu - Petite Riviere - Albion (Mon Plaisir) / via Belle Vue 9",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "52C",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - G.R.N.W. - Cite Richelieu - Petite Riviere - Bambous (NHDC Complex) 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "53",
       "operator": "IO",
       "description": "Saint Antoine (Traffic Centre) - Poudre d'Or - Riviere du Rempart - Amaury - Laventure - Saint Remy - Central Flacq (Bus Station) 16 (Included in Rte 26)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "54",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Argy - Isidore Rose - Belle Mare - Palmar (Football Ground) 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "55",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Boulet Rouge - Trou d'Eau Douce - Palmar (Temple) 9 5 (Incl. 55B)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "55A",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Argy - Camp Ithier - Isidore Rose 5 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "55B",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Argy - Trou d'Eau Douce Palmar (Temple) 10 (Included in Rte 55)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "56",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Boulet Rouge - Ecroignard - Bel Air - G.R.S.E. 9 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "57",
       "operator": "IO",
       "description": "Quatre Bornes (Traffic Centre) - Palma - Beaux Songes Bambous - Flic en Flac - Wolmar 13 13",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "57A",
       "operator": "IO",
       "description": "Quatre Bornes (Traffic Centre) - Palma - Beaux Songes Cascavelle 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "59",
       "operator": "UBS",
       "description": "Rose Hill (Dar-es-Salaam Square) - Mont Roches - Roches Brunes (Reservoir) 3 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "60",
       "operator": "NTC",
       "description": "Rose Belle - Jawaharlall Nehru Hospital - Pont Colville - La Flora - Bois Cheri 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "61",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Riviere Dragon - Camp Diable - Chateau Benares 15 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "61A",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Riviere Dragon - Riviere des Anguilles - Benares Camp Diable 18",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "62",
       "operator": "IO",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Rose Belle - Jawaharlall Nehru Hospital - New Grove - Mare Tabac - Riviere du Poste 15 15",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "63",
       "operator": "NTC",
-      "description": "Roches Noires - Riviere du Rempart - Amaury - Petite Julie The Mount - SSRN Hospital 16 2 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Roches Noires - Riviere du Rempart - Amaury - Petite Julie The Mount - SSRN Hospital 16 2 8",
+      "source": "time2p.pdf"
     },
     {
       "route": "64",
       "operator": "UBS",
-      "description": "Les Casernes (Housing Estate) - Curepipe (Jan Palach North) - Forest Side (Forum Complex) 3 4 7",
-      "source": "time3p.pdf"
+      "description": "Les Casernes (Housing Estate) - Curepipe (Jan Palach North) - Forest Side (Forum Complex) 3 4",
+      "source": "time2p.pdf"
     },
     {
       "route": "65",
       "operator": "UBS",
       "description": "Vacoas (Bus Station) - Saint Paul - Phoenix - Highlands Camp Fouquereaux - Hermitage 5 5 65A/65C UBS Cinq Arpents - Highlands - Phoenix - Saint Paul - Vacoas (Bus Station) - Carreau Laliane - Candos (Victoria Hospital) Quatre Bornes (Traffic Centre) / via Belle Terre 8 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "65B",
       "operator": "UBS",
       "description": "Hermitage - Highlands - Phoenix - Saint Paul - Vacoas (Bus Station) - Carreau Laliane - Candos (Victoria Hospital) Quatre Bornes (Traffic Centre) 9 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "66",
       "operator": "IO",
       "description": "Vacoas (Bus Station) - Glen Park - Henrietta - Bord Cascade 4 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "66A",
       "operator": "IO",
       "description": "Vacoas (Bus Station) - Glen Park - La Marie 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "66B",
       "operator": "NTC",
       "description": "Vacoas (Bus Station) - Glen Park - La Marie - La Brasserie Forest Side - Curepipe (Jan Palach South) 8 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "66C",
       "operator": "NTC",
       "description": "Vacoas (Bus Station) - Glen Park - La Marie - Mare aux Vacoas - Grand Bassin 11",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "68",
       "operator": "NTC",
       "description": "Rose Hill (Dar es Salaam Square) - Ollier Avenue - Candos (Victoria Hospital) - Vacoas - Saint Paul - Castel - Curepipe (Jan Palach North) 10 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "68A",
       "operator": "NTC",
       "description": "Rose Hill (Dar es Salaam Square) - Ollier Avenue - Candos (Victoria Hospital) - Vacoas - Floreal - Curepipe (Jan Palach North) 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "69",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Beaux Songes (Reservoir) 13 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "70",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Cocoterie Road - Sainte Croix (Pere Laval Church) - Cite La Cure (Traffic Centre) 4 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "71",
       "operator": "NTC/IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - Belle Vue Harel - Cottage - Poudre d'Or (Hospital) 17 10 NTC + 3 IO",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "72",
       "operator": "UBS",
       "description": "Port Louis (Transportation Centre) - Riche Terre (Commercial Centre) via Motorway 3 73/73A UBS Curepipe (Jan Palach North) - Castel - Camp Fouquereaux Hermitage / via Cinq Arpents 4 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "75",
       "operator": "TBS",
       "description": "Pamplemousses - Beau Plan (Aventure du Sucre) - SSRN Hospital - Triolet (Terminus) 7 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "75A",
       "operator": "TBS",
       "description": "Pamplemousses - Beau Plan (Aventure du Sucre) - SSRN Hospital 2 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "76",
       "operator": "UBS",
       "description": "Port Louis (Transportation Centre) - Cite Roche Bois [With extension to Mer Rouge (Freeport)] 2 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "77",
       "operator": "IO",
-      "description": "Port Louis (Transportation Centre) - Roche Bois - Baie du Tombeau - Terre Rouge (Police Station) 7 8 (Incl. 235) No. of buses",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Transportation Centre) - Roche Bois - Baie du Tombeau - Terre Rouge (Police Station) 7 8 (Incl. 235) 9",
+      "source": "time2p.pdf"
     },
     {
       "route": "78",
       "operator": "UBS",
-      "description": "Port Louis (Transportation Centre) - Plaine Verte - Riche Terre Road - Riche Terre (Commercial Centre) (With extension to Riche Terre Muslim Cemetery) 3 2 8",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Transportation Centre) - Plaine Verte - Riche Terre Road - Riche Terre (Commercial Centre) (With extension to Riche Terre Muslim Cemetery) 3 2",
+      "source": "time2p.pdf"
     },
     {
       "route": "79",
       "operator": "NTC",
       "description": "Rose Belle - Jawaharlall Nehru Hospital - La Flora - Bois Cheri via Wireless Road 7 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "80",
       "operator": "IO",
       "description": "Curepipe (Jan Palach North) - Valetta - Quartier Militaire Sebastopol - Pellegrin (Riviere Profonde) 18 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "80A",
       "operator": "IO",
       "description": "Curepipe (Jan Palach North) - Valetta - Quartier Militaire Sebastopol - Clavet - Olivia - Bel Air (Police Station) 24",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "81",
       "operator": "IO",
       "description": "Allee Brillant (Sandokan Store) - Engrais Martial - Curepipe (Jan Palach North) [With extension to Forest Side (Forum Complex)] 3 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "82",
       "operator": "TBS",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal Triolet - Trou aux Biches - Mon Choisy - Grand Baie Pereybere - Saint Francois - Goodlands - Cap Malheureux Saint Antoine (Traffic Centre) 25 19",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "84",
       "operator": "NTC",
       "description": "Plaine des Roches - Riviere du Rempart - Piton - Belle Vue Harel - Beau Plan (Aventure du Sucre) - SSRN Hospital 15 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "85",
       "operator": "NTC",
       "description": "Riviere du Rempart (Traffic Centre) - Poudre d'Or Hamlet Piton - Belle Vue Harel - Beau Plan (Aventure du Sucre) SSRN Hospital - Arsenal - Terre Rouge - Port Louis (Transportation Centre) 20 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "86",
       "operator": "NTC",
       "description": "Riviere du Rempart (Traffic Centre) - Poudre d'Or - Piton The Mount - Pamplemousses - Beau Plan (Aventure du Sucre) - SSRN Hospital - Arsenal - Terre Rouge - Port Louis (Transportation Centre) 23 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "87",
       "operator": "IO",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Union Park Jawaharlall Nehru Hospital - New Grove - Mare Chicose Riche en Eau - Saint Hubert (Terminus) 17 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "88",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal SSRN Hospital - Beau Plan (Aventure du Sucre) - Camp des Embrevades - Ilot - D'Epinay - Congomah (Terminus) 15 17 (Incl. 110/ 117/196)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "89",
       "operator": "MBT",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Long Mountain - Camp La Boue 9 12",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "89A",
       "operator": "MBT",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Long Mountain - Les Mariannes - Eau Bouillie 11",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "89B",
       "operator": "MBT",
       "description": "Camp La Boue - Les Mariannes - Eau Bouillie 4 (Included in Rte 19/19A)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "90",
       "operator": "IO",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Union Park Jawaharlall Nehru Hospital - Mare d'Albert - SSRI Airport Blue Bay via Blue Bay Link Road 19 (Included in Rte 9)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "93",
       "operator": "IO",
       "description": "Port Louis (Victoria Square) - Reduit (University of Mauritius) Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire Saint Julien d'Hotman - Camp Thorel 20 33 (Incl. 113/113A)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "93A",
       "operator": "IO",
       "description": "Port Louis (Victoria Square) - Reduit (University of Mauritius) Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire L'Esperance 17",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "94",
       "operator": "IO",
-      "description": "Riviere du Rempart (Traffic Centre) - Piton - L'Esperance Trebuchet - Cottage - Saint Antoine (Traffic Centre) 12 6 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Riviere du Rempart (Traffic Centre) - Piton - L'Esperance Trebuchet - Cottage - Saint Antoine (Traffic Centre) 12 6 10",
+      "source": "time2p.pdf"
     },
     {
       "route": "95",
       "operator": "TBS",
-      "description": "Pamplemousses – Beau Plan (Aventure du Sucre) – SSRN Hospital – Solitude – Triolet – Trou aux Biches – Mon Choisy – Grand Baie – Pereybere – Pavillon – Cap Malheureux – Grand Gaube – Goodlands – Saint Antoine (Traffic Centre) 25 3 9",
-      "source": "time3p.pdf"
+      "description": "Pamplemousses – Beau Plan (Aventure du Sucre) – SSRN Hospital – Solitude – Triolet – Trou aux Biches – Mon Choisy – Grand Baie – Pereybere – Pavillon – Cap Malheureux – Grand Gaube – Goodlands – Saint Antoine (Traffic Centre) 25 3",
+      "source": "time2p.pdf"
     },
     {
       "route": "96",
       "operator": "MBT",
       "description": "Creve Coeur – Long Mountain – Kitchin – Terre Rouge – Riche Terre (Commercial Centre) 9 99/99A IO Mahebourg (Bus Station) – Plaine Magnien – Carreau Esnouf – Mon Desert – Carreau Accacia – Trois Boutiques / via Le Bouchon 11 2 101/101B IO Central Flacq (Bus Station) – Petite Retraite – Bon Acceuil – Villebague – The Mount – Pamplemousses – Beau Plan (Aventure du Sucre) – SSRN Hospital / via Laventure 16 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "101A",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) – FUEL – Lallmatie – Bon Acceuil – Villebague – The Mount – SSRN Hospital 18",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "101C",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) – FUEL – Belvedere – Villebague – The Mount – Pamplemousses – Beau Plan (Aventure du Sucre) – SSRN Hospital 17",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "102",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) – Coromandel – Rose Hill (Place Cardinal Margeot) – Phoenix – Saint Paul – Floreal – Curepipe (Jan Palach North) 16 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "103",
       "operator": "IO",
       "description": "Port Louis (Victoria Square) – Mount Ory – Moka (Hospital) – Bois Cheri Road – Saint Pierre (Traffic Centre) – L’Avenir – Nouvelle Decouverte – Junction La Nicoliere Road / Eau Bouillie 15 (Included in Rte 12)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "103A",
       "operator": "IO",
       "description": "Port Louis (Victoria Square) – Reduit (University of Mauritius) – Helvetia – Saint Pierre (Traffic Centre) – L’Avenir – Malinga – La Laura 13",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "104",
       "operator": "IO",
       "description": "Curepipe (Jan Palach North) – Corson (Tea Factory) – Icery – Curepipe (Jan Palach North) [With extension to Forest Side (Forum Complex)] 5 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "105",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) – Reduit (University of Mauritius) – Moka (Hospital) – Helvetia – Saint Pierre (Traffic Centre) – Valetta – Upper Dagotiere (NHDC Housing Estate) – Vuillemin (Terminus) 12 (Included in Rte 13A)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "105A",
       "operator": "IO",
       "description": "Rose Hill (Place Cardinal Margeot) – Reduit (University of Mauritius) – Moka (Hospital) – Helvetia – Saint Pierre (Traffic Centre) – Cote d’Or (Ex-Co-operative Store) 6",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "106",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) – Terre Rouge – Pamplemousses – The Mount – Villebague – Bon Acceuil – Lallmatie – FUEL – Central Flacq (Bus Station) 23 70 (Incl. 109/ 111/ 112/ 232/236)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "109",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) – Terre Rouge – Pamplemousses – The Mount – Villebague – Belvedere – FUEL – Central Flacq (Bus Station) 22 (Included in Rte 106)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "110",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) – Terre Rouge – Old Flacq Road – Ilot – D’Epinay – Congomah (Terminus) 10 (Included in Rte 88)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "111",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) – Terre Rouge – Pamplemousses – The Mount – Villebague – Bon Acceuil – Laventure – Central Flacq (Bus Station) 21 (Included in Rte 106)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "112",
       "operator": "IO",
-      "description": "Port Louis (Transportation Centre) – Terre Rouge – Pamplemousses – The Mount – Villebague – Bon Acceuil – Constance - Central Flacq (Bus Station) 22 (Included in Rte 106) No. of buses 113/ 113A IO Port Louis (Victoria Square) - Reduit (University of Mauritius) Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire Camp de Masque - Petite Cabane/Camp de Masque Pave (With extension to Bel Air via Clemencia) 29 (Included in Rte 93) 10",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Transportation Centre) – Terre Rouge – Pamplemousses – The Mount – Villebague – Bon Acceuil – Constance - Central Flacq (Bus Station) 22 (Included in Rte 106) 11",
+      "source": "time2p.pdf"
     },
     {
       "route": "114",
       "operator": "IO",
       "description": "Cite Malherbes - Curepipe (Jan Palach North) [With extension to Forest Side (Forum Complex)] 3 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "114A",
       "operator": "IO",
       "description": "Wooton (Millenium Memorial) - Curepipe (Jan Palach North) [With extension to Forest Side (Forum Complex)] 3 115 / 115A UBS Plaine Verte - Vallee Pitort - Tranquebar - Dr. Jeetoo Hospital - La Butte - Cite Vallijee (Bus Station) / via Cite Rozemont 4 11",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "117",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Camp des Embrevades - Ilot - D'Epinay - Congomah (Terminus) 12 (Included in Rte 88)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "119",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - G.R.N.W. - Cite Richelieu - Petite Riviere - Bambous - Tamarin - Grande Riviere Noire (Trois Bras Store) 19 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "120",
       "operator": "IO",
       "description": "Port Louis - G.R.N.W. - Cite Richelieu - Petite Riviere Bambous - Tamarin - Grande Riviere Noire (Trois Bras Store) - Le Morne - Baie du Cap 32 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "121",
       "operator": "IO",
       "description": "Camp Levieux (Eau Coulee) - Mgr Leen Street - Curepipe (Jan Palach North) [with extension to Forest Side (Forum Complex)] 3 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "122",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Floreal - Vacoas - Candos (Victoria Hospital) - Quatre Bornes - Camp Levieux (NHDC Complex) 10 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "122A",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Castel - Saint Paul - Vacoas Candos (Victoria Hospital) - Quatre Bornes - Camp Levieux (NHDC Complex) 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "123",
       "operator": "NTC/IO",
       "description": "Port Louis (Transportation Centre) - G.R.N.W. - Cite Richelieu - Petite Riviere - Bambous - Wolmar 15 10 (NTC) + 6 (IO)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "125",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Floreal - Vacoas - Cite La Caverne 5 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "126",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - Belle Vue Harel - Cottage - Poudre d'Or Riv du Rempart (Traffic Centre) 21 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "127",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - Belle Vue Harel - Piton - L'Amitie - Riviere du Rempart (Traffic Centre) - Roches Noires Village 19 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "128",
       "operator": "IO",
       "description": "Curepipe (Jan Palach North) - Botanical Garden Entrance Curepipe (Jan Palach North) [With extension to Forest Side (Forum Complex)] 4 6",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "129",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Souillac - Chemin Grenier - Pointe aux Roches 25 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "131",
       "operator": "IO",
       "description": "Cite L'Oiseau - Curepipe (Jan Palach North) [With extension to Forest Side (Forum Complex)] 4 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "132",
       "operator": "IO",
       "description": "Rose Hill (Dar-es-Salaam Square) - Trefles (Housing Estate) 2 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "133",
       "operator": "NTC",
-      "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Souillac - Chemin Grenier - Bel Ombre - Baie du Cap - Choisy (Terminus) 32 2 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - Souillac - Chemin Grenier - Bel Ombre - Baie du Cap - Choisy (Terminus) 32 2 12",
+      "source": "time2p.pdf"
     },
     {
       "route": "134",
       "operator": "NTC",
-      "description": "Curepipe (Jan Palach North) - Floreal - Sadally - Glen Park Henrietta - Bord Cascade 7 5 11",
-      "source": "time3p.pdf"
+      "description": "Curepipe (Jan Palach North) - Floreal - Sadally - Glen Park Henrietta - Bord Cascade 7 5",
+      "source": "time2p.pdf"
     },
     {
       "route": "134A",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Floreal - Sadally - Glen Park La Marie (Terminus) 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "135",
       "operator": "IO",
       "description": "Port Louis (Victoria Square) - Mount Ory - Moka (Hospital) Bois Cheri Road - Saint Pierre (Traffic Centre) - Upper Dagotiere (NHDC Housing Estate) - Valetta - Vuillemin 16 (Included in Rte 12) 137/ 137A IO Curepipe - Lapeyre Hill - Union Park - Jawaharlall Nehru Hospital - Mare d'Albert - Plaine Magnien - Carreau Esnouf Mon Desert - Carreau Accacia / via Le Bouchon 17 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "139",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Vallee Pitot (Cite Rozemont) - Cite Gabriel Martial 3 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "140",
       "operator": "UBS",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Phoenix - Highlands - Hermitage 14 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "141",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Reduit (University of Mauritius) Phoenix (Commercial Centre) - Vacoas - Glen Park Henrietta - Bord Cascade 16 15 143/ 143A NTC Vacoas - Floreal - Cite L'Oiseau / Queen Mary Avenue Curepipe (Jan Palach North) 4 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "144",
       "operator": "UBS/IO",
       "description": "O'Connor - Camp Caval - Curepipe (Jan Palach North) via Dr. Edwards / Emile Pitot Streets [With extension to Forest Side (Forum Complex)] 3 2 (UBS) + 1 (IO)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "144A",
       "operator": "UBS",
       "description": "O'Connor - Camp Caval - Curepipe (Jan Palach North) [With extension to Forest Side (Forum Complex)] 3 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "145",
       "operator": "RHT",
       "description": "Port Louis (Victoria Square) - Coromandel - Roches Brunes Trefles - Rose Hill (Market) 11 12",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "147",
       "operator": "NTC",
       "description": "Rose Hill (Place Cardinal Margeot) - Quatre Bornes Candos (Victoria Hospital) - Glen Park - Henrietta - Bord Cascade 9 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "148",
       "operator": "UBS",
       "description": "Cite la Cure (Traffic Centre) - Sainte Croix (Pere Laval Church) - Plaine Verte - Dr. Jeetoo Hospital - La Butte - Cite Vallijee (Bus Station) 6 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "149",
       "operator": "UBS",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Phoenix - Curepipe - Forest Side - La Brasserie - Bigara (Wireless Station) 16 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "150",
       "operator": "IO",
       "description": "Pailles - G.R.N.W. - La Butte - Dr. Jeetoo Hospital Tranquebar - Vallee Pitot 6 12",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "152",
       "operator": "UBS",
       "description": "Cite Vallijee (Bus Station) - La Butte - Dr. Jeetoo Hospital Plaine Verte - Cite Roche Bois - Baie du Tombeau - Le Goulet 8 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "153",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Floreal - Vacoas - Candos (Victoria Hospital) - Quatre Bornes - Reduit (University of Mauritius) - Moka (Hospital) - Helvetia - Saint Pierre (Traffic Centre) 13 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "155",
       "operator": "NTC",
       "description": "Quatre Bornes (Traffic Centre) - Candos (Victoria Hospital) Glen Park - La Marie - Curepipe (Jan Palach South) 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "156",
       "operator": "NTC",
-      "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Ollier Avenue - Berthaud (Bus Station) 10 15 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Ollier Avenue - Berthaud (Bus Station) 10 15 13",
+      "source": "time2p.pdf"
     },
     {
       "route": "156A",
       "operator": "NTC",
-      "description": "Rose Hill (Place Cardinal Margeot) - Quatre Bornes - La Source 4 1 12",
-      "source": "time3p.pdf"
+      "description": "Rose Hill (Place Cardinal Margeot) - Quatre Bornes - La Source 4 1",
+      "source": "time2p.pdf"
     },
     {
       "route": "159",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal SSRN Hospital - Plaine des Papayes - Belle Vue Harel Cottage - Poudre d'Or (Hospital) 19 (Included in Rte 21) 160/ 160A UBS Cite Vallijee (Bus Station) - La Butte - Dr. Jeetoo Hospital Plaine Verte - Vallee des Pretres / Upper Vallee des Pretres 7 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "162",
       "operator": "UBS",
       "description": "Port Louis (Victoria Square) - Reduit (Roundabout) - Phoenix Curepipe (Jan Palach North) (With extension to Forest Side) 14 35",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "163",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Reduit (Roundabout) - Quatre Bornes - Candos (Victoria Hospital) - Vacoas (Bus Station) 13 23 + 10 (Blue Line)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "166",
       "operator": "NTC",
       "description": "Vacoas (Bus Station) - Bonne Terre - Cite La Caverne 3 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "168",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach South) - Lapeyre Hill - Nouvelle France - La Flora - Bois Cheri - Grand Bassin 14 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "169",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - FUEL - Camp de Masque Pave Petite Cabane 6 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "170",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Candos (Victoria Hospital) - Vacoas - Saint Paul - Castel - Curepipe (Jan Palach North) 17 20",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "170A",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Candos (Victoria Hospital) - Vacoas - Floreal - Curepipe (Jan Palach North) 17",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "171",
       "operator": "TBS",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Arsenal SSRN (Hospital) - Solitude - Triolet - Grande Pointe aux Piments 13 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "172",
       "operator": "UBS",
       "description": "Rose Hill (Dar-es-Salaam Square) - Roches Brunes 2 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "173",
       "operator": "UBS",
       "description": "Curepipe (Jan Palach North) - Castel - Phoenix - Reduit (University of Mauritius) - Moka (Hospital) - Helvetia - Saint Pierre (Traffic Centre) 10 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "174",
       "operator": "RHT",
       "description": "Rose Hill (Place Cardinal Margeot) - Ebene - Reduit (University of Mauritius) - Pailles - Port Louis (Victoria Square) 9 Included in Route 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "174A",
       "operator": "RHT",
       "description": "Rose Hill (Place Cardinal Margeot) - Ebene (Cyber Tower) Reduit (University of Mauritius) - Pailles - Port Louis (Victoria Square) 9 Included in Route 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "175",
       "operator": "MBT",
       "description": "SSRN (Hospital) - Pamplemousses - Melle Laure - Long Mountain - Creve Coeur 11 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "176",
       "operator": "NTC",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Old Flacq Road - D'Epinay - Villebague - Bon Acceuil - Lallmatie - Saint Julien - Constance - Central Flacq (Bus Station) 21 6",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "178",
       "operator": "IO",
       "description": "Melville - Roche Terre - Goodlands - Saint Antoine (Traffic Centre) - Madame Azor 6 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "179",
       "operator": "NTC",
-      "description": "Curepipe (Jan Palach North) - Castel - Saint Paul - Vacoas Candos (Victoria Hospital) - Palma - Beaux Songes Bambous - Flic en Flac - Wolmar 19 6 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Curepipe (Jan Palach North) - Castel - Saint Paul - Vacoas Candos (Victoria Hospital) - Palma - Beaux Songes Bambous - Flic en Flac - Wolmar 19 6 14",
+      "source": "time2p.pdf"
     },
     {
       "route": "179A",
       "operator": "NTC",
-      "description": "Curepipe (Jan Palach North) - Floreal - Vacoas - Candos (Victoria Hospital) - Palma - Beaux Songes - Bambous - Flic en Flac - Wolmar 19 13",
-      "source": "time3p.pdf"
+      "description": "Curepipe (Jan Palach North) - Floreal - Vacoas - Candos (Victoria Hospital) - Palma - Beaux Songes - Bambous - Flic en Flac - Wolmar 19",
+      "source": "time2p.pdf"
     },
     {
       "route": "180",
       "operator": "NTC",
       "description": "Bord Cascade - Henrietta - Glen Park - Vacoas (Bus Station) Valentina (Phoenix Industrial Estate) 6 6",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "181",
       "operator": "UBS",
       "description": "Hermitage - Highlands - Valentina (Phoenix Industrial Estate) 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "182",
       "operator": "IO",
       "description": "Cite la Cure (Traffic Centre) - Sainte Croix - Plaine Verte Vallee Pitot - Tranquebar - Dr. Jeetoo Hospital - La Butte Coromandel - Cite Chebel [With extension to Gros Cailloux (Morc. De Marigny)] 13 8",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "185",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Cite Bois Marchand 4 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "187",
       "operator": "IO",
       "description": "Saint Antoine (Traffic Centre) - Melle Jeanne (Near Kalimaye) 2 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "188",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Reduit (Roundabout) - Quatre Bornes - Sodnac 10 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "189",
       "operator": "NTC",
       "description": "Rose Hill (Place Cardinal Margeot) - Mont Roches -Bambous Flic en Flac - Wolmar 12 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "190",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Port Louis (Transportation Centre) 1 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "191",
       "operator": "UBS",
       "description": "Port Louis (Transportation Centre) - Curepipe (Jan Palach North) via Motorway and Couvent de Lorette Street 16 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "192",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Vacoas (Bus Station) via Motorway and Sivananda Avenue 14 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "193",
       "operator": "UBS",
       "description": "Curepipe (Jan Palach North) - Castel - Phoenix - Highlands Belle Terre (Terminus) 5 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "194",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Boulet Rouge - Bel Air - Marie Jeanne 11 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "195",
       "operator": "NTC",
       "description": "Quatre Bornes (Traffic Centre) - Phoenix (Commercial Centre) - Quatre Bornes (Traffic Centre) 4 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "196",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - Mon Gout - D'Epinay - Congomah (Terminus) 12 (Included in Rte 88)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "197",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Reduit (University of Mauritius) Pont Fer - La Vigie (Roundabout) - Nouvelle France Souillac - Chemin Grenier - Riviere des Galets (Bus Station) 39 10",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "198",
       "operator": "UBS/IO",
       "description": "Port Louis (Deschartres Street / Victoria Square) - Reduit (University of Mauritius) - Pont Fer - La Vigie (Roundabout) Rose Belle - Mare d'Albert - SSRI Airport - Mahebourg (Bus Station) 31 4 (UBS) + 4 (IO)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "199",
       "operator": "TBS",
       "description": "Port Louis (Transportation Centre) - Morcellement Raffray Terre Rouge (Police Station) 3 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "200",
       "operator": "IO",
-      "description": "Port Louis (Deschartres Street / Victoria Square) - Reduit (University of Mauritius) - Pont Fer - La Vigie (Roundabout) Rose Belle - Mare d'Albert - L'Escalier - La Sourdine 32 8 No. of buses 201 NTC/UBS Curepipe (Jan Palach South) - Forest Side (Forum Complex) 1 1 (NTC) + 1 (UBS) 14",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Deschartres Street / Victoria Square) - Reduit (University of Mauritius) - Pont Fer - La Vigie (Roundabout) Rose Belle - Mare d'Albert - L'Escalier - La Sourdine 32 8 15",
+      "source": "time2p.pdf"
     },
     {
       "route": "202",
       "operator": "UBS",
       "description": "Hermitage - Camp Fouquereaux - Castel - Saint Paul Vacoas (Bus Station) 4 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "203",
       "operator": "NTC",
-      "description": "Port Louis (Transportation Centre) - GRNW - Cite Richelieu Petite Riviere - Mont Roches - Camp Levieux (NHDC Complex) 10 10 204 (Rodrigues) Port Mathurin (Traffic Centre) - Terre Rouge - Grand Baie 3 4 (Incl. 230) 205 (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Baie Malgache Baie du Nord 7 4 205A (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Allee Tamarin 3 205B (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Fond la Bonte 3 206 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Petit Gabriel Quatre Vents - La Ferme - Plaine Corail (Airport) 13 15 (Incl. 207) 206A (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Baie Malgache Montagne du Sable - Mangues - La Ferme - Plaine Corail (Airport) 12 207 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Petit Gabriel Marechal - La Ferme - Camp Pintade (Pointe Palmiste Water Tank) 14 (Included in Rte 206) 207A (Rodrigues) Port Mathurin (Traffic Centre) - Malartic - Marechal - Grand La Fouche Corail - Anse Quitor - Riviere Cocos (R.C.A. School) 12 207B (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Baie du Nord - La Ferme - Camp Pintade (Pointe Palmiste Water Tank) 13 207C (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Baie Malgache Montagne du Sable - Mangues - La Ferme - Camp Pintade (Pointe Palmiste Water Tank) 13 208 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Roche Bon Dieu Pointe Coton (Public Beach) (Extension to Riviere Banane and Saint Francois) 9 8 209 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Sainte Famille Port Sud Est - Mourouk - Riviere Cocos (R.C.A. School) 10 11 210 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Batatrand Graviers 7 4 210A (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Coromandel Patate Theophile - Montagne Cabris 7 210B (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Coromandel Montagne Cheri 7 211 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Malartic / Saint Gabriel - Petit Gabriel - Citron Donis (With extension to Eau Vannee) 6 3 No. of buses 213 (Rodrigues) Riviere Cocos - La Ferme - Baie du Nord (With extension to Mourouk and Anse Quitor) 11 5 15",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Transportation Centre) - GRNW - Cite Richelieu Petite Riviere - Mont Roches - Camp Levieux (NHDC Complex) 10 10 204 (Rodrigues) Port Mathurin (Traffic Centre) - Terre Rouge - Grand Baie 3 4 (Incl. 230) 205 (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Baie Malgache Baie du Nord 7 4 205A (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Allee Tamarin 3 205B (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Fond la Bonte 3 206 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Petit Gabriel Quatre Vents - La Ferme - Plaine Corail (Airport) 13 15 (Incl. 207) 206A (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Baie Malgache Montagne du Sable - Mangues - La Ferme - Plaine Corail (Airport) 12 207 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Petit Gabriel Marechal - La Ferme - Camp Pintade (Pointe Palmiste Water Tank) 14 (Included in Rte 206) 207A (Rodrigues) Port Mathurin (Traffic Centre) - Malartic - Marechal - Grand La Fouche Corail - Anse Quitor - Riviere Cocos (R.C.A. School) 12 207B (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Baie du Nord - La Ferme - Camp Pintade (Pointe Palmiste Water Tank) 13 207C (Rodrigues) Port Mathurin (Traffic Centre) - Accacia - Baie Malgache Montagne du Sable - Mangues - La Ferme - Camp Pintade (Pointe Palmiste Water Tank) 13 208 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Roche Bon Dieu Pointe Coton (Public Beach) (Extension to Riviere Banane and Saint Francois) 9 8 209 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Sainte Famille Port Sud Est - Mourouk - Riviere Cocos (R.C.A. School) 10 11 210 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Batatrand Graviers 7 4 210A (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Coromandel Patate Theophile - Montagne Cabris 7 210B (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Coromandel Montagne Cheri 7 211 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Malartic / Saint Gabriel - Petit Gabriel - Citron Donis (With extension to Eau Vannee) 6 3 16",
+      "source": "time2p.pdf"
     },
     {
       "route": "214",
       "operator": "IO",
       "description": "Riviere du Poste - Mare Tabac - Mare d'Albert - SSRI Airport Mahebourg (Bus Station) 13",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "215",
       "operator": "TBS",
       "description": "Port Louis (Transportation Centre ) - Grand Baie (La Jonque Restaurant) 16 9",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "216",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - FUEL - Lallmatie - Grand Bas Fond - FUEL - Central Flacq (Bus Station) 14 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "217",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Constance - hermitage - La Porte Providence - Poste de Flacq - Constance - Central Flacq (Bus Station) 8 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "218",
       "operator": "IO",
       "description": "Central Flacq (Bus Station) - Queen Victoria - Central Flacq (Bus Station) 6 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "219",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Sivananda Avenue (Vacoas Bus Station) - Phoenix (Commercial Centre) - Paillotte Candos (Victoria Hospital) - Quatre Bornes (Traffic Centre) 7 10 220 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Malartic - Soupirs 5 4",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "221",
       "operator": "NTC",
       "description": "Riviere du Rempart (Traffic Centre) - Plaine des Roches Petite Retraite - Central Flacq (Bus Station) 8 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "222",
       "operator": "NTC",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Saint Julien d'Hotman - Lallmatie - Petite Retraite Laventure - Belle Vue Maurel - Riviere du Rempart (Traffic Centre) 27 7",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "222A",
       "operator": "NTC",
       "description": "Rose Hill (Place Cardinal Margeot) - Reduit (University of Mauritius) - Helvetia - Saint Pierre (Traffic Centre) - Quartier Militaire - Saint Julien d'Hotman - Lallmatie - Belvedere Petite Retraite - Laventure - Belle Vue Maurel - Riviere du Rempart (Traffic Centre) 29 224 (Rodrigues) Port Mathurin (Traffic Centre) - Solitude - Montagne Goyaves (Health Centre) - Baladirou 6 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "225",
       "operator": "UBS",
       "description": "Rose Hill (Dar-es-Salaam Square) - Plaisance - Camp Levieux (NHDC Complex) 2 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "226",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Valetta - Vuillemin - Quartier Militaire - Saint Julien d'Hotman - Lallmatie - Bon Acceuil Mare d'Australia - Amaury - Belle Vue Maurel - Riviere du Rempart (Traffic Centre) 26 12",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "226A",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Valetta - Vuillemin - Quartier Militaire - Saint Julien d'Hotman - Lallmatie - Belvedere Mare d'Australia - Belle Vue Maurel - Riviere du Rempart (Traffic Centre) 25",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "226B",
       "operator": "NTC",
       "description": "Curepipe (Jan Palach North) - Valetta - Vuillemin - Quartier Militaire - Saint Julien d'Hotman - Lallmatie - Grande Retraite Laventure - Belle Vue Maurel - Riviere du Rempart (Traffic Centre) 25",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "227",
       "operator": "IO",
-      "description": "Port Louis - Terre Rouge - Pamplemousses - Beau Plan (Aventure du Sucre) - SSRN Hospital - Plaine des Papayes Petit Raffray - Goodlands - Saint Antoine (Traffic Centre) 21 (Included in Rte 21) No. of buses",
-      "source": "time3p.pdf"
+      "description": "Port Louis - Terre Rouge - Pamplemousses - Beau Plan (Aventure du Sucre) - SSRN Hospital - Plaine des Papayes Petit Raffray - Goodlands - Saint Antoine (Traffic Centre) 21 (Included in Rte 21) 17",
+      "source": "time2p.pdf"
     },
     {
       "route": "228",
       "operator": "TBS",
-      "description": "Grande Pointe aux Piments - Mon Choisy (Public Beach) Grand Baie - Pereybere - Pavillon - Petit Raffray Goodlands - Saint Antoine (Traffic Centre) 17 2 16",
-      "source": "time3p.pdf"
+      "description": "Grande Pointe aux Piments - Mon Choisy (Public Beach) Grand Baie - Pereybere - Pavillon - Petit Raffray Goodlands - Saint Antoine (Traffic Centre) 17 2",
+      "source": "time2p.pdf"
     },
     {
       "route": "229",
       "operator": "UBS",
       "description": "Rose Hill (Dar-es-Salaam Square) - Mont Roches Bambous 7 5 230 (Rodrigues) Port Mathurin (Traffic Centre) - Hauteur Accacia 1 (Included in Rte 204)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "231",
       "operator": "TBS",
       "description": "Pointe aux Cannoniers - Grand Baie - Upper Vale - Rouillard Goodlands - Saint Antoine (Traffic Centre) 9 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "232",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge - Old Flacq Road - D'Epinay - Villebague - Belvedere - Saint Julien Constance - Central Flacq - Boulet Rouge - Bel Air (End of Village) 27 (Included in Rte 106)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "233",
       "operator": "UBS",
       "description": "Plaine Verte - Vallee Pitot - Tranquebar (Cite Madeleine) 2 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "234",
       "operator": "UBS",
       "description": "Cite Vallijee - La Butte - Dr. Jeetoo Hospital - Tranquebar (Cite Madeleine) 3 2 235 IO/UBS Port Louis (Transportation Centre) - Roche Bois - Cite Ilois 3 (Included in Rte 77)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "236",
       "operator": "IO",
       "description": "Port Louis (Transportation Centre) - Terre Rouge Pamplemousses - The Mount - Villebague - Bon Acceuil FUEL - Central Flacq - Belle Mare (Waterpark) 29 (Included in Rte 106)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "237",
       "operator": "UBS",
       "description": "Vallee des Pretres (Terminus) - Plaine Verte - Vallee Pitot Dr. Jeetoo Hospital - La Butte - Old Moka Road - Pailles (Morcellement Raffray) 9 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "238",
       "operator": "UBS",
       "description": "Pailles (Morcellement Raffray) - Old Moka Road - Port Louis (Transportation Centre) 4 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "239",
       "operator": "RHT",
       "description": "Rose Hill (Place Margeot) - Camp Levieux (NHDC Complex) Roches Brunes - Beau Bassin - Rose Hill (Place Margeot) 4 3",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "240",
       "operator": "IO",
       "description": "Sottise - Lower Vale - Plaine des Papayes - Piton - L'Amitie Riviere du Rempart - Belle Vue Maurel - Petite Retraite Central Flacq (Bus Station) 20 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "241",
       "operator": "NTC",
       "description": "Vacoas (NTC Remy Ollier Depot) - La Caverne - Vacoas (Bus Station) - Phoenix (Commercial Centre) - Rose Hill (Place Cardinal Margeot) 5 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "242",
       "operator": "NTC",
       "description": "Petite Riviere (Foyer Piat) - Coromandel - Rose Hill (Place Cardinal Margeot) - Quatre Bornes - Candos (Victoria Hospital) - Vacoas (ENT Hospital) 5 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "243",
       "operator": "IO",
       "description": "Quatre Bornes (Traffic Centre) - Beaux Songes - Bambous Riviere Noire - Case Noyale - Chamarel (Entrance La Terre 7 Couleurs) 23 1",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "244",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Roche Bois - Mer Rouge (Mauritius Freeport Authority) 2 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "245",
       "operator": "NTC",
       "description": "Port Louis (Victoria Square) - Reduit (University of Mauritius) Pont Fer - La Vigie (Roundabout) - Nouvelle France Riviere des Anguilles - Camp Diable 32 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "246",
       "operator": "NTC",
-      "description": "Port Louis (Victoria Square) - Reduit (University of Mauritius) Pont Fer - La Vigie (Roundabout) - Nouvelle France Grand Bois - Bois Cheri 26 5 No. of buses",
-      "source": "time3p.pdf"
+      "description": "Port Louis (Victoria Square) - Reduit (University of Mauritius) Pont Fer - La Vigie (Roundabout) - Nouvelle France Grand Bois - Bois Cheri 26 5 18",
+      "source": "time2p.pdf"
     },
     {
       "route": "247",
       "operator": "UBS",
-      "description": "Curepipe (Jan Palach North) - Forest Side - Cite Anouchka 2 2 17",
-      "source": "time3p.pdf"
+      "description": "Curepipe (Jan Palach North) - Forest Side - Cite Anouchka 2 2",
+      "source": "time2p.pdf"
     },
     {
       "route": "248",
       "operator": "UBS",
       "description": "Port Louis (Deschartres Street/Victoria Square) - Reduit (University of Mauritius) - Pont Fer - La Vigie (Roundabout) Rose Belle - Mare Tabac - Riviere du Poste (Terminus) 29 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "249",
       "operator": "UBS",
       "description": "Dubreuil (Terminus) - Hermitage - Highlands - Phoenix Saint Paul - Vacoas - Carreau Laliane - Candos (Victoria Hospital) - Quatre Bornes (Traffic Centre) 16 2",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "250",
       "operator": "UBS",
       "description": "Port Louis - Coromandel - Rose Hill (Place Cardinal Margeot) - Eau Coulee - Wooton - Piton du Milieu - Dubreuil (Terminus) 22",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "251",
       "operator": "UBS/IO",
       "description": "Calebasses - Terre Rouge - Saint Francois Xavier (Stadium) SSR Street - La Butte - Plaine Lauzun (Bus Station) 8 2 (UBS) + 4 (IO)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "252",
       "operator": "IO",
       "description": "Curepipe - La Vigie - Jawaharlall Nehru Hospital - Mare d'Albert - Mahebourg (Bus Station) 17 (Included in Rte 9)",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "253",
       "operator": "UBS",
       "description": "Cite Vallijee (Bus Station ) - La Butte - Dr. Jeetoo Hospital Plaine Verte - Riche Terre (Commercial Centre) - Riche Terre Road - Le Goulet 7 5",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "254",
       "operator": "UBS",
       "description": "Curepipe - Phoenix - Trianon - Ebene (Cyber Tower) - Rose Hill (Place Cardinal Margeot) 9",
-      "source": "time3p.pdf"
+      "source": "time2p.pdf"
     },
     {
       "route": "255",
       "operator": "NTC",
-      "description": "Bord Cascade - Henrietta - Glen Park - Vacoas (Bus Station) Pont Fer (IVTB) - Ebene (Cyber Tower) - Rose Hill (Place Cardinal Margeot) 11 5",
-      "source": "time3p.pdf"
+      "description": "Bord Cascade - Henrietta - Glen Park - Vacoas (Bus Station) Pont Fer (IVTB) - Ebene (Cyber Tower) - Rose Hill (Place Cardinal Margeot) 11 5 4. (a) Fares Fares are charged according to the number of fare stages travelled (distance -related fare). Each fare stage is about 1.6 km. These fare stages coincide with specific bus stops on each route and are of yellow colour. The fares payable by a passenger are as follows: Stage Adult Child Student 1 6.00 3.00 6.00 2 10.00 7.00 8.00 3 – 4 14.00 8.00 9.00 5 – 6 16.00 8.00 9.00 7 – 8 18.00 9.00 10.00 9 – 12 19.00 9.00 10.00 13 – 14 21.00 10.00 10.00 15 – 20 21.00 10.00 11.00 21 – 30 22.00 10.00 11.00 30+ 23.00 11.00 11.00 19 (b) Calculation of Fare Payable The following four examples show you how fare payable is calculated: Bus Stop: A B C D Ex. 1 .-----------------. Ex. 2 .-------------------. Ex. 3 .----------------------------. Ex. 4 .---------. Example 1 (Bus Stops A to C) Fare Stage Fare Payable Alighting at fare stage 6 6 Adult Child Student Boarding at fare stage 2 -2 14.00 8.00 9.00 No. of stages travelled 4 Example 2 (Bus Stops B to D) Fare Stage Fare Payable Alighting at fare stage 6 ½ 6 ½ (7) Adult Child Student Boarding at fare stage 2 ½ - 2 ¼ (2) 16.00 8.00 9.00 No. of stages travelled 5 Example 3 (Bus Stops A to D) Fare Stage Fare Payable Alighting at fare stage 6 ½ 6 ½ (7) Adult Child Student Boarding at fare stage 2 - 2 16.00 8.00 9.00 No. of stages travelled 4 ½ (5) Example 4 (Bus Stops B to C) Fare Stage Fare Payable Alighting at fare stage 6 6 Adult Child Student Boarding at fare stage 2 ½ - 2 14.00 8.00 9.00 No. of stages travelled 4 20 (c) Concessionary Fares Fares on a concession basis are allowed to the following categories of passengers: (a) Students (b) Children (c) Pensioner/disabled A student is defined as a person who is registered as a full-time student at any primary, secondary, post-secondary or tertiary institution approved by the Ministry of Education and Human Resources and is following a full -time course of a duration not less than 9 months at a secondary or tertiary institution or 6 months at a post-secondary institution Students are normally issued with Student Identity Cards. A person under the age of 13 is considered to be a child. No fare is claimed in respect of a child under the age of 3 who does not occupy a seat. Every pensioner or disabled person holding an identity card issued by the Ministry of Social Security is authorised to travel free of charge as from 15 August 2005. (d) Student Identity Cards A new type of student identity card was introduced in 2005. The cards are as follows: 21 5. Complaints Any complaint may be addressed to the National Transport Authority, MSI Building, Les Cassis, Port Louis, to the nearest Police Station or to the respective bus companies/operators. 6. Contact numbers of the NTA/Bus Companies/Operators National Transport Authority Chief Road Transport Inspectors Black River, Savanne, Plaines Wilhems, Grand Port, Rodrigues 202 2810 Pamplemousses, Port Louis, Riviere du Rempart, Moka, Flacq 202 2818 Principal Road Transport Inspectors Black River, Plaines Wilhems 202 2813 Port Louis (South), Moka, Flacq 202 2820 Savanne, Grand Port, Rodrigues 202 2825 Pamplemousses, Port Louis (North), Riviere du Rempart 202 2809 Planning Section 202 2830 Hotline for Free Travel 800 1555 National Transport Authority (Rodrigues) Principal Road Transport Inspector 831-2095 Bus Companies National Transport Corporation Head Office 426 1859/426 5761 Bonne Terre, Vacoas 426 2938 Enquiries 424 7981/427 4131 United Bus Service Ltd Head Office (Cassis) 212 2026 (Ext 227) 212 8086 Booking office for Tours 2, Jemmapes Street, Port Louis 212 1022 Victoria Square, Port Louis 211 2244 Edward VII Street, Rose Hill 464 8298 Sir Celicourt Antelme Street, Forest Side 676 3202/670 1604/670 1758 Curepipe Traffic Centre, Jan Palach, Curepipe 676 2786 Triolet Bus Service Quay Street, Port Louis (Rte no. 51) 241-1511 Royal Road, Pointe aux Sables 234-7347 Immigration Square, Port Louis 242-3177 Shivala Road, Triolet 261-5760 T.B.S. Lane, Triolet (Office) 261 6516 / 261 6849 22 Terminus, Triolet 261 6725 Royal Road, Triolet 261 6849 Pavillon, Cap Malheureux 262 8043 New Traffic Centre, Goodlands 282 0572 Rose Hill Transport Head Office, Hugnin Road, Rose Hill 464 1221/465 3371/465 9626 Port Louis Bus Stand 212 1844 St. Patrick Bus Stand 464 5123 Mauritian Bus Transport Head Office 245 2539 Ilot Branch Road, Montagne Longue 245 2796 Immigration Bus Stand, Port Louis 216 0200 Long Mountain Bus Stand 545 0157 Bus Owners’ Co-operative Societies Bus Owners’ Co-operative Society (North) 283 1937 Archades Sahai, Royal Road, Goodlands Bus Owners’ Co-operative Society (South) 627 4942 Doolub Building, Royal Road, New Grove Port Louis Bus Owners’ Co-operative Society 212 5459 6, Edith Cavell Street, Port Louis Bus Owners’ Co-operative Society (Flacq) 413 2605 Pothia Building, Central Flacq Bus Owners’ Co-operative Society (Quatre-Bornes) 250 7447 C/o Chandanlall Jeewoonarain, Palma Road Quatre Bornes Bus Owners’ Co-operative Society (Moka/Flacq) 433 4904 Mohit Hall, L’Agrement St. Pierre Southern Bus Owners’ Co-operative Society 626 2794 Tyack, Riviere des Anguilles Curepipe Bus Owners’ Co-operative Society 698 4582 c/o S. Aubeeluck, Allee Brillant, Castel Grand Port – Savanne Bus Owners’ Co-operative Society 762 6343 c/o Riaz Mohabuth, Chapel Lane, Rose Belle Grand Port – Flacq Bus Owners’ Co-operative Society c/o Mr. B. Ramful, Royal Road, Grand Sable Eastern Bus Owners’ Co-operative Society c/o Mr. M. Hazareesingh, 9 Beyts Street, Beau Bassin 23 8. Legal requirements for passengers (a) to form a queue in single file while waiting at a bus stop; (b) not to use obscene or offensive language or conduct themselves in a disorderly manner; (c) not to willfully remove, displace, deface a fare table or other notice in or on the bus; (d) not to smoke in a bus; (e) not to leave or attempt to leave a bus without paying the fare for the journey; (f) to retain their tickets until the end of the journey; (g) to produce their tickets to any authorized officer on demand; (h) to pay the fare for the journey taken in case they fail to produce their tickets; (i) to give priority to disabled persons to enable them to have access to their reserved seats.",
+      "source": "time2p.pdf"
     }
   ]
 }
