@@ -1,0 +1,38 @@
+{
+  "sources": [
+    {
+      "id": "opendata_bus_stops",
+      "authority": "Open Data Mauritius / MDPA",
+      "dataset": "Location of Bus Stops",
+      "url": "https://data.govmu.org/dataset/location-bus-stops",
+      "license": "CC-BY-SA-4.0",
+      "last_known_update": "2024-09-30",
+      "role": "official static stop geospatial source",
+      "confidence": "official"
+    },
+    {
+      "id": "nlta_bus_timetables",
+      "authority": "National Land Transport Authority",
+      "dataset": "Bus Timetable - The Official Guide for Public Bus Transport Services",
+      "url": "https://nlta.govmu.org/Pages/Procedures/Bus-Timetable.aspx",
+      "role": "official route, service window, frequency and scheduled journey-time source",
+      "confidence": "official"
+    },
+    {
+      "id": "ntc_mobis",
+      "authority": "National Transport Corporation",
+      "dataset": "MoBis Passenger Information System",
+      "url": "https://www.buscnt.mu/mobis-passenger-information-system/",
+      "role": "candidate realtime provider for CNT bus ETA, vehicle position and occupancy; integration requires an authorized API/feed",
+      "confidence": "official-capability-confirmed / feed-access-pending"
+    },
+    {
+      "id": "openstreetmap",
+      "authority": "OpenStreetMap",
+      "url": "https://www.openstreetmap.org/",
+      "role": "base map and pedestrian routing support",
+      "confidence": "community geospatial source"
+    }
+  ],
+  "policy": "MauriMove must not scrape or reverse-engineer private operator APIs. Realtime integrations are enabled only when a legitimate reusable feed or permission is available."
+}
