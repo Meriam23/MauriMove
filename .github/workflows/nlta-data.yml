@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - 'scripts/fetch_nlta.py'
+      - '.github/workflows/nlta-data.yml'
 permissions:
   contents: write
 jobs:
@@ -13,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
@@ -25,5 +28,10 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/nlta-routes.json
-          git diff --cached --quiet || git commit -m 'Sync official NLTA bus route data'
-          git push
+          if git diff --cached --quiet; then
+            echo 'NLTA data unchanged.'
+            exit 0
+          fi
+          git commit -m 'Sync official NLTA bus route data'
+          git pull --rebase origin main
+          git push origin HEAD:main
