@@ -4,81 +4,96 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#101828">
-<meta name="description" content="MauriMove — planifier un trajet en transport public à Maurice.">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon.svg">
+<meta name="description" content="MauriMove — calculateur de trajets en bus et à pied à Maurice.">
 <title>MauriMove 🇲🇺</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;background:#eef1f5;color:#101828}#map{position:fixed;inset:0}.panel{position:fixed;z-index:1000;left:12px;top:12px;width:min(500px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;background:#fffffff2;backdrop-filter:blur(20px);border-radius:24px;padding:16px;box-shadow:0 20px 70px #0003}.brand{font-size:27px;font-weight:950;letter-spacing:-1px}.brand span{color:#ff5a36}.sub{font-size:12px;color:#667085;margin:2px 0 14px}.search{background:#fff;border:1px solid #e4e7ec;border-radius:16px;overflow:hidden}.field{display:flex;gap:10px;padding:13px}.field+.field{border-top:1px solid #eaecf0}.dot{width:10px;height:10px;border-radius:50%;background:#ff5a36;margin-top:5px;flex:0 0 auto}.dot.blue{background:#246bfd}input{border:0;outline:0;width:100%;font-size:15px;background:transparent}.row{display:flex;gap:6px;overflow:auto;margin:8px 0}.chip{white-space:nowrap;background:#fff;border:1px solid #d0d5dd;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:800}.go{width:100%;background:#101828;color:#fff;border:0;border-radius:14px;padding:13px;font-weight:900}.go:disabled{opacity:.55}.title{font-size:12px;font-weight:900;margin:13px 0 7px}.card{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:12px;margin:7px 0}.best{border:2px solid #ff5a36}.big{font-size:18px;font-weight:950}.small{font-size:12px;color:#667085;line-height:1.45;margin-top:4px}.step{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #eee}.step:last-child{border:0}.ico{font-size:21px;width:27px}.pill{display:inline-block;background:#ecfdf3;color:#067647;border-radius:999px;padding:5px 7px;font-size:10px;font-weight:900;margin-top:7px}.warn{background:#fffaeb;color:#b54708;padding:9px;border-radius:11px;font-size:11px;line-height:1.4}.ok{color:#067647;font-weight:900}.err{color:#b42318;font-weight:900}.footer{font-size:10px;color:#98a2b3;line-height:1.45;margin-top:10px}.suggestions{display:none;background:#fff;border:1px solid #e4e7ec;border-radius:12px;margin-top:5px;overflow:hidden}.suggestions button{display:block;width:100%;text-align:left;background:#fff;border:0;padding:10px 12px;font-size:13px}.suggestions button+button{border-top:1px solid #eee}.install{display:none;margin-top:8px;background:#eef4ff;border-radius:12px;padding:9px;font-size:11px}.network{display:flex;align-items:center;justify-content:space-between;gap:10px}.refresh{border:1px solid #d0d5dd;background:#fff;border-radius:9px;padding:6px 8px;font-weight:800;font-size:11px}
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;background:#eef1f5;color:#101828}#map{position:fixed;inset:0}.panel{position:fixed;z-index:1000;left:12px;top:12px;width:min(500px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;background:#fffffff2;backdrop-filter:blur(20px);border-radius:24px;padding:16px;box-shadow:0 20px 70px #0003}.brand{font-size:28px;font-weight:950;letter-spacing:-1px}.brand span{color:#ff5a36}.sub{font-size:12px;color:#667085;margin:2px 0 14px}.search{background:#fff;border:1px solid #e4e7ec;border-radius:16px;overflow:hidden}.field{display:flex;gap:10px;padding:13px}.field+.field{border-top:1px solid #eaecf0}.dot{width:10px;height:10px;border-radius:50%;background:#ff5a36;margin-top:5px;flex:0 0 auto}.dot.blue{background:#246bfd}input{border:0;outline:0;width:100%;font-size:15px;background:transparent}.go{width:100%;background:#101828;color:#fff;border:0;border-radius:14px;padding:13px;margin-top:8px;font-weight:900}.go:disabled{opacity:.55}.bar{display:flex;gap:6px;margin-top:8px}.secondary{flex:1;background:#fff;border:1px solid #d0d5dd;border-radius:10px;padding:9px;font-weight:800;font-size:12px}.title{font-size:12px;font-weight:900;margin:14px 0 7px}.card{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:12px;margin:7px 0}.best{border:2px solid #ff5a36}.big{font-size:18px;font-weight:950}.small{font-size:12px;color:#667085;line-height:1.45;margin-top:4px}.step{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #eee}.step:last-child{border:0}.ico{font-size:21px;width:27px}.pill{display:inline-block;background:#ecfdf3;color:#067647;border-radius:999px;padding:5px 7px;font-size:10px;font-weight:900;margin-top:7px}.warn{background:#fffaeb;color:#b54708;padding:9px;border-radius:11px;font-size:11px;line-height:1.4}.ok{color:#067647;font-weight:900}.err{color:#b42318;font-weight:900}.footer{font-size:10px;color:#98a2b3;line-height:1.45;margin-top:10px}.suggest{display:none;border:1px solid #e4e7ec;border-radius:12px;background:#fff;margin-top:5px;overflow:hidden}.suggest button{display:block;width:100%;border:0;background:#fff;text-align:left;padding:10px 12px;font-size:13px}.suggest button+button{border-top:1px solid #eee}.network{display:flex;justify-content:space-between;align-items:center}.badge{font-size:10px;background:#eef4ff;color:#175cd3;border-radius:999px;padding:5px 8px;font-weight:900}
 </style>
 </head>
 <body>
 <div id="map"></div>
 <section class="panel">
 <div class="brand">Mauri<span>Move</span> 🇲🇺</div>
-<div class="sub">Le transport mauricien, pensé comme Citymapper</div>
+<div class="sub">Le calculateur de transport de l’île Maurice</div>
 <div class="search">
-<div class="field"><span class="dot"></span><input id="from" value="Ma position" placeholder="Départ" autocomplete="off"></div>
-<div id="fromSuggest" class="suggestions"></div>
-<div class="field"><span class="dot blue"></span><input id="to" placeholder="Où allez-vous ?" autocomplete="off"></div>
-<div id="toSuggest" class="suggestions"></div>
+ <div class="field"><span class="dot"></span><input id="from" value="Ma position" placeholder="Départ" autocomplete="off"></div>
+ <div id="fromSuggest" class="suggest"></div>
+ <div class="field"><span class="dot blue"></span><input id="to" placeholder="Où allez-vous ?" autocomplete="off"></div>
+ <div id="toSuggest" class="suggest"></div>
 </div>
-<div class="row"><button class="chip" id="gps">⌖ Ma position</button><button class="chip" id="ccare">🏥 C-Care Tamarin</button><button class="chip" id="carrefour">🛒 Carrefour Flic-en-Flac</button><button class="chip" id="cascavelle">🛍️ Cascavelle</button></div>
-<button class="go" id="go">Calculer le meilleur trajet</button>
-<div class="install" id="install">📲 Pour installer MauriMove sur iPad : partagez cette page dans Safari puis « Ajouter à l’écran d’accueil ».</div>
-<div class="title">Itinéraire</div><div id="results"><div class="card small">Autorise la localisation puis teste une destination.</div></div>
-<div class="title network"><span>Réseau</span><button class="refresh" id="refresh">Actualiser</button></div>
-<div id="status" class="small">Chargement des arrêts officiels…</div>
-<div class="footer">Données d’arrêts : Open Data Mauritius. Horaires Route 57 : NLTA. La carte et le routage piéton utilisent des services OpenStreetMap. Aucun ETA GPS n’est inventé.</div>
+<div class="bar"><button class="secondary" id="gps">⌖ Utiliser ma position</button><button class="secondary" id="swap">⇅ Inverser</button></div>
+<button class="go" id="go">Trouver le meilleur trajet</button>
+<div class="title">Itinéraire</div>
+<div id="results"><div class="card small">Entre une destination. MauriMove cherchera automatiquement les arrêts et les lignes disponibles, y compris les correspondances.</div></div>
+<div class="title network"><span>Réseau</span><span id="networkBadge" class="badge">chargement…</span></div>
+<div id="status" class="small">Chargement du réseau bus OpenStreetMap…</div>
+<div class="footer">Le réseau est construit à partir des relations de lignes de bus OSM et de leurs arrêts ordonnés. Les horaires en temps réel ne sont pas inventés. Les horaires officiels NLTA seront ajoutés comme couche séparée.</div>
 </section>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const STOP_URL='https://data.govmu.org/dataset/2ba9ca15-d2d4-415e-9b37-3148511da1b9/resource/11e30efe-7fb9-41bb-a718-a3f0a5525dd7/download/busstops.csv';
+const OVERPASS='https://overpass-api.de/api/interpreter';
 const NOM='https://nominatim.openstreetmap.org/search';
 const FOOT='https://routing.openstreetmap.de/routed-foot/route/v1/driving/';
-const ROUTE_URL='data/transit/route-57.json';
-const PRESETS={
- 'c-care tamarin':'C-Care Tamarin, Mauritius','c care tamarin':'C-Care Tamarin, Mauritius','c care':'C-Care Tamarin, Mauritius',
- 'carrefour flic en flac':'Carrefour Flic-en-Flac, Mauritius','carrefour flic-en-flac':'Carrefour Flic-en-Flac, Mauritius',
- 'cascavelle':'Cascavelle Shopping Mall, Mauritius','wolmar':'Wolmar, Mauritius','flic en flac':'Flic en Flac, Mauritius'
-};
 const map=L.map('map').setView([-20.3484,57.5522],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
-let stops=[],routeData=null,marks=[],geocache={},lastPosition=null;
-const $=id=>document.getElementById(id);
+const $=id=>document.getElementById(id);let routes=[],stops=[],stopById=new Map(),cache={},marks=[],position=null;
 function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim()}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function hav(a,b){return Math.hypot((a.lat-b.lat)*111,(a.lon-b.lon)*104)}
-function parseCSV(t){const ls=t.replace(/\r/g,'').split('\n').filter(Boolean);if(!ls.length)return[];const d=(ls[0].match(/;/g)||[]).length>(ls[0].match(/,/g)||[]).length?';':',';function row(s){let a=[],v='',q=false;for(let i=0;i<s.length;i++){const c=s[i];if(c==='"'&&s[i+1]==='"'){v+='"';i++;continue}if(c==='"')q=!q;else if(c===d&&!q){a.push(v);v=''}else v+=c}a.push(v);return a}const h=row(ls[0]).map(x=>x.trim());return ls.slice(1).map(s=>{const a=row(s),o={};h.forEach((k,i)=>o[k]=a[i]||'');return o})}
-function rowToStop(o){let lat=null,lon=null,name='Arrêt de bus';for(const[k,v0]of Object.entries(o)){const k2=norm(k),v=String(v0).trim();if(/latitude|(^| )lat( |$)/.test(k2)&&isFinite(+v))lat=+v;if(/longitude|(^| )lon( |$)|lng/.test(k2)&&isFinite(+v))lon=+v;if(/name|stop|location|description/.test(k2)&&v)name=v}return lat!==null&&lon!==null?{lat,lon,name}:null}
-async function loadData(){
- $('status').textContent='Chargement des données…';
- try{const [sr,rr]=await Promise.all([fetch(STOP_URL,{cache:'no-store'}),fetch(ROUTE_URL,{cache:'no-store'})]);if(!sr.ok||!rr.ok)throw new Error('data');const rows=parseCSV(await sr.text());stops=rows.map(rowToStop).filter(Boolean);routeData=await rr.json();$('status').innerHTML='<span class="ok">✓ '+stops.length+' arrêts officiels · Route 57 structurée</span>';drawStops()}catch(e){$('status').innerHTML='<span class="err">Impossible de charger les données de transport.</span><div class="small">Vérifie ta connexion puis appuie sur Actualiser.</div>'}
+async function getJSON(url,opts={}){const r=await fetch(url,opts);if(!r.ok)throw Error(r.status);return r.json()}
+async function loadNetwork(){
+ $('status').textContent='Téléchargement des lignes de bus…';
+ try{
+  const q='[out:json][timeout:60];rel["type"="route"]["route"="bus"](-20.55,57.25,-19.95,57.85);out body;>;out skel qt;';
+  const data=await getJSON(OVERPASS,{method:'POST',body:new URLSearchParams({data:q})});
+  const nodes=new Map(),rels=[];
+  for(const e of data.elements){if(e.type==='node'&&e.lat!==undefined)nodes.set(e.id,{id:e.id,lat:e.lat,lon:e.lon,name:e.tags?.name||'Arrêt de bus'});if(e.type==='relation')rels.push(e)}
+  const dedupe=new Map(), out=[];
+  for(const r of rels){const t=r.tags||{};const members=r.members||[];const ids=[];for(const m of members){if(m.type!=='node')continue;if(!['stop','platform','stop_entry_only','platform_entry_only','stop_exit_only','platform_exit_only'].includes(m.role))continue;if(nodes.has(m.ref))ids.push(m.ref)}
+   const uniq=[];for(const id of ids)if(!uniq.includes(id))uniq.push(id);if(uniq.length<2)continue;
+   const st=uniq.map(id=>nodes.get(id));const key=(t.ref||t.name||r.id)+'|'+(t.from||'')+'|'+(t.to||'')+'|'+st.map(s=>s.id).join(',');
+   if(dedupe.has(key))continue;dedupe.set(key,1);
+   const route={id:r.id,ref:t.ref||t.name||String(r.id),name:t.name||'',operator:t.operator||'',from:t.from||'',to:t.to||'',stops:st};out.push(route);
+   st.forEach(s=>{const existing=stopById.get(s.id);if(existing)existing.routes.add(out.length-1);else{const x={...s,routes:new Set([out.length-1])};stopById.set(s.id,x);stops.push(x)}})
+  }
+  routes=out;$('networkBadge').textContent=routes.length+' lignes';$('status').innerHTML='<span class="ok">✓ '+routes.length+' variantes de lignes · '+stops.length+' arrêts OSM</span>';
+  if(!routes.length)throw Error('no routes');
+ }catch(e){$('networkBadge').textContent='indisponible';$('status').innerHTML='<span class="err">Le réseau bus n’a pas pu être chargé.</span><div class="small">Appuie sur Actualiser ou réessaie dans quelques secondes.</div>'}
 }
-function drawStops(){marks.filter(m=>m._isStop).forEach(m=>m.remove());if(!stops.length)return;const group=L.layerGroup();stops.forEach(s=>{const m=L.circleMarker([s.lat,s.lon],{radius:2.5,weight:1,opacity:.55,fillOpacity:.25});m.bindTooltip(s.name,{direction:'top',opacity:.8});m._isStop=true;m.addTo(group)});group.addTo(map);marks.push(group)}
-async function geo(q){const key=norm(q);if(geocache[key])return geocache[key];const preset=PRESETS[key]||q;if(!preset)return null;try{const r=await fetch(NOM+'?format=jsonv2&limit=1&countrycodes=mu&q='+encodeURIComponent(preset),{headers:{'Accept-Language':'fr'}});const a=r.ok?await r.json():[];const v=a[0]?{lat:+a[0].lat,lon:+a[0].lon,label:q}:null;geocache[key]=v;return v}catch(e){return null}}
-function nearest(p){return stops.length?stops.map(s=>({...s,d:hav(p,s)})).sort((a,b)=>a.d-b.d)[0]:null}
-function routeStopMatch(name){const n=norm(name);if(!stops.length)return null;let best=null,score=0;for(const s of stops){const sn=norm(s.name);let sc=sn===n?100:0;if(!sc){const words=n.split(' ').filter(w=>w.length>3);const hits=words.filter(w=>sn.includes(w)).length;sc=words.length?hits/words.length*80:0;if(n.includes(sn)||sn.includes(n))sc=Math.max(sc,88)}if(sc>score){score=sc;best=s}}return score>=45?best:null}
-async function walk(a,b){try{const r=await fetch(FOOT+a.lon+','+a.lat+';'+b.lon+','+b.lat+'?overview=false&steps=false');const j=await r.json();if(j.routes&&j.routes[0])return{min:Math.max(1,Math.round(j.routes[0].duration/60)),m:Math.round(j.routes[0].distance)}}catch(e){}const km=hav(a,b);return{min:Math.max(1,Math.round(km/5*60)),m:Math.round(km*1000)}}
-async function resolve(q){if(norm(q)==='ma position'){return lastPosition||await getPosition()}return geo(q)}
-function getPosition(){return new Promise(res=>{if(!navigator.geolocation)return res(null);navigator.geolocation.getCurrentPosition(p=>{lastPosition={lat:p.coords.latitude,lon:p.coords.longitude,label:'Ma position'};res(lastPosition)},()=>res(null),{enableHighAccuracy:true,timeout:10000,maximumAge:30000})})}
-function serviceForNow(dir){const d=new Date(),day=d.getDay();const key=day===0?'sundays_public_holidays':day===6?'saturdays':'weekdays';return dir.service[key]}
+async function geo(q){const key=norm(q);if(cache[key])return cache[key];try{const r=await fetch(NOM+'?format=jsonv2&limit=1&countrycodes=mu&q='+encodeURIComponent(q+', Mauritius'),{headers:{'Accept-Language':'fr'}});const a=r.ok?await r.json():[];const v=a[0]?{lat:+a[0].lat,lon:+a[0].lon,label:q}:null;cache[key]=v;return v}catch(e){return null}}
+function getPosition(){return new Promise(res=>{if(!navigator.geolocation)return res(null);navigator.geolocation.getCurrentPosition(p=>{position={lat:p.coords.latitude,lon:p.coords.longitude,label:'Ma position'};res(position)},()=>res(null),{enableHighAccuracy:true,timeout:10000,maximumAge:30000})})}
+async function resolve(q){if(norm(q)==='ma position')return position||await getPosition();return geo(q)}
+function nearestStops(p,n=8){return stops.map(s=>({...s,d:hav(p,s)})).sort((a,b)=>a.d-b.d).slice(0,n)}
+function routeCandidates(from,to){
+ const a=nearestStops(from,8),b=nearestStops(to,8),res=[];
+ for(const s of a)for(const t of b){const ar=[...s.routes],br=[...t.routes];for(const ri of ar){const r=routes[ri],i=r.stops.findIndex(x=>x.id===s.id),j=r.stops.findIndex(x=>x.id===t.id);if(i>=0&&j>i)res.push({type:'direct',route:r,ri,i,j,os:s,ds:t,walkA:s.d,walkB:t.d,busStops:j-i})}}
+ return res.sort((x,y)=>x.walkA+x.walkB-x.walkB-(y.walkA+y.walkB-y.walkB)).slice(0,12)
+}
+function transferCandidates(from,to){
+ const A=nearestStops(from,10),B=nearestStops(to,10),out=[];
+ for(const s of A){for(const t of B){for(const ra of s.routes){const r1=routes[ra];const i=r1.stops.findIndex(x=>x.id===s.id);if(i<0)continue;for(const rb of t.routes){const r2=routes[rb];const j=r2.stops.findIndex(x=>x.id===t.id);if(j<0)continue;if(ra===rb||j<0)continue;let best=null;for(let k=i+1;k<r1.stops.length;k++){const x=r1.stops[k];const idx2=r2.stops.findIndex(y=>y.id===x.id);if(idx2>0&&idx2<j){const transfer=x;const score=s.d+t.d;best={r1, r2, s,t, transfer,i,j,idx2,score};break}}if(best)out.push(best)}}}}
+ return out.sort((a,b)=>a.score-b.score).slice(0,6)
+}
+function fmtWalk(m){const min=Math.max(1,Math.round(m/83));return min+' min à pied'}
+async function walkTime(a,b){try{const j=await getJSON(FOOT+a.lon+','+a.lat+';'+b.lon+','+b.lat+'?overview=false&steps=false');if(j.routes?.[0])return{min:Math.max(1,Math.round(j.routes[0].duration/60)),m:Math.round(j.routes[0].distance)}}catch(e){}return{min:Math.max(1,Math.round(hav(a,b)/5*60)),m:Math.round(hav(a,b)*1000)}}
+function clearMarks(){marks.forEach(x=>x.remove());marks=[]}
+function draw(points){clearMarks();marks.push(L.polyline(points,{color:'#246bfd',weight:5}).addTo(map));marks.push(L.polyline([points[0],points[1]],{color:'#ff5a36',weight:4,dashArray:'6 7'}).addTo(map));marks.push(L.polyline([points[points.length-2],points[points.length-1]],{color:'#ff5a36',weight:4,dashArray:'6 7'}).addTo(map));marks.push(L.marker(points[0]).addTo(map).bindPopup('Départ'));marks.push(L.marker(points.at(-1)).addTo(map).bindPopup('Destination'));map.fitBounds(points,{padding:[80,80]})}
+function cardDirect(x,w1,w2){const bus=Math.max(10,x.busStops*3);return '<div class="card best"><div class="big">⭐ Ligne '+esc(x.route.ref)+'</div><div class="small">'+esc(x.route.from||'')+(x.route.to?' → '+esc(x.route.to):'')+(x.route.operator?' · '+esc(x.route.operator):'')+'</div><div class="step"><div class="ico">🚶</div><div><b>'+esc(x.os.name)+'</b><div class="small">'+w1.min+' min · '+w1.m+' m depuis le départ</div></div></div><div class="step"><div class="ico">🚌</div><div><b>'+esc(x.os.name)+' → '+esc(x.ds.name)+'</b><div class="small">Environ '+bus+' min de trajet bus (estimation, pas un horaire temps réel)</div></div></div><div class="step"><div class="ico">🚶</div><div><b>'+esc(x.ds.name)+'</b><div class="small">'+w2.min+' min · '+w2.m+' m jusqu’à la destination</div></div></div><span class="pill">Correspondance : directe</span></div><div class="warn">⏱️ Total indicatif : <b>~'+(w1.min+bus+w2.min)+' min</b>. Les horaires exacts seront ajoutés depuis les données NLTA.</div>'}
 async function calculate(){
- $('go').disabled=true;$('go').textContent='Recherche…';$('results').innerHTML='<div class="card"><b>🔎 Je cherche le meilleur trajet…</b><div class="small">Départ → arrêt proche → Route 57 → arrêt proche → destination.</div></div>';
- const A=await resolve($('from').value.trim()),B=await resolve($('to').value.trim());
- if(!A||!B){$('results').innerHTML='<div class="card"><b>Je ne peux pas localiser ce trajet.</b><div class="small">Autorise la localisation pour « Ma position » ou utilise une destination précise.</div></div>';$('go').disabled=false;$('go').textContent='Calculer le meilleur trajet';return}
- marks.filter(m=>!m._isStop).forEach(m=>m.remove());marks=marks.filter(m=>m._isStop);const fromStop=nearest(A),toStop=nearest(B);if(!fromStop||!toStop){$('results').innerHTML='<div class="card"><b>Les arrêts officiels ne sont pas disponibles.</b></div>';$('go').disabled=false;return}
- const candidates=[];for(const dir of routeData.directions){let oi=-1,di=-1,os=null,ds=null;for(const s of dir.stops){const match=routeStopMatch(s.name);if(!match)continue;const d1=hav(A,match),d2=hav(B,match);if(!os||d1<hav(A,os)){os=match;oi=s.sequence}if(!ds||d2<hav(B,ds)){ds=match;di=s.sequence}}if(oi>=0&&di>oi){const w1=await walk(A,os),w2=await walk(ds,B),bus=dir.stops[di].journey_minutes-dir.stops[oi].journey_minutes;candidates.push({dir,os,ds,oi,di,w1,w2,bus,total:w1.min+bus+w2.min})}}
- if(!candidates.length){$('results').innerHTML='<div class="card"><b>Aucun itinéraire fiable trouvé.</b><div class="small">Le moteur ne propose actuellement que les correspondances qu’il peut prouver à partir des données officielles intégrées.</div></div>';$('go').disabled=false;$('go').textContent='Calculer le meilleur trajet';return}
- candidates.sort((a,b)=>a.total-b.total);const x=candidates[0],service=serviceForNow(x.dir);const pts=[[A.lat,A.lon],[x.os.lat,x.os.lon],[x.ds.lat,x.ds.lon],[B.lat,B.lon]];const routeLine=L.polyline(pts,{color:'#246bfd',weight:5,opacity:.9}).addTo(map);const walk1=L.polyline([pts[0],pts[1]],{color:'#ff5a36',weight:4,dashArray:'6 7'}).addTo(map);const walk2=L.polyline([pts[2],pts[3]],{color:'#ff5a36',weight:4,dashArray:'6 7'}).addTo(map);const m1=L.marker(pts[0]).addTo(map).bindPopup('Départ');const m2=L.marker(pts[3]).addTo(map).bindPopup('Destination');marks.push(routeLine,walk1,walk2,m1,m2);map.fitBounds(pts,{padding:[80,80]});
- const freq=x.dir.frequency_weekdays&&x.dir.frequency_weekdays.length?x.dir.frequency_weekdays.map(f=>f.minutes+' min').filter((v,i,a)=>a.indexOf(v)===i).join(' · '):'non publiée pour cette direction';
- $('results').innerHTML='<div class="card best"><div class="big">⭐ Ligne '+esc(routeData.route_id)+'</div><div class="small">'+esc(x.dir.origin)+' → '+esc(x.dir.destination)+'</div><div class="step"><div class="ico">🚶</div><div><b>'+esc(A.label)+' → '+esc(x.os.name)+'</b><div class="small">~'+x.w1.min+' min · '+x.w1.m+' m</div></div></div><div class="step"><div class="ico">🚌</div><div><b>'+esc(x.os.name)+' → '+esc(x.ds.name)+'</b><div class="small">~'+x.bus+' min de temps moyen publié</div></div></div><div class="step"><div class="ico">🚶</div><div><b>'+esc(x.ds.name)+' → '+esc(B.label)+'</b><div class="small">~'+x.w2.min+' min · '+x.w2.m+' m</div></div></div><span class="pill">Temps total indicatif : ~'+x.total+' min</span><div class="small">Service aujourd’hui : '+esc(service.first)+' → '+esc(service.last)+' · Fréquence semaine : '+esc(freq)+'</div></div><div class="warn">⚠️ Pas d’ETA GPS en direct. Le temps de bus affiché est le temps moyen publié par la NLTA. Le temps réel peut varier avec le trafic.</div>';
- $('go').disabled=false;$('go').textContent='Calculer le meilleur trajet';
+ $('go').disabled=true;$('go').textContent='Recherche…';$('results').innerHTML='<div class="card"><b>🔎 Recherche du réseau…</b><div class="small">Je cherche les arrêts les plus proches et les lignes possibles.</div></div>';
+ if(!routes.length)await loadNetwork();const A=await resolve($('from').value.trim()),B=await resolve($('to').value.trim());
+ if(!A||!B){$('results').innerHTML='<div class="card"><b>Je n’arrive pas à localiser le départ ou la destination.</b><div class="small">Pour « Ma position », autorise la localisation. Pour la destination, utilise une ville, un quartier, une rue ou un lieu.</div></div>';$('go').disabled=false;$('go').textContent='Trouver le meilleur trajet';return}
+ const direct=routeCandidates(A,B);let choice=direct[0];if(!choice){const tr=transferCandidates(A,B)[0];if(tr)choice={type:'transfer',...tr}}
+ if(!choice){$('results').innerHTML='<div class="card"><b>Aucun trajet fiable trouvé.</b><div class="small">Le réseau cartographié ne contient pas encore de ligne reliant ces zones. Je préfère ne pas inventer une correspondance.</div></div>';$('go').disabled=false;$('go').textContent='Trouver le meilleur trajet';return}
+ if(choice.type==='direct'){const w1=await walkTime(A,choice.os),w2=await walkTime(choice.ds,B);draw([[A.lat,A.lon],[choice.os.lat,choice.os.lon],[choice.ds.lat,choice.ds.lon],[B.lat,B.lon]]);$('results').innerHTML=cardDirect(choice,w1,w2)}
+ else{const w1=await walkTime(A,choice.s),wt=await walkTime(choice.s,choice.transfer),w2=await walkTime(choice.transfer,choice.t),bus1=Math.max(10,(choice.transfer?choice.r1.stops.findIndex(x=>x.id===choice.transfer.id)-choice.i:1)*3),bus2=Math.max(10,(choice.j-choice.idx2)*3);draw([[A.lat,A.lon],[choice.s.lat,choice.s.lon],[choice.transfer.lat,choice.transfer.lon],[choice.t.lat,choice.t.lon],[B.lat,B.lon]]);$('results').innerHTML='<div class="card best"><div class="big">⭐ Meilleur trajet avec correspondance</div><div class="step"><div class="ico">🚶</div><div><b>'+esc(choice.s.name)+'</b><div class="small">'+w1.min+' min à pied</div></div></div><div class="step"><div class="ico">🚌</div><div><b>Ligne '+esc(choice.r1.ref)+'</b><div class="small">~'+bus1+' min jusqu’à '+esc(choice.transfer.name)+'</div></div></div><div class="step"><div class="ico">🔄</div><div><b>Correspondance à '+esc(choice.transfer.name)+'</b><div class="small">'+wt.min+' min de marche si nécessaire</div></div></div><div class="step"><div class="ico">🚌</div><div><b>Ligne '+esc(choice.r2.ref)+'</b><div class="small">~'+bus2+' min jusqu’à '+esc(choice.t.name)+'</div></div></div><div class="step"><div class="ico">🚶</div><div><b>Destination</b><div class="small">'+w2.min+' min à pied</div></div></div></div><div class="warn">⏱️ Temps indicatif. Les horaires officiels et ETA temps réel seront ajoutés séparément.</div>'}
+ $('go').disabled=false;$('go').textContent='Trouver le meilleur trajet'
 }
-function choosePreset(v){$('to').value=v;$('toSuggest').style.display='none';calculate()}
-$('go').onclick=calculate;$('refresh').onclick=loadData;$('gps').onclick=async()=>{const p=await getPosition();if(p){$('from').value='Ma position';map.setView([p.lat,p.lon],15)}else alert('Autorise la localisation dans Safari.')};$('ccare').onclick=()=>choosePreset('C-Care Tamarin');$('carrefour').onclick=()=>choosePreset('Carrefour Flic-en-Flac');$('cascavelle').onclick=()=>choosePreset('Cascavelle');
-$('to').addEventListener('input',()=>{$('toSuggest').style.display=$('to').value.trim()?'block':'none';$('toSuggest').innerHTML='<button type="button">📍 '+esc($('to').value.trim())+', Mauritius</button>';$('toSuggest').querySelector('button').onclick=()=>{$('toSuggest').style.display='none';calculate()}});
-if(location.protocol==='https:'&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});$('install').style.display='block';loadData();
+$('gps').onclick=async()=>{const p=await getPosition();if(p){$('from').value='Ma position';map.setView([p.lat,p.lon],15);$('status').innerHTML='<span class="ok">✓ Position trouvée</span> · réseau : '+routes.length+' lignes'}else alert('Autorise la localisation dans Safari pour MauriMove.')};
+$('swap').onclick=()=>{const a=$('from').value;$('from').value=$('to').value;$('to').value=a};
+$('go').onclick=calculate;$('refresh').onclick=loadNetwork;
+$('to').addEventListener('keydown',e=>{if(e.key==='Enter')calculate()});
+loadNetwork();
 </script>
 </body>
 </html>
