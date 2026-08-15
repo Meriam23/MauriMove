@@ -1,0 +1,24 @@
+name: Apply MauriMove identity
+on:
+  push:
+    paths:
+      - 'scripts/apply_identity.py'
+      - 'styles/maurimove-identity.css'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply identity stylesheet
+        run: python scripts/apply_identity.py
+      - name: Commit if changed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Apply MauriMove visual identity'
+          git push
