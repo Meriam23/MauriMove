@@ -1,0 +1,17 @@
+{
+  "schema": "maurimove-feedback-v1",
+  "allowed_types": ["bus_late", "bus_missing", "wrong_stop", "wrong_route", "crowding", "accessibility", "fare", "other"],
+  "required": ["type", "created_at", "source"],
+  "optional": ["route_id", "stop_id", "trip_id", "observed_at", "reported_eta_minutes", "comment", "location"],
+  "source_values": ["user", "operator", "official"],
+  "trust_rules": {
+    "official": 1.0,
+    "operator": 0.95,
+    "user": "calculated from corroboration, recency and proximity; never promoted to authoritative schedule without verification"
+  },
+  "privacy": [
+    "Do not store precise user location unless necessary for the report.",
+    "Strip account identifiers from public analytics.",
+    "Allow anonymous reports."
+  ]
+}
