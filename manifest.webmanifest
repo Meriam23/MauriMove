@@ -2,12 +2,12 @@
   "name":"SegaMap",
   "short_name":"SegaMap",
   "lang":"fr",
-  "start_url":"./?v=16",
+  "start_url":"./?v=17",
   "scope":"./",
   "display":"standalone",
   "orientation":"portrait",
   "background_color":"#06143F",
   "theme_color":"#06143F",
   "description":"SegaMap — planificateur de transport public à Maurice.",
-  "icons":[{"src":"segamap-logo.svg?v=16","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"}]
+  "icons":[{"src":"segamap-logo.svg?v=17","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"}]
 }
