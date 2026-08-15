@@ -1,0 +1,64 @@
+name: Fix MauriMove place search
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch place search
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          if 'SEARCH_PATCH_V2' in s:
+              print('Search patch already applied')
+              raise SystemExit(0)
+          new=r'''/* SEARCH_PATCH_V2 */
+          async function geo(q,limit=7){
+            const queries=[q, q+' Mauritius'];
+            const seen=new Set(), out=[];
+            for(const term of queries){
+              try{
+                const u='https://photon.komoot.io/api/?limit='+limit+'&lang=fr&q='+encodeURIComponent(term);
+                const d=await get(u);
+                for(const f of (d.features||[])){
+                  const c=f.geometry?.coordinates, p=f.properties||{};
+                  if(!c||c.length<2)continue;
+                  const country=norm(p.country||'');
+                  if(country && !country.includes('mauritius') && country!=='mu')continue;
+                  const label=p.name||p.street||p.city||'Lieu';
+                  const address=[p.street,p.district,p.city,p.state,p.country].filter(Boolean).join(', ');
+                  const key=(Math.round(c[0]*1e5)+'|'+Math.round(c[1]*1e5));
+                  if(!seen.has(key)){seen.add(key);out.push({lat:+c[1],lon:+c[0],label,address:address||label});}
+                }
+              }catch(e){}
+              if(out.length>=limit)break;
+            }
+            return out.slice(0,limit);
+          }
+          async function resolvePlace(q){
+            const a=await geo(q,5); return a[0]||null;
+          }
+          '''
+          pattern=r'async function geo\(q,limit=7\)\{.*?\}function picker'
+          s2=re.sub(pattern,new+'function picker',s,count=1,flags=re.S)
+          if s2==s:
+              raise SystemExit('Could not find geo function')
+          p.write_text(s2,encoding='utf-8')
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Fix place search and Carrefour discovery'
+          git push
