@@ -1,5 +1,5 @@
-const CACHE='maurimove-v5';
-const APP=['./','./index.html','./manifest.webmanifest','./icon.svg','./route-fix.js?v=5','./data/transit/route-57.json'];
+const CACHE='maurimove-v6';
+const APP=['./','./index.html','./manifest.webmanifest','./icon.svg','./route-fix.js?v=6','./data/transit/route-57.json'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(APP)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{
@@ -8,7 +8,7 @@ self.addEventListener('fetch',e=>{
  if(u.origin===location.origin && (u.pathname.endsWith('/')||u.pathname.endsWith('/index.html'))){
   e.respondWith(fetch(e.request).then(async r=>{
    const text=await r.clone().text();
-   const patched=text.includes('route-fix.js')?text:text.replace('</body>','<script src="./route-fix.js?v=5"></script></body>');
+   const patched=text.includes('route-fix.js')?text:text.replace('</body>','<script src="./route-fix.js?v=6"></script></body>');
    const out=new Response(patched,{status:r.status,statusText:r.statusText,headers:r.headers});
    caches.open(CACHE).then(c=>c.put(e.request,out.clone()));
    return out;
