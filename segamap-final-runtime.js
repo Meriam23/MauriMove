@@ -23,6 +23,25 @@ async function geo(q){const l=local(q);if(l.length)return l;try{const u='https:/
 function show(input,box,data){box.innerHTML='';if(!data.length){box.innerHTML='<div class="suggestion"><span>Aucun lieu trouvé à Maurice. Essaie avec le nom du lieu ou de la rue.</span></div>';box.classList.remove('hidden');return}for(const x of data){const b=document.createElement('button');b.type='button';b.className='suggestion';b.innerHTML='<b>📍 '+esc(x.label)+'</b><span>'+esc(x.address)+'</span>';b.onclick=()=>{input.value=x.label;input.dataset.lat=x.lat;input.dataset.lon=x.lon;input.dataset.label=x.label;box.classList.add('hidden')};box.appendChild(b)}box.classList.remove('hidden')}
 function installSearch(id,boxId){const input=$(id),box=$(boxId);if(!input||!box)return;let timer;input.addEventListener('input',e=>{e.stopImmediatePropagation();delete input.dataset.lat;delete input.dataset.lon;delete input.dataset.label;clearTimeout(timer);const q=input.value.trim();if(q.length<2){box.classList.add('hidden');return}timer=setTimeout(async()=>show(input,box,await geo(q)),180)},true);input.addEventListener('focus',()=>{const q=input.value.trim();if(q.length>=2)geo(q).then(d=>show(input,box,d))});}
 installSearch('from','fromSug');installSearch('to','toSug');
+
+// Road geometry for bus legs: snap the official stop sequence to the real
+// OpenStreetMap road network instead of drawing straight lines between stops.
+// Valhalla accepts two or more ordered locations and returns a polyline6 shape.
+window.realRoad=async function(stops){
+  if(!Array.isArray(stops)||stops.length<2)return null;
+  const locations=stops.map(p=>({lat:+p[0],lon:+p[1]}));
+  try{
+    const r=await fetch('https://valhalla1.openstreetmap.de/route',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({locations,costing:'bus',units:'kilometers',shape_format:'polyline6'})});
+    if(!r.ok)throw Error('Valhalla HTTP '+r.status);
+    const j=await r.json();
+    const legs=j?.trip?.legs||[];
+    if(!legs.length)return null;
+    const decode=s=>{let i=0,la=0,lo=0,o=[];while(i<s.length){let b,sh=0,v=0;do{b=s.charCodeAt(i++)-63;v|=(b&31)<<sh;sh+=5}while(b>=32);la+=v&1?~(v>>1):v>>1;sh=0;v=0;do{b=s.charCodeAt(i++)-63;v|=(b&31)<<sh;sh+=5}while(b>=32);lo+=v&1?~(v>>1):v>>1;o.push([la/1e6,lo/1e6])}return o};
+    const pts=[];for(const leg of legs){const p=leg.shape?decode(leg.shape):[];if(p.length)pts.push(...(pts.length?p.slice(1):p));}
+    return pts.length>1?pts:null;
+  }catch(e){console.warn('Road geometry unavailable; keeping stop geometry',e);return null}
+};
+
 function fixRoutes(){if(!Array.isArray(window.routes))return;for(const r of window.routes){for(const s of r.stops||[]){if(!s.name)s.name=s.stop_name||s.stopName||s.label||s.title||'Arrêt';if(!Number.isFinite(+s.lat)&&Number.isFinite(+s.latitude))s.lat=+s.latitude;if(!Number.isFinite(+s.lon)&&Number.isFinite(+s.lng))s.lon=+s.lng;}}}
 const appIcon='./segamap-app-icon.svg?v=final';const pageLogo='./segamap-logo-v2.svg?v=final';document.querySelectorAll('img.logo').forEach(i=>i.src=pageLogo);const icon=document.querySelector('link[rel="apple-touch-icon"]');if(icon)icon.href=appIcon;const fav=document.querySelector('link[rel="icon"]');if(fav)fav.href=appIcon;const man=document.querySelector('link[rel="manifest"]');if(man)man.href='./manifest.webmanifest?v=final';
 let n=0;const t=setInterval(()=>{fixRoutes();if(Array.isArray(window.routes)&&window.routes.length)n++;if(n>5||++window.__segamapFinalTicks>80)clearInterval(t)},250);
