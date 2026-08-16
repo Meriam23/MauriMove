@@ -21,8 +21,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Inject final SegaMap runtime
-        run: python3 -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); import re; s=re.sub(r'<script src=\"\\./segamap-fix\\.js\\?v=\\d+\"></script>','<script src=\"./segamap-fix.js?v=final\"></script>',s); s=re.sub(r'<script src=\"\\./segamap-mobile-v19\\.js\\?v=\\d+\"></script>','',s); s=s.replace('segamap-logo.svg?v=14','segamap-logo-v2.svg?v=final'); s=s.replace('manifest.webmanifest?v=14','manifest.webmanifest?v=final'); tag='<script src=\"./segamap-mobile-v19.js?v=final\"></script>'; s=s if tag in s else s.replace('</body>',tag+'</body>'); final='<script src=\"./segamap-final-runtime.js?v=final\"></script>'; s=s if final in s else s.replace('</body>',final+'</body>'); p.write_text(s,encoding='utf-8')"
+      - name: Prepare stable SegaMap build
+        run: python3 -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); s=s.replace('segamap-logo.svg?v=14','segamap-logo-v2.svg?v=stable'); s=s.replace('manifest.webmanifest?v=14','manifest.webmanifest?v=stable'); s=s.replace('await loadNLTA();await loadOSM();','await loadOSM();'); s=s.replace('$(\'status\').innerHTML=\'<span class=\"ok\">✓ \'+routes.length+\' parcours routables chargés · \'+nltaCount+\' lignes NLTA au catalogue</span>\';','$(\'status\').innerHTML=\'<span class=\"ok\">✓ \'+routes.length+\' parcours routables chargés</span>\';'); p.write_text(s,encoding='utf-8')"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
