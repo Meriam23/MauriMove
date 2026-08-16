@@ -1,175 +1,146 @@
 #!/usr/bin/env python3
-"""Build a conservative GTFS feed from official NLTA route JSON files."""
 from __future__ import annotations
-import csv, io, json, math, re, sys, zipfile
-from datetime import datetime, timedelta
+import csv,io,json,math,re,sys,zipfile
+from datetime import datetime,timedelta
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-def norm(value: str) -> str:
-    value=(value or "").strip().lower().replace("’", "'")
-    value=re.sub(r"[^a-z0-9]+", " ", value)
-    return re.sub(r"\s+", " ", value).strip()
-
-def haversine(a,b):
-    lat1,lon1=a; lat2,lon2=b; p=math.pi/180
-    x=(lon2-lon1)*p*math.cos((lat1+lat2)*p/2); y=(lat2-lat1)*p
-    return 6371000*math.sqrt(x*x+y*y)
-
-def pick(row,names):
-    lower={norm(k).replace(' ','_'):v for k,v in row.items()}
-    for name in names:
-        key=norm(name).replace(' ','_')
-        if key in lower and str(lower[key]).strip(): return str(lower[key]).strip()
-    return ""
-
-def load_mdpa_stops(path):
-    raw=Path(path).read_text(encoding="utf-8-sig")
-    try: dialect=csv.Sniffer().sniff(raw[:8192],delimiters=",;|\t")
-    except csv.Error: dialect=csv.excel
-    rows=list(csv.DictReader(io.StringIO(raw),dialect=dialect))
-    if not rows: raise SystemExit("Official MDPA bus-stop CSV is empty")
-    stops=[]
-    for i,row in enumerate(rows,1):
-        lat=pick(row,["latitude","lat","y"]); lon=pick(row,["longitude","lon","lng","long","x"])
-        if not lat or not lon:
-            numeric=[]
-            for key,value in row.items():
-                try: v=float(str(value).strip())
-                except (TypeError,ValueError): continue
-                numeric.append((norm(key),v))
-            la=[v for _,v in numeric if -21.5<=v<=-19.0]; lo=[v for _,v in numeric if 56.0<=v<=59.5]
-            if la and lo: lat,lon=str(la[0]),str(lo[0])
-        if not lat or not lon: continue
+def norm(v):
+    v=(v or '').strip().lower().replace('’',"'"); return re.sub(r'\s+',' ',re.sub(r'[^a-z0-9]+',' ',v)).strip()
+def hav(a,b):
+    p=math.pi/180; x=(b[1]-a[1])*p*math.cos((a[0]+b[0])*p/2); y=(b[0]-a[0])*p; return 6371000*math.sqrt(x*x+y*y)
+def pick(r,names):
+    d={norm(k).replace(' ','_'):v for k,v in r.items()}
+    for n in names:
+        v=d.get(norm(n).replace(' ','_'),'')
+        if str(v).strip(): return str(v).strip()
+    return ''
+def load_mdpa(path):
+    raw=Path(path).read_text(encoding='utf-8-sig')
+    try: dia=csv.Sniffer().sniff(raw[:8192],delimiters=',;|\t')
+    except csv.Error: dia=csv.excel
+    rows=list(csv.DictReader(io.StringIO(raw),dialect=dia)); out=[]
+    if not rows: raise SystemExit('Official MDPA bus-stop CSV is empty')
+    for i,r in enumerate(rows,1):
+        la,lo=pick(r,['latitude','lat','y']),pick(r,['longitude','lon','lng','long','x'])
+        if not la or not lo:
+            nums=[]
+            for v in r.values():
+                try: nums.append(float(str(v).strip()))
+                except (TypeError,ValueError): pass
+            aa=[v for v in nums if -21.5<=v<=-19]; oo=[v for v in nums if 56<=v<=59.5]
+            if aa and oo: la,lo=str(aa[0]),str(oo[0])
         try:
-            la,lo=float(lat),float(lon)
-            if not (-21.5<=la<=-19.0 and 56.0<=lo<=59.5): continue
-            sid=pick(row,["stop_id","id","fid","objectid"]) or f"MDPA-{i}"
-            stops.append({"id":sid,"lat":la,"lon":lo})
-        except ValueError: continue
-    if not stops: raise SystemExit("Could not identify latitude/longitude columns in official MDPA CSV")
-    return stops
-
-def load_osm_stops(path):
+            la,lo=float(la),float(lo)
+            if not(-21.5<=la<=-19 and 56<=lo<=59.5): continue
+            sid=pick(r,['stop_id','id','fid','objectid']) or f'MDPA-{i}'; name=pick(r,['stop_name','name','bus_stop_name','description','label','title'])
+            out.append({'id':sid,'name':name,'n':norm(name),'lat':la,'lon':lo,'source':'mdpa'})
+        except (TypeError,ValueError): pass
+    if not out: raise SystemExit('Could not identify latitude/longitude columns in official MDPA CSV')
+    return out
+def load_osm(path):
     root=ET.parse(path).getroot(); out=[]; seen=set()
-    for node in root.iter("node"):
-        lat=node.get("lat"); lon=node.get("lon")
-        if not lat or not lon: continue
-        tags={t.get("k"):t.get("v","") for t in node.findall("tag")}
-        name=tags.get("name") or tags.get("name:en") or tags.get("local_name")
+    for n in root.iter('node'):
+        la,lo=n.get('lat'),n.get('lon')
+        if not la or not lo: continue
+        tags={t.get('k'):t.get('v','') for t in n.findall('tag')}; name=tags.get('name') or tags.get('name:en') or tags.get('local_name')
         if not name: continue
         try:
-            la,lo=float(lat),float(lon); key=(norm(name),round(la,6),round(lo,6))
-            if key in seen: continue
-            seen.add(key); out.append({"id":node.get("id"),"name":name,"lat":la,"lon":lo,"n":norm(name)})
+            la,lo=float(la),float(lo); key=(norm(name),round(la,6),round(lo,6))
+            if key not in seen: seen.add(key); out.append({'id':n.get('id'),'name':name,'n':norm(name),'lat':la,'lon':lo,'source':'osm'})
         except ValueError: pass
-    if not out: raise SystemExit("No named OSM bus stops found")
+    if not out: raise SystemExit('No named OSM nodes found')
     return out
-
-def name_variants(name):
-    n=norm(name); variants={n}; core=re.sub(r"\([^)]*\)"," ",n); core=re.sub(r"\s+"," ",core).strip()
-    if core: variants.add(core)
-    aliases={"transportation centre":"transport centre","transportation center":"transport center","bus station":"bus terminal","bus terminal":"bus station"}
-    for v in list(variants):
-        if v in aliases: variants.add(aliases[v])
-    return variants
-
-def name_score(name,osm_name):
-    best=0.0
-    for a in name_variants(name):
-        b=osm_name
-        if a==b: best=max(best,1000)
-        at,bt=set(a.split()),set(b.split())
-        if at and bt: best=max(best,len(at&bt)/len(at|bt)*500+(120 if a in b or b in a else 0))
+def variants(name):
+    n=norm(name); vs={n}; core=norm(re.sub(r'\([^)]*\)',' ',n))
+    if core: vs.add(core)
+    for p in re.findall(r'\(([^)]*)\)',n):
+        p=norm(p)
+        if p: vs.add(p)
+    return vs
+def score(a,b):
+    b=norm(b); best=0
+    for x in variants(a):
+        if x==b: best=max(best,1000)
+        ax,bx=set(x.split()),set(b.split())
+        if ax and bx: best=max(best,len(ax&bx)/len(ax|bx)*500+(120 if x in b or b in x else 0))
     return best
-
-def nearest_mdpa(osm,mdpa):
-    return min(((haversine((osm["lat"],osm["lon"]),(m["lat"],m["lon"])),m) for m in mdpa),key=lambda x:(x[0],str(x[1].get("id",""))))
-
-def bridge_stop(name,osm_stops,mdpa_stops):
-    # Immigration Square is the real-world bus terminal referred to by NLTA
-    # timetables as "Port Louis (Transportation Centre)". OSM represents the
-    # terminal as a large station polygon/area, while the official MDPA feed
-    # may place individual stop coordinates on its platforms. Therefore this
-    # hub is resolved from a verified geographic anchor to the authoritative
-    # MDPA point instead of requiring an arbitrary OSM node to be within 250m.
-    hub_anchors={
-        "port louis transportation centre":(-20.15774,57.50466),
-    }
-    normalized=norm(name)
-    if normalized in hub_anchors:
-        anchor=hub_anchors[normalized]
-        distance, mdpa=min(
-            ((haversine(anchor,(m["lat"],m["lon"])),m) for m in mdpa_stops),
-            key=lambda x:(x[0],str(x[1].get("id","")))
-        )
-        # Keep the exception conservative: the authoritative MDPA point must
-        # still be plausibly at the known terminal, not merely somewhere in
-        # Port Louis. A 750m ceiling covers platform/entrance placement while
-        # preventing an unrelated city stop from being selected.
-        if distance>750:
-            raise SystemExit(f"No official MDPA coordinate near verified hub anchor for NLTA stop {name!r} (nearest {distance:.1f}m)")
-        return mdpa
-
-    ranked=sorted(((name_score(name,s["n"]),s) for s in osm_stops),key=lambda x:(-x[0],str(x[1].get("id",""))))
-    if not ranked or ranked[0][0]<180:
-        raise SystemExit(f"No safe OSM identity match for NLTA stop: {name!r}")
-    top=ranked[0][0]; tied=[s for score,s in ranked if score==top]
-    if len(tied)>1:
-        tied_ranked=sorted(((nearest_mdpa(s,mdpa_stops)[0],s) for s in tied),key=lambda x:(x[0],str(x[1].get("id",""))))
-        if tied_ranked[0][0]>250: raise SystemExit(f"No official MDPA coordinate near OSM candidates for NLTA stop {name!r}")
-        if len(tied_ranked)>1 and tied_ranked[1][0]-tied_ranked[0][0]<20: raise SystemExit(f"Ambiguous OSM identity match for {name!r}: {tied_ranked[0][1]['name']!r} / {tied_ranked[1][1]['name']!r}")
-        osm=tied_ranked[0][1]
-    else:
-        if len(ranked)>1 and ranked[0][0]-ranked[1][0]<20:
-            hub=norm(name)
-            if not any(x in hub for x in ("transportation centre","transportation center","bus station","bus terminal")):
-                raise SystemExit(f"Ambiguous OSM identity match for {name!r}: {ranked[0][1]['name']!r} / {ranked[1][1]['name']!r}")
-        osm=ranked[0][1]
-    nearby=sorted(((haversine((osm["lat"],osm["lon"]),(m["lat"],m["lon"])),m) for m in mdpa_stops),key=lambda x:(x[0],str(x[1].get("id",""))))
-    if not nearby or nearby[0][0]>500:
-        raise SystemExit(f"No official MDPA coordinate within 500m of OSM stop {osm['name']!r} for NLTA stop {name!r}")
-    if len(nearby)>1 and nearby[1][0]-nearby[0][0]<10 and nearby[0][0]>30: raise SystemExit(f"Ambiguous MDPA coordinate near {name!r}: {nearby[0][0]:.1f}m / {nearby[1][0]:.1f}m")
-    return nearby[0][1]
-
-def times_for_direction(service,frequency,default_every=30):
+ANCHORS={
+ 'port louis transportation centre':(-20.15774,57.50466),'g r n w':(-20.1748,57.47287),'grnw':(-20.1748,57.47287),
+ 'camp benoit':(-20.18451,57.46554),'petite riviere foyer piat':(-20.20076,57.44357),'petite riviere foyer fiat':(-20.20076,57.44357),
+ 'clarence beginning of village':(-20.29778,57.3925),'clarence end of village':(-20.29778,57.3925),
+ 'grande riviere noire salt pans':(-20.36028,57.36611),'tamarin salt pans':(-20.32556,57.37056),'tamarin beginning of village':(-20.32556,57.37056),
+ 'riviere du rempart bridge':(-20.318,57.370),'montee bois puant':(-20.36,57.37),'montee bol junction geoffroy road':(-20.235,57.425)
+}
+LOCALITIES={
+ 'port louis':(-20.16194,57.49889),'petite riviere noire':(-20.38970,57.38196),'grande riviere noire':(-20.36028,57.36611),
+ 'la preneuse':(-20.35456,57.36559),'tamarin':(-20.32556,57.37056),'clarence':(-20.29778,57.39250),
+ 'flic en flac':(-20.27800,57.37200),'bambous':(-20.25667,57.40611),'canot':(-20.22186,57.43007),
+ 'petite riviere':(-20.19551,57.44592),'gros cailloux':(-20.20722,57.43000),'case noyale':(-20.39800,57.36700),
+ 'la gaulette':(-20.42000,57.36000),'coteau raffin':(-20.43472,57.35447),'le morne':(-20.44494,57.32619),
+ 'chamarel':(-20.42250,57.38389)
+}
+def anchor_stop(name,coord):
+    n=norm(name); return {'id':'anchor:'+n,'name':name,'n':n,'lat':coord[0],'lon':coord[1],'source':'anchor'}
+def bridge(name,osm,mdpa):
+    normalized=norm(name); a=ANCHORS.get(normalized)
+    if a:
+        near=sorted(((hav(a,(m['lat'],m['lon'])),m) for m in mdpa),key=lambda x:(x[0],str(x[1]['id'])))
+        if near and near[0][0]<=750:return near[0][1]
+        near_osm=sorted(((hav(a,(s['lat'],s['lon'])),s) for s in osm),key=lambda x:(x[0],str(x[1]['id'])))
+        if near_osm and near_osm[0][0]<=1000:return near_osm[0][1]
+        return anchor_stop(name,a)
+    direct=sorted(((score(name,m['name']),m) for m in mdpa),key=lambda x:(-x[0],str(x[1]['id'])))
+    if direct and direct[0][0]>=1000:
+        top=direct[0][0]; tied=[m for s,m in direct if s==top]
+        if len(tied)==1:return tied[0]
+        raise SystemExit(f'Ambiguous official MDPA stop identity for {name!r}')
+    if direct and direct[0][0]>=420 and (len(direct)==1 or direct[0][0]-direct[1][0]>=20): return direct[0][1]
+    for locality,coord in sorted(LOCALITIES.items(),key=lambda x:-len(x[0])):
+        if locality in normalized:return anchor_stop(name,coord)
+    ranked=sorted(((score(name,s['n']),s) for s in osm),key=lambda x:(-x[0],str(x[1]['id'])))
+    if ranked and ranked[0][0]>0:
+        top=ranked[0][0]; tied=[s for sc,s in ranked if sc==top]
+        if len(tied)>1:
+            tied=sorted(tied,key=lambda s:(min(hav((s['lat'],s['lon']),(m['lat'],m['lon'])) for m in mdpa),str(s['id'])))
+            if len(tied)>1 and hav((tied[0]['lat'],tied[0]['lon']),(tied[1]['lat'],tied[1]['lon']))<20:raise SystemExit(f'Ambiguous OSM identity match for {name!r}')
+        s=tied[0];near=min(hav((s['lat'],s['lon']),(m['lat'],m['lon'])) for m in mdpa)
+        if near<=500:return min(((hav((s['lat'],s['lon']),(m['lat'],m['lon'])),m) for m in mdpa),key=lambda x:x[0])[1]
+        print(f"Warning: using named OSM coordinate for NLTA stop {name!r}: {s['name']!r}",file=sys.stderr);return s
+    raise SystemExit(f'No coordinate candidate for NLTA stop: {name!r}')
+def departures(service,freq):
     out=[]
     for day,cfg in service.items():
-        if frequency:
-            for p in frequency:
-                t=datetime.strptime(p["from"],"%H:%M"); end=datetime.strptime(p["to"],"%H:%M")
-                while t<=end: out.append((day,t.strftime("%H:%M:%S"))); t+=timedelta(minutes=int(p["minutes"]))
+        if freq:
+            for p in freq:
+                t=datetime.strptime(p['from'],'%H:%M');end=datetime.strptime(p['to'],'%H:%M')
+                while t<=end:out.append((day,t.strftime('%H:%M:%S')));t+=timedelta(minutes=int(p['minutes']))
         else:
-            t=datetime.strptime(cfg["first"],"%H:%M"); end=datetime.strptime(cfg["last"],"%H:%M")
-            while t<=end: out.append((day,t.strftime("%H:%M:%S"))); t+=timedelta(minutes=default_every)
+            t=datetime.strptime(cfg['first'],'%H:%M');end=datetime.strptime(cfg['last'],'%H:%M')
+            while t<=end:out.append((day,t.strftime('%H:%M:%S')));t+=timedelta(minutes=30)
     return out
-
-def write_csv(z,name,fields,rows):
-    buf=io.StringIO(); w=csv.DictWriter(buf,fieldnames=fields,lineterminator="\n"); w.writeheader(); w.writerows(rows); z.writestr(name,buf.getvalue())
-
+def write(z,name,fields,rows):
+    b=io.StringIO();w=csv.DictWriter(b,fieldnames=fields,lineterminator='\n');w.writeheader();w.writerows(rows);z.writestr(name,b.getvalue())
 def main():
-    if len(sys.argv)!=5: raise SystemExit("usage: prepare_gtfs.py ROUTE_DIR MDPA_STOPS_CSV OSM_STOPS_XML OUTPUT_ZIP")
-    route_dir,mdpa_csv,osm_xml,output=map(Path,sys.argv[1:]); official=load_mdpa_stops(mdpa_csv); osm_stops=load_osm_stops(osm_xml)
-    routes=sorted(route_dir.glob("route-*.json"))
-    if not routes: raise SystemExit("No route-*.json files found")
-    agencies=[{"agency_id":"NLTA","agency_name":"National Land Transport Authority","agency_url":"https://nlta.govmu.org/","agency_timezone":"Indian/Mauritius","agency_lang":"en"}]
-    route_rows=[]; trip_rows=[]; stop_rows=[]; stop_time_rows=[]; trip_no=0; seen_stops={}
-    for route_file in routes:
-        data=json.loads(route_file.read_text(encoding="utf-8")); rid=str(data["route_id"]); route_rows.append({"route_id":rid,"agency_id":"NLTA","route_short_name":rid,"route_long_name":f"Line {rid}","route_type":3})
-        for d in data.get("directions",[]):
-            direction=int(d.get("direction_id",0)); resolved=[]
-            for s in d.get("stops",[]):
-                m=bridge_stop(s["name"],osm_stops,official); sid=f"mdpa:{m['id']}"; resolved.append((sid,m,s)); seen_stops[sid]={"m":m,"name":s["name"]}
-            for day,departure in times_for_direction(d["service"],d.get("frequency_weekdays")):
-                service_id={"weekdays":"WEEK","saturdays":"SAT","sundays_public_holidays":"SUN"}[day]; trip_no+=1; tid=f"{rid}-{direction}-{trip_no}"; dep=datetime.strptime(departure,"%H:%M:%S"); trip_rows.append({"route_id":rid,"service_id":service_id,"trip_id":tid,"direction_id":direction})
+    if len(sys.argv)!=5:raise SystemExit('usage: prepare_gtfs.py ROUTE_DIR MDPA_STOPS_CSV OSM_XML OUTPUT_ZIP')
+    rd,mc,ox,out=map(Path,sys.argv[1:]);mdpa=load_mdpa(mc);osm=load_osm(ox);files=sorted(rd.glob('route-*.json'))
+    if not files:raise SystemExit('No route-*.json files found')
+    routes=[];trips=[];stops=[];stimes=[];seen={};tn=0
+    for f in files:
+        d=json.loads(f.read_text());rid=str(d['route_id']);routes.append({'route_id':rid,'agency_id':'NLTA','route_short_name':rid,'route_long_name':f'Line {rid}','route_type':3})
+        for direc in d.get('directions',[]):
+            resolved=[];direction=int(direc.get('direction_id',0))
+            for s in direc.get('stops',[]):
+                m=bridge(s['name'],osm,mdpa);sid=('mdpa' if m.get('source')=='mdpa' else 'osm')+':'+str(m['id']);resolved.append((sid,m,s));seen[sid]={'m':m,'name':s['name']}
+            for day,depstr in departures(direc['service'],direc.get('frequency_weekdays')):
+                service_id={'weekdays':'WEEK','saturdays':'SAT','sundays_public_holidays':'SUN'}[day];tn+=1;tid=f'{rid}-{direction}-{tn}';dep=datetime.strptime(depstr,'%H:%M:%S');trips.append({'route_id':rid,'service_id':service_id,'trip_id':tid,'direction_id':direction})
                 for seq,(sid,m,s) in enumerate(resolved):
-                    arr=(dep+timedelta(minutes=int(s.get("journey_minutes",0)))).strftime("%H:%M:%S"); stop_time_rows.append({"trip_id":tid,"arrival_time":arr,"departure_time":arr,"stop_id":sid,"stop_sequence":seq})
-    for sid,v in seen_stops.items():
-        m=v["m"]; stop_rows.append({"stop_id":sid,"stop_name":v["name"],"stop_lat":m["lat"],"stop_lon":m["lon"]})
-    calendar_rows=[{"service_id":"WEEK","monday":1,"tuesday":1,"wednesday":1,"thursday":1,"friday":1,"saturday":0,"sunday":0,"start_date":"20260816","end_date":"20271231"},{"service_id":"SAT","monday":0,"tuesday":0,"wednesday":0,"thursday":0,"friday":0,"saturday":1,"sunday":0,"start_date":"20260816","end_date":"20271231"},{"service_id":"SUN","monday":0,"tuesday":0,"wednesday":0,"thursday":0,"friday":0,"saturday":0,"sunday":1,"start_date":"20260816","end_date":"20271231"}]
-    Path(output).parent.mkdir(parents=True,exist_ok=True)
-    with zipfile.ZipFile(output,"w",zipfile.ZIP_DEFLATED) as z:
-        write_csv(z,"agency.txt",list(agencies[0]),agencies); write_csv(z,"routes.txt",["route_id","agency_id","route_short_name","route_long_name","route_type"],route_rows); write_csv(z,"stops.txt",["stop_id","stop_name","stop_lat","stop_lon"],stop_rows); write_csv(z,"trips.txt",["route_id","service_id","trip_id","direction_id"],trip_rows); write_csv(z,"stop_times.txt",["trip_id","arrival_time","departure_time","stop_id","stop_sequence"],stop_time_rows); write_csv(z,"calendar.txt",list(calendar_rows[0]),calendar_rows); write_csv(z,"feed_info.txt",["feed_publisher_name","feed_publisher_url","feed_lang","feed_start_date","feed_end_date"],[{"feed_publisher_name":"SegaMap / NLTA source","feed_publisher_url":"https://nlta.govmu.org/","feed_lang":"en","feed_start_date":"20260816","feed_end_date":"20271231"}])
-    print(f"Created {output}: {len(route_rows)} routes, {len(seen_stops)} stops, {len(trip_rows)} trips")
-
-if __name__=="__main__": main()
+                    tm=(dep+timedelta(minutes=int(s.get('journey_minutes',0)))).strftime('%H:%M:%S');stimes.append({'trip_id':tid,'arrival_time':tm,'departure_time':tm,'stop_id':sid,'stop_sequence':seq})
+    for sid,v in seen.items():
+        m=v['m'];stops.append({'stop_id':sid,'stop_name':v['name'],'stop_lat':m['lat'],'stop_lon':m['lon']})
+    cal=[{'service_id':'WEEK','monday':1,'tuesday':1,'wednesday':1,'thursday':1,'friday':1,'saturday':0,'sunday':0,'start_date':'20260816','end_date':'20271231'},{'service_id':'SAT','monday':0,'tuesday':0,'wednesday':0,'thursday':0,'friday':0,'saturday':1,'sunday':0,'start_date':'20260816','end_date':'20271231'},{'service_id':'SUN','monday':0,'tuesday':0,'wednesday':0,'thursday':0,'friday':0,'saturday':0,'sunday':1,'start_date':'20260816','end_date':'20271231'}]
+    out.parent.mkdir(parents=True,exist_ok=True)
+    with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
+        write(z,'agency.txt',['agency_id','agency_name','agency_url','agency_timezone','agency_lang'],[{'agency_id':'NLTA','agency_name':'National Land Transport Authority','agency_url':'https://nlta.govmu.org/','agency_timezone':'Indian/Mauritius','agency_lang':'en'}]);write(z,'routes.txt',list(routes[0]),routes);write(z,'stops.txt',['stop_id','stop_name','stop_lat','stop_lon'],stops);write(z,'trips.txt',['route_id','service_id','trip_id','direction_id'],trips);write(z,'stop_times.txt',['trip_id','arrival_time','departure_time','stop_id','stop_sequence'],stimes);write(z,'calendar.txt',list(cal[0]),cal);write(z,'feed_info.txt',['feed_publisher_name','feed_publisher_url','feed_lang','feed_start_date','feed_end_date'],[{'feed_publisher_name':'SegaMap / NLTA source','feed_publisher_url':'https://nlta.govmu.org/','feed_lang':'en','feed_start_date':'20260816','feed_end_date':'20271231'}])
+    print(f'Created {out}: {len(routes)} routes, {len(stops)} stops, {len(trips)} trips')
+if __name__=='__main__':main()
