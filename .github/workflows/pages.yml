@@ -21,8 +21,47 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Prepare stable SegaMap build
-        run: python3 -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); s=s.replace('href=\"./manifest.webmanifest?v=14\"','href=\"./manifest.webmanifest?v=final5\"'); s=s.replace('href=\"./segamap-logo.svg?v=14\"','href=\"./segamap-app-icon.svg?v=final5\"'); s=s.replace('src=\"./segamap-logo.svg?v=14\"','src=\"./segamap-app-icon.svg?v=final5\"'); s=s.replace('<span class=\"name\">SegaMap</span><span>🇲🇺</span>','<span class=\"name\">SegaMap</span>'); s=s.replace('.brand{display:flex;align-items:center;gap:9px;font-size:28px;font-weight:950}', '.brand{display:flex;align-items:center;gap:9px;font-size:28px;font-weight:600;letter-spacing:-.4px}'); s=s.replace('.go{width:100%;border:0;background:linear-gradient(90deg,#ef233c,#0072ce);color:#fff;border-radius:14px;padding:14px;margin-top:8px;font-weight:950;font-size:15px}', '.go{width:100%;border:0;background:linear-gradient(to bottom,#EA2839 0%,#EA2839 25%,#1A206D 25%,#1A206D 50%,#FFD500 50%,#FFD500 75%,#00A651 75%,#00A651 100%);color:#fff;border-radius:14px;padding:14px;margin-top:8px;font-weight:900;font-size:17px;text-shadow:0 1px 3px #0008;box-shadow:0 5px 14px #0002}'); s=s.replace('<button class=\"btn\" id=\"gps\">⌖ Ma position</button>',''); s=s.replace('<button class=\"btn\" id=\"pick\">📍 Carte</button>',''); s=s.replace(\"$('gps').onclick=async()=>{const p=await locate();if(p){$('from').value='Ma position';delete $('from').dataset.lat;delete $('from').dataset.lon;L.circleMarker([p.lat,p.lon],{radius:8}).addTo(map).bindPopup('Ma position').openPopup()}};\",''); s=s.replace(\"$('pick').onclick=()=>{pickMode=!pickMode;$('pick').textContent=pickMode?'📍 Cliquez sur la carte':'📍 Carte';map.getContainer().style.cursor=pickMode?'crosshair':''};\",''); s=s.replace(\"map.on('click',e=>{if(!pickMode)return;const i=$('to');i.value='Point sur la carte';i.dataset.lat=e.latlng.lat;i.dataset.lon=e.latlng.lng;i.dataset.label='Point sur la carte';pickMode=false;$('pick').textContent='📍 Carte';L.marker(e.latlng).addTo(map).bindPopup('Destination').openPopup()});\",''); s=s.replace('Trouver le meilleur trajet','Go'); s=s.replace(\"go.textContent='Trouver le meilleur trajet'\",\"go.textContent='Go'\"); s=s.replace('await loadNLTA();await loadOSM();','await loadOSM();'); s=s.replace(\"$('status').innerHTML='<span class=\\\"ok\\\">✓ '+routes.length+' parcours routables chargés · '+nltaCount+' lignes NLTA au catalogue</span>';\",\"$('status').innerHTML='<span class=\\\"ok\\\">✓ Réseau de transport disponible</span>';\"); s=s.replace('<div class=\"title\">Réseau mauricien</div><div class=\"card\"><span id=\"network\" class=\"badge\">Chargement…</span><div id=\"status\" class=\"small\" style=\"margin-top:7px\">Chargement du réseau…</div></div>','<div id=\"networkInfo\" style=\"margin-top:10px;text-align:center;font-size:10px;color:#98A2B3\"><span id=\"network\">Réseau</span> · <span id=\"status\">Chargement…</span></div>'); p.write_text(s,encoding='utf-8')"
+      - name: Prepare SegaMap build
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          replacements = {
+              'href="./manifest.webmanifest?v=14"': 'href="./manifest.webmanifest?v=final6"',
+              'href="./segamap-logo.svg?v=14"': 'href="./segamap-app-icon.svg?v=final6"',
+              'src="./segamap-logo.svg?v=14"': 'src="./segamap-app-icon.svg?v=final6"',
+              '<span class="name">SegaMap</span><span>🇲🇺</span>': '<span class="name">SegaMap</span>',
+              '.brand{display:flex;align-items:center;gap:9px;font-size:28px;font-weight:950}': '.brand{display:flex;align-items:center;gap:9px;font-size:28px;font-weight:600;letter-spacing:-.4px}',
+              '.go{width:100%;border:0;background:linear-gradient(90deg,#ef233c,#0072ce);color:#fff;border-radius:14px;padding:14px;margin-top:8px;font-weight:950;font-size:15px}': '.go{width:100%;border:0;background:linear-gradient(to bottom,#EA2839 0%,#EA2839 25%,#1A206D 25%,#1A206D 50%,#FFD500 50%,#FFD500 75%,#00A651 75%,#00A651 100%);color:#fff;border-radius:14px;padding:14px;margin-top:8px;font-weight:900;font-size:17px;text-shadow:0 1px 3px #0008;box-shadow:0 5px 14px #0002}',
+              '<button class="btn" id="gps">⌖ Ma position</button>': '',
+              '<button class="btn" id="pick">📍 Carte</button>': '',
+              "$('gps').onclick=async()=>{const p=await locate();if(p){$('from').value='Ma position';delete $('from').dataset.lat;delete $('from').dataset.lon;L.circleMarker([p.lat,p.lon],{radius:8}).addTo(map).bindPopup('Ma position').openPopup()}};": '',
+              "$('pick').onclick=()=>{pickMode=!pickMode;$('pick').textContent=pickMode?'📍 Cliquez sur la carte':'📍 Carte';map.getContainer().style.cursor=pickMode?'crosshair':''};": '',
+              "map.on('click',e=>{if(!pickMode)return;const i=$('to');i.value='Point sur la carte';i.dataset.lat=e.latlng.lat;i.dataset.lon=e.latlng.lng;i.dataset.label='Point sur la carte';pickMode=false;$('pick').textContent='📍 Carte';L.marker(e.latlng).addTo(map).bindPopup('Destination').openPopup()});": '',
+              'Trouver le meilleur trajet': 'Go',
+              "go.textContent='Trouver le meilleur trajet'": "go.textContent='Go'",
+              'await loadNLTA();await loadOSM();': 'await loadOSM();',
+              "$('status').innerHTML='<span class=\"ok\">✓ '+routes.length+' parcours routables chargés · '+nltaCount+' lignes NLTA au catalogue</span>';": "$('status').innerHTML='<span class=\"ok\">✓ Réseau de transport disponible</span>';",
+              '<div class="title">Réseau mauricien</div><div class="card"><span id="network" class="badge">Chargement…</span><div id="status" class="small" style="margin-top:7px">Chargement du réseau…</div></div>': '<div id="networkInfo" style="margin-top:10px;text-align:center;font-size:10px;color:#98A2B3"><span id="network">Réseau</span> · <span id="status">Chargement…</span></div>'
+          }
+          for old, new in replacements.items():
+              s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Validate prepared page
+        run: |
+          test -s index.html
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path('index.html').read_text(encoding='utf-8')
+          assert 'id="gps"' not in s
+          assert 'id="pick"' not in s
+          assert 'Trouver le meilleur trajet' not in s
+          assert 'SegaMap</span><span>🇲🇺' not in s
+          assert 'segamap-app-icon.svg?v=final6' in s
+          print('SegaMap page validation OK')
+          PY
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
