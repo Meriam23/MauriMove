@@ -35,5 +35,7 @@ COPY routing/build-config.json /var/opentripplanner/build-config.json
 RUN java -Xmx4g -jar /app/otp.jar --build --save /var/opentripplanner \
     && test -s /var/opentripplanner/graph.obj
 
+# Render's free instance has 512 MB RAM. Keep the OTP heap below that limit so
+# the service can actually stay alive on the free tier.
 EXPOSE 8080
-CMD ["java", "-Xmx1g", "-jar", "/app/otp.jar", "--load", "--serve", "/var/opentripplanner"]
+CMD ["java", "-Xmx384m", "-XX:+UseSerialGC", "-jar", "/app/otp.jar", "--load", "--serve", "/var/opentripplanner"]
