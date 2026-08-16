@@ -7,6 +7,7 @@ WORKDIR /var/opentripplanner
 COPY routing/prepare_gtfs.py /opt/prepare_gtfs.py
 COPY data/transit /opt/transit
 
+# Verified main-branch OTP graph build: keep the release artifact checksum pinned.
 # The 2.9.0 Docker image does not expose the shaded JAR at a stable filesystem
 # path. Download the official signed release artifact instead and verify its
 # published SHA-256 before using it.
