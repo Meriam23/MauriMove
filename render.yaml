@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: segamap-otp-west
+    runtime: image
+    image:
+      url: ghcr.io/meriam23/segamap-otp-west:latest
+    plan: free
+    healthCheckPath: /otp/actuators/health
+    envVars:
+      - key: PORT
+        value: 8080
