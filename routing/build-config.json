@@ -1,0 +1,21 @@
+{
+  "transitServiceStart": "P0D",
+  "transitServiceEnd": "P16M",
+  "osmDefaults": {
+    "timeZone": "Indian/Mauritius",
+    "osmTagMapping": "default"
+  },
+  "osm": [
+    {
+      "source": "mauritius.osm.pbf",
+      "timeZone": "Indian/Mauritius",
+      "osmTagMapping": "default"
+    }
+  ],
+  "transitFeeds": [
+    {
+      "type": "gtfs",
+      "source": "mauritius.gtfs.zip"
+    }
+  ]
+}

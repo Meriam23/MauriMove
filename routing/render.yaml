@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: segamap-routing
+    runtime: docker
+    dockerfilePath: ./routing/Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    plan: free

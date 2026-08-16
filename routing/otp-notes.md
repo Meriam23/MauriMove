@@ -1,0 +1,1 @@
+OTP 2.9.0 is the selected routing engine. The official documentation confirms it combines GTFS public transport data with OpenStreetMap street data and exposes a GraphQL API for clients. See https://docs.opentripplanner.org/ for the upstream reference.

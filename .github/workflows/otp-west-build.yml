@@ -1,0 +1,35 @@
+name: Build OTP West routing graph
+
+on:
+  push:
+    branches:
+      - otp-west-routing
+    paths:
+      - 'routing/**'
+      - 'data/transit/**'
+      - '.github/workflows/otp-west-build.yml'
+  pull_request:
+    paths:
+      - 'routing/**'
+      - 'data/transit/**'
+      - '.github/workflows/otp-west-build.yml'
+  workflow_dispatch:
+
+jobs:
+  build-otp-west:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify Docker
+        run: docker version
+
+      - name: Build OTP graph image
+        run: |
+          docker build --progress=plain -f routing/Dockerfile -t segamap-otp-west:ci .
+
+      - name: Verify built graph exists in image
+        run: |
+          docker run --rm --entrypoint sh segamap-otp-west:ci -c 'test -s /var/opentripplanner/graph.obj && ls -lh /var/opentripplanner/graph.obj'
