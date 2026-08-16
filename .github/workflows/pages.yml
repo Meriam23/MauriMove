@@ -22,7 +22,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Prepare stable SegaMap build
-        run: python3 -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); s=s.replace('segamap-logo.svg?v=14','segamap-logo-v2.svg?v=stable'); s=s.replace('manifest.webmanifest?v=14','manifest.webmanifest?v=stable'); s=s.replace('await loadNLTA();await loadOSM();','await loadOSM();'); s=s.replace('$(\'status\').innerHTML=\'<span class=\"ok\">✓ \'+routes.length+\' parcours routables chargés · \'+nltaCount+\' lignes NLTA au catalogue</span>\';','$(\'status\').innerHTML=\'<span class=\"ok\">✓ \'+routes.length+\' parcours routables chargés</span>\';'); p.write_text(s,encoding='utf-8')"
+        run: python3 -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); s=s.replace('href=\"./manifest.webmanifest?v=14\"','href=\"./manifest.webmanifest?v=stable\"'); s=s.replace('href=\"./segamap-logo.svg?v=14\"','href=\"./segamap-app-icon.svg?v=stable\"'); s=s.replace('src=\"./segamap-logo.svg?v=14\"','src=\"./segamap-logo-v2.svg?v=stable\"'); s=s.replace('await loadNLTA();await loadOSM();','await loadOSM();'); s=s.replace('$(\'status\').innerHTML=\'<span class=\"ok\">✓ \'+routes.length+\' parcours routables chargés · \'+nltaCount+\' lignes NLTA au catalogue</span>\';','$(\'status\').innerHTML=\'<span class=\"ok\">✓ \'+routes.length+\' parcours routables chargés</span>\';'); p.write_text(s,encoding='utf-8')"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
