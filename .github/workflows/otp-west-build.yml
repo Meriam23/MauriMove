@@ -15,6 +15,10 @@ on:
       - '.github/workflows/otp-west-build.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-otp-west:
     runs-on: ubuntu-latest
@@ -33,3 +37,20 @@ jobs:
       - name: Verify built graph exists in image
         run: |
           docker run --rm --entrypoint sh segamap-otp-west:ci -c 'test -s /var/opentripplanner/graph.obj && ls -lh /var/opentripplanner/graph.obj'
+
+      - name: Login to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish OTP image
+        if: github.event_name != 'pull_request'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/segamap-otp-west
+          docker tag segamap-otp-west:ci "$IMAGE:latest"
+          docker tag segamap-otp-west:ci "$IMAGE:${{ github.sha }}"
+          docker push "$IMAGE:latest"
+          docker push "$IMAGE:${{ github.sha }}"
