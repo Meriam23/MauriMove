@@ -49,7 +49,7 @@ jobs:
       - name: Publish OTP image
         if: github.event_name != 'pull_request'
         run: |
-          IMAGE=ghcr.io/${{ github.repository_owner }}/segamap-otp-west
+          IMAGE=ghcr.io/$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')/segamap-otp-west
           docker tag segamap-otp-west:ci "$IMAGE:latest"
           docker tag segamap-otp-west:ci "$IMAGE:${{ github.sha }}"
           docker push "$IMAGE:latest"
