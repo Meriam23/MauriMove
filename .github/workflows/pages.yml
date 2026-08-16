@@ -28,9 +28,9 @@ jobs:
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
           replacements = {
-              'href="./manifest.webmanifest?v=14"': 'href="./manifest.webmanifest?v=final6"',
-              'href="./segamap-logo.svg?v=14"': 'href="./segamap-app-icon.svg?v=final6"',
-              'src="./segamap-logo.svg?v=14"': 'src="./segamap-app-icon.svg?v=final6"',
+              'href="./manifest.webmanifest?v=14"': 'href="./manifest.webmanifest?v=final7"',
+              'href="./segamap-logo.svg?v=14"': 'href="./segamap-app-icon.svg?v=final7"',
+              'src="./segamap-logo.svg?v=14"': 'src="./segamap-app-icon.svg?v=final7"',
               '<span class="name">SegaMap</span><span>🇲🇺</span>': '<span class="name">SegaMap</span>',
               '.brand{display:flex;align-items:center;gap:9px;font-size:28px;font-weight:950}': '.brand{display:flex;align-items:center;gap:9px;font-size:28px;font-weight:600;letter-spacing:-.4px}',
               '.go{width:100%;border:0;background:linear-gradient(90deg,#ef233c,#0072ce);color:#fff;border-radius:14px;padding:14px;margin-top:8px;font-weight:950;font-size:15px}': '.go{width:100%;border:0;background:linear-gradient(to bottom,#EA2839 0%,#EA2839 25%,#1A206D 25%,#1A206D 50%,#FFD500 50%,#FFD500 75%,#00A651 75%,#00A651 100%);color:#fff;border-radius:14px;padding:14px;margin-top:8px;font-weight:900;font-size:17px;text-shadow:0 1px 3px #0008;box-shadow:0 5px 14px #0002}',
@@ -47,6 +47,9 @@ jobs:
           }
           for old, new in replacements.items():
               s = s.replace(old, new)
+          mobile_css = '''<style id="segamap-mobile-ui">@media(max-width:760px){html,body,#map{height:100dvh}.panel{left:0;top:0;width:100%;max-height:none;height:52dvh;border-radius:0 0 24px 24px;padding:12px;overflow:auto;transition:transform .25s ease,box-shadow .25s ease}.panel.mobile-collapsed{transform:translateY(calc(-100% + 54px));box-shadow:0 8px 28px #0003}.panel.mobile-collapsed .brand,.panel.mobile-collapsed .sub,.panel.mobile-collapsed .search,.panel.mobile-collapsed .actions,.panel.mobile-collapsed .go,.panel.mobile-collapsed .title,.panel.mobile-collapsed #result,.panel.mobile-collapsed #networkInfo{display:none!important}.mobile-reopen{display:flex!important;position:absolute;right:12px;top:8px;width:42px;height:36px;align-items:center;justify-content:center;border:0;border-radius:18px;background:#fff;box-shadow:0 3px 12px #0002;font-size:20px;z-index:20}.panel:not(.mobile-collapsed) .mobile-reopen{display:none!important}.mobile-swap{display:block;width:max-content;margin:0 auto 7px;border:0;background:transparent;color:#06143F;font-weight:800;font-size:12px;padding:2px 8px}.mobile-search-row{display:flex;gap:8px;align-items:stretch}.mobile-search-row .search{flex:1;min-width:0}.mobile-search-row .go{width:58px;min-width:58px;height:auto;margin:0;padding:8px 4px;border-radius:16px;font-size:14px;line-height:1}.mobile-search-row .go::after{content:'GO';display:block;font-size:10px;margin-top:3px}.mobile-search-row .go{font-size:0}.mobile-search-row .go::before{content:'➜';font-size:20px}.actions{display:none!important}.result-selectable{cursor:pointer}.mobile-route-list{display:block}.mobile-map-hint{display:block!important}.panel .title{margin-top:10px}}@media(min-width:761px){.mobile-reopen,.mobile-swap{display:none!important}}</style>'''
+          mobile_js = '''<script id="segamap-mobile-ui-js">(()=>{const p=document.querySelector('.panel'),search=document.querySelector('.search'),go=document.querySelector('#go'),result=document.querySelector('#result');if(!p||!search||!go||!result)return;const swap=document.querySelector('#swap');if(swap){swap.classList.add('mobile-swap');search.parentNode.insertBefore(swap,search)}const row=document.createElement('div');row.className='mobile-search-row';search.parentNode.insertBefore(row,search);row.appendChild(search);row.appendChild(go);const reopen=document.createElement('button');reopen.className='mobile-reopen';reopen.type='button';reopen.setAttribute('aria-label','Rouvrir la recherche');reopen.textContent='⌃';p.appendChild(reopen);const collapse=()=>{if(window.innerWidth<=760)p.classList.add('mobile-collapsed')};const expand=()=>p.classList.remove('mobile-collapsed');reopen.onclick=expand;result.addEventListener('click',e=>{if(e.target.closest('button,a,input'))return;const card=e.target.closest('.card,.step,[data-route],.route');if(card||result.contains(e.target)){result.classList.add('result-selectable');collapse()}});new MutationObserver(()=>{const buttons=result.querySelectorAll('button,[data-route],.step');buttons.forEach(b=>b.addEventListener('click',()=>{if(window.innerWidth<=760)setTimeout(collapse,50)},{once:true}));}).observe(result,{childList:true,subtree:true});window.addEventListener('resize',()=>{if(window.innerWidth>760)expand()});})();</script>'''
+          s = s.replace('</script></body>', '</script>'+mobile_css+mobile_js+'</body>')
           p.write_text(s, encoding='utf-8')
           PY
       - name: Validate prepared page
@@ -59,8 +62,10 @@ jobs:
           assert 'id="pick"' not in s
           assert 'Trouver le meilleur trajet' not in s
           assert 'SegaMap</span><span>🇲🇺' not in s
-          assert 'segamap-app-icon.svg?v=final6' in s
-          print('SegaMap page validation OK')
+          assert 'segamap-app-icon.svg?v=final7' in s
+          assert 'segamap-mobile-ui' in s
+          assert 'mobile-search-row' in s
+          print('SegaMap mobile UI validation OK')
           PY
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
