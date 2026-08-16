@@ -22,7 +22,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Prepare SegaMap build
-        run: python3 scripts/finalize_refined_build.py
+        run: |
+          python3 scripts/finalize_refined_build.py
+          python3 scripts/west_ui_patch.py
       - name: Validate prepared page
         run: |
           test -s index.html
@@ -35,11 +37,14 @@ jobs:
               'search-layout-final',
               'route-screen-final',
               'segamap-final-corrections-js',
+              'segamap-west-corridor-final',
+              'showOverview()',
               'Carrefour City Flic-en-Flac',
               'carrefourLat=-20.27925',
               'SOFITEL_STOP',
               'Flic en Flac Public Beach / Wolmar',
               'La Preneuse',
+              'Grande Riviere Noire (Trois Bras Store)',
               'valhalla1.openstreetmap.de',
           ]
           for item in checks:
@@ -49,6 +54,7 @@ jobs:
           assert 'Trouver le meilleur trajet' not in s
           assert 'Prêt 😊' not in s
           assert 'Suivre ma progression' not in s
+          assert 'id="networkInfo"' not in s
           print('SegaMap final build validation OK')
           PY
       - name: Upload artifact
