@@ -26,6 +26,15 @@ jobs:
           python3 scripts/finalize_refined_build.py
           python3 scripts/west_ui_patch.py
           python3 scripts/site_ux_corrections.py
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace("const map=L.map('map')", "const map=window.segaMap=L.map('map')")
+          tag = '<script>window.SEGAMAP_ROUTING_API="https://segamap-routing.YOUR_WORKERS_SUBDOMAIN.workers.dev";</script><script src="./segamap-routing-worker.js?v=1"></script>'
+          s = s if 'segamap-routing-worker.js?v=1' in s else s.replace('</body>', tag + '</body>')
+          p.write_text(s, encoding='utf-8')
+          PY
       - name: Validate prepared page
         run: |
           test -s index.html
@@ -50,6 +59,8 @@ jobs:
               'valhalla1.openstreetmap.de',
               'C-Care Tamarin — District One, La Mivoie',
               'home-ready',
+              'segamap-routing-worker.js?v=1',
+              'window.segaMap=L.map',
           ]
           for item in checks:
               assert item in s, item
