@@ -14,13 +14,30 @@ s = s.replace(old, new)
 s = s.replace("const ccLat=-20.35775, ccLon=57.36850;", f"const ccLat={CC_LAT}, ccLon={CC_LON};")
 s = s.replace("to.dataset.lat=-20.35775;to.dataset.lon=57.36850;to.dataset.label='C-Care Tamarin'", f"to.dataset.lat={CC_LAT};to.dataset.lon={CC_LON};to.dataset.label='C-Care Tamarin — District One, La Mivoie'")
 
+# Normalize every historical Worker spelling in the generated production page.
+for bad in (
+    'https://maurimove.meriammb.workers.dev',
+    'https://maurimove.meriamb.workers.dev',
+):
+    s = s.replace(bad, 'https://maurimove.meriaamb.workers.dev')
+
+# Keep destination search results above the on-screen keyboard on iPhone/iPad.
+search_css = '''<style id="segamap-search-visibility-fix">
+@media(max-width:760px){
+  #toSug{top:auto!important;bottom:calc(100% + 8px)!important;max-height:36vh!important;overflow-y:auto!important;z-index:10050!important}
+  #fromSug{max-height:36vh!important;overflow-y:auto!important;z-index:10050!important}
+}
+</style>'''
+s = s.replace('</head>', search_css + '</head>', 1)
+
 ux = r'''<script id="segamap-site-ux-final">(()=>{
 const result=document.getElementById('result');
 if(result){result.classList.add('home-ready');const reveal=()=>{if(result.textContent.trim()&&!/Prêt/.test(result.textContent))result.classList.remove('home-ready')};new MutationObserver(reveal).observe(result,{subtree:true,childList:true,characterData:true});}
 const brand=document.querySelector('.brand .name');if(brand)brand.style.fontWeight='500';
 const network=document.getElementById('networkInfo');if(network)network.remove();
-const badge=document.createElement('div');badge.id='segamap-version-badge';badge.textContent='v1.3 · Production UI';badge.style='position:fixed;right:10px;top:10px;z-index:9999;background:#06143F;color:#fff;border-radius:999px;padding:5px 9px;font:700 10px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;box-shadow:0 4px 14px #0003;letter-spacing:.2px';document.body.appendChild(badge);
+const badge=document.createElement('div');badge.id='segamap-version-badge';badge.textContent='v1.4 · Production UI';badge.style='position:fixed;right:10px;top:10px;z-index:9999;background:#06143F;color:#fff;border-radius:999px;padding:5px 9px;font:700 10px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;box-shadow:0 4px 14px #0003;letter-spacing:.2px';document.body.appendChild(badge);
 if(navigator.serviceWorker){navigator.serviceWorker.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister()))).catch(()=>{});if(window.caches)caches.keys().then(ks=>Promise.all(ks.map(k=>caches.delete(k)))).catch(()=>{});}
 })();</script>'''
 s = s.replace('</body>', ux + '</body>')
+
 p.write_text(s, encoding='utf-8')
