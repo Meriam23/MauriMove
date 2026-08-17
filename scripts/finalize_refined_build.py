@@ -23,6 +23,11 @@ css = '''<style id="segamap-final-polish-css">
 </style>'''
 s = s.replace('</body>', css + '</body>')
 
+# Cache recovery only: this does not alter the visual UI. It makes an already-installed
+# SegaMap PWA discard an older service-worker cache once, then reload the current Pages build.
+cache_recovery = '''<script id="segamap-cache-recovery">(()=>{try{const KEY='segamap-build-version';if(localStorage.getItem(KEY)!=='1.5'){localStorage.setItem(KEY,'1.5');if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>Promise.all(rs.map(r=>r.unregister()))).then(()=>caches.keys()).then(keys=>Promise.all(keys.map(k=>caches.delete(k)))).then(()=>location.reload()).catch(()=>location.reload());}else{location.reload();}}}catch(e){}})();</script>'''
+s = s.replace('</head>', cache_recovery + '</head>', 1)
+
 js = r'''<script id="segamap-final-corrections-js">
 (()=>{
   const carrefourLat=-20.27925, carrefourLon=57.367673;
