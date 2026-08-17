@@ -19,6 +19,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore golden SegaMap UI base
+        run: git checkout dd87d2ef9263bc9ee52910ba5a5e009f001f4837 -- index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Prepare SegaMap build
@@ -30,9 +34,9 @@ jobs:
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          s = s.replace("const map=L.map('map')", "const map=window.segaMap=L.map('map')")
-          tag = '<script>window.SEGAMAP_ROUTING_API="https://maurimove.meriamb.workers.dev";</script><script src="./segamap-routing-worker.js?v=1"></script>'
-          s = s if 'segamap-routing-worker.js?v=1' in s else s.replace('</body>', tag + '</body>')
+          badge = '''<div id="segamap-version-badge" style="position:fixed;right:10px;top:10px;z-index:9999;background:#06143F;color:#fff;border-radius:999px;padding:5px 9px;font:700 10px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;box-shadow:0 4px 14px #0003;letter-spacing:.2px">v1.1 · Production UI</div>'''
+          if 'id="segamap-version-badge"' not in s:
+              s = s.replace('<body>', '<body>' + badge, 1)
           p.write_text(s, encoding='utf-8')
           PY
       - name: Validate prepared page
@@ -50,28 +54,17 @@ jobs:
               'segamap-west-corridor-final',
               'segamap-site-ux-final',
               'showOverview()',
-              'Carrefour City Flic-en-Flac',
-              'carrefourLat=-20.27925',
-              'SOFITEL_STOP',
-              'Flic en Flac Public Beach / Wolmar',
-              'La Preneuse',
-              'Grande Riviere Noire (Trois Bras Store)',
-              'valhalla1.openstreetmap.de',
-              'C-Care Tamarin — District One, La Mivoie',
-              'home-ready',
-              'segamap-routing-worker.js?v=1',
-              'window.segaMap=L.map',
+              'segamap-version-badge',
           ]
           missing = [item for item in checks if item not in s]
           if missing:
-              print('SegaMap validation warnings (non-blocking):', missing)
-          else:
-              print('SegaMap final build validation OK')
+              raise SystemExit('Golden SegaMap UI validation failed: ' + ', '.join(missing))
           assert 'id="gps"' not in s
           assert 'id="pick"' not in s
           assert 'Trouver le meilleur trajet' not in s
           assert 'Prêt 😊' not in s
-          assert 'Suivre ma progression' not in s
+          assert 'Réseau mauricien' not in s
+          print('SegaMap v1.1 golden UI validation OK')
           PY
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
