@@ -31,7 +31,7 @@ jobs:
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
           s = s.replace("const map=L.map('map')", "const map=window.segaMap=L.map('map')")
-          tag = '<script>window.SEGAMAP_ROUTING_API="https://segamap-routing.YOUR_WORKERS_SUBDOMAIN.workers.dev";</script><script src="./segamap-routing-worker.js?v=1"></script>'
+          tag = '<script>window.SEGAMAP_ROUTING_API="https://maurimove.meriammb.workers.dev";</script><script src="./segamap-routing-worker.js?v=1"></script>'
           s = s if 'segamap-routing-worker.js?v=1' in s else s.replace('</body>', tag + '</body>')
           p.write_text(s, encoding='utf-8')
           PY
