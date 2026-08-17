@@ -1,7 +1,7 @@
 (()=>{
 const go=document.getElementById('go'),result=document.getElementById('result');
 if(!go||!result)return;
-const API='https://maurimove.meriamb.workers.dev/api/route';
+const API='https://maurimove.meriaamb.workers.dev/api/route';
 let layers=[],markers=[],watch=null,currentPlan=null,currentStep=0;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const mins=n=>Math.max(1,Math.round(Number(n)||0));
