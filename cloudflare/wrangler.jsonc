@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
+  "name": "segamap-routing",
+  "main": "./worker.js",
+  "compatibility_date": "2026-08-17",
+  "workers_dev": true,
+  "limits": { "cpu_ms": 10 }
+}
