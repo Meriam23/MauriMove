@@ -70,8 +70,6 @@ async function officialStops() {
 function matchOfficial(name, stops) {
   const ranked = stops.map(s => [score(name, s.name), s]).sort((a, b) => b[0] - a[0]);
   if (ranked[0]?.[0] >= 1000) return ranked[0][1];
-  // The official feed and NLTA timetable use slightly different naming conventions.
-  // Accept a strong unique partial/token match rather than dropping the stop entirely.
   if (ranked[0]?.[0] >= 300 && (!ranked[1] || ranked[0][0] - ranked[1][0] >= 12)) return ranked[0][1];
   return null;
 }
@@ -127,22 +125,35 @@ function transferNodes(node, graph) {
     .map(x => x.n);
   return [...new Map([...exact, ...nearby].map(n => [n.id, n])).values()];
 }
+
+// Routing objective: prefer a logical itinerary with little walking and few changes,
+// rather than blindly choosing the fastest bus-only path. This is especially important
+// for Wolmar -> C-Care Tamarin, where the practical journey is 123 from Wolmar and then
+// a transfer onto line 5 around Junction Flic en Flac before the final walk.
+function routeCost(state) {
+  // Walking is deliberately expensive: 1 minute walking counts as ~4 minutes of
+  // journey cost. A transfer also carries a fixed penalty so needless line changes
+  // are not preferred over a clean direct ride with similar walking.
+  return state.busMinutes + state.walkMinutes * 4 + state.transfers * 12;
+}
 function shortestPath(from, to, graph) {
   const starts = nearestNodes(from, graph);
   const targets = nearestNodes(to, graph);
   if (!starts.length || !targets.length) return null;
   const targetIds = new Set(targets.map(x => x.n.id));
-  const dist = new Map(), prev = new Map(), queue = [];
+  const best = new Map(), prev = new Map(), queue = [];
   for (const s of starts) {
-    const c = walkMinutes(s.d);
-    dist.set(s.n.id, c);
-    queue.push([c, s.n.id]);
+    const walk = walkMinutes(s.d);
+    const state = { busMinutes: 0, walkMinutes: walk, transfers: 0 };
+    best.set(s.n.id, { ...state, cost: routeCost(state) });
+    queue.push([routeCost(state), s.n.id]);
   }
   let targetId = null;
   while (queue.length) {
     queue.sort((a, b) => a[0] - b[0]);
     const [cost, id] = queue.shift();
-    if (cost !== dist.get(id)) continue;
+    const cur = best.get(id);
+    if (!cur || cost !== cur.cost) continue;
     if (targetIds.has(id)) { targetId = id; break; }
     const node = graph.nodes.get(id);
     if (!node) continue;
@@ -151,23 +162,26 @@ function shortestPath(from, to, graph) {
     if (nextIndex < node.direction.stops.length) {
       const nextId = `${node.route.route_id}|${node.direction.direction_id}|${nextIndex}`;
       if (graph.nodes.has(nextId)) {
-        const nd = cost + busMinutes(node.direction, node.index, nextIndex);
-        if (nd < (dist.get(nextId) ?? Infinity)) {
-          dist.set(nextId, nd);
+        const bus = busMinutes(node.direction, node.index, nextIndex);
+        const state = { busMinutes: cur.busMinutes + bus, walkMinutes: cur.walkMinutes, transfers: cur.transfers };
+        const nd = routeCost(state);
+        if (nd < (best.get(nextId)?.cost ?? Infinity)) {
+          best.set(nextId, { ...state, cost: nd });
           prev.set(nextId, { from: id, kind: "bus" });
           queue.push([nd, nextId]);
         }
       }
     }
 
-    // Allow transfers at the same published stop name OR at physically coincident official stops.
     for (const alt of transferNodes(node, graph)) {
       if (alt.id === id || (alt.route.route_id === node.route.route_id && alt.direction.direction_id === node.direction.direction_id)) continue;
-      const walk = distance(node.point, alt.point);
-      const nd = cost + Math.max(1, walkMinutes(walk));
-      if (nd < (dist.get(alt.id) ?? Infinity)) {
-        dist.set(alt.id, nd);
-        prev.set(alt.id, { from: id, kind: "transfer" });
+      const walkMeters = distance(node.point, alt.point);
+      const walk = walkMinutes(walkMeters);
+      const state = { busMinutes: cur.busMinutes, walkMinutes: cur.walkMinutes + walk, transfers: cur.transfers + 1 };
+      const nd = routeCost(state);
+      if (nd < (best.get(alt.id)?.cost ?? Infinity)) {
+        best.set(alt.id, { ...state, cost: nd });
+        prev.set(alt.id, { from: id, kind: "transfer", walkMeters });
         queue.push([nd, alt.id]);
       }
     }
@@ -180,8 +194,18 @@ function shortestPath(from, to, graph) {
   const startNode = graph.nodes.get(ids[0]);
   const endNode = graph.nodes.get(ids.at(-1));
   const edges = [];
-  for (let i = 1; i < ids.length; i++) edges.push({ from: graph.nodes.get(ids[i - 1]), to: graph.nodes.get(ids[i]), kind: prev.get(ids[i])?.kind });
-  return { ids, nodes: ids.map(id => graph.nodes.get(id)), edges, minutes: (dist.get(targetId) || 0) + walkMinutes(distance(endNode.point, to)), accessMeters: distance(from, startNode.point), egressMeters: distance(endNode.point, to) };
+  for (let i = 1; i < ids.length; i++) edges.push({ from: graph.nodes.get(ids[i - 1]), to: graph.nodes.get(ids[i]), kind: prev.get(ids[i])?.kind, walkMeters: prev.get(ids[i])?.walkMeters || 0 });
+  const finalWalk = walkMinutes(distance(endNode.point, to));
+  const state = best.get(targetId);
+  return {
+    ids,
+    nodes: ids.map(id => graph.nodes.get(id)),
+    edges,
+    minutes: state.busMinutes + state.walkMinutes + finalWalk,
+    transfers: state.transfers,
+    accessMeters: distance(from, startNode.point),
+    egressMeters: distance(endNode.point, to)
+  };
 }
 function buildLegs(path) {
   const legs = [];
@@ -190,7 +214,7 @@ function buildLegs(path) {
   for (const edge of path.edges) {
     if (edge.kind === "transfer") {
       flush();
-      legs.push({ kind: "transfer", minutes: Math.max(1, walkMinutes(distance(edge.from.point, edge.to.point))), from: edge.from.point, to: edge.to.point, from_name: edge.from.stop.name, to_name: edge.to.stop.name });
+      legs.push({ kind: "transfer", minutes: Math.max(1, walkMinutes(edge.walkMeters)), meters: Math.round(edge.walkMeters), from: edge.from.point, to: edge.to.point, from_name: edge.from.stop.name, to_name: edge.to.stop.name });
       continue;
     }
     const routeId = String(edge.from.route.route_id);
@@ -239,7 +263,7 @@ export default {
       const access = { kind: "walk", minutes: walkMinutes(path.accessMeters), meters: Math.round(path.accessMeters), from, to: path.nodes[0].point };
       const egress = { kind: "walk", minutes: walkMinutes(path.egressMeters), meters: Math.round(path.egressMeters), from: path.nodes.at(-1).point, to };
       const geometry = await roadGeometry([from, ...path.nodes.map(n => n.point), to]);
-      return json({ ok: true, network: "west", approximate: true, note: "Timetable travel times are published schedule values; live traffic and live vehicle positions are not included.", minutes: path.minutes, from, to, legs: [access, ...legs, egress], geometry });
+      return json({ ok: true, network: "west", approximate: true, note: "Itinerary prioritizes low walking and few transfers; timetable travel times are published schedule values and live vehicle positions are not included.", minutes: path.minutes, transfers: path.transfers, from, to, legs: [access, ...legs, egress], geometry });
     } catch (e) {
       return json({ ok: false, error: e?.message || "Routing error" }, 500);
     }
