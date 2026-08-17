@@ -39,12 +39,22 @@ jobs:
           s = s.replace('@media(max-width:1100px)', '@media(max-width:1600px)')
           s = s.replace('@media(min-width:1101px)', '@media(min-width:1601px)')
           s = s.replace('max-height:46dvh!important', 'max-height:52dvh!important')
+          # The production Worker hostname is meriaamb (not meriammb).
+          s = s.replace('https://maurimove.meriammb.workers.dev', 'https://maurimove.meriaamb.workers.dev')
           badge = '''<div id="segamap-version-badge" style="position:fixed;right:10px;top:10px;z-index:9999;background:#06143F;color:#fff;border-radius:999px;padding:5px 9px;font:700 10px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;box-shadow:0 4px 14px #0003;letter-spacing:.2px">v1.4 · Production UI</div>'''
           if 'id="segamap-version-badge"' in s:
               import re
               s = re.sub(r'<div id="segamap-version-badge"[^>]*>.*?</div>', badge, s, count=1)
           else:
               s = s.replace('<body>', '<body>' + badge, 1)
+          # Keep the destination suggestions visible above the on-screen keyboard on iPhone/iPad.
+          search_fix = '''<style id="segamap-search-visibility-fix">
+          @media(max-width:760px){
+            #toSug{top:auto!important;bottom:calc(100% + 8px)!important;max-height:36vh!important;overflow-y:auto!important;z-index:10050!important}
+            #fromSug{max-height:36vh!important;overflow-y:auto!important;z-index:10050!important}
+          }
+          </style>'''
+          s = s.replace('</head>', search_fix + '</head>', 1)
           p.write_text(s, encoding='utf-8')
           PY
       - name: Validate prepared page
@@ -53,9 +63,10 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           s = Path('index.html').read_text(encoding='utf-8')
-          checks = ['segamap-app-icon.svg?v=final9','refined-logo-final','search-layout-final','route-screen-final','segamap-final-corrections-js','segamap-west-corridor-final','segamap-site-ux-final','showOverview()','segamap-version-badge','v1.4 · Production UI','@media(max-width:1600px)','max-height:52dvh!important']
+          checks = ['segamap-app-icon.svg?v=final9','refined-logo-final','search-layout-final','route-screen-final','segamap-final-corrections-js','segamap-west-corridor-final','segamap-site-ux-final','showOverview()','segamap-version-badge','v1.4 · Production UI','@media(max-width:1600px)','max-height:52dvh!important','https://maurimove.meriaamb.workers.dev','segamap-search-visibility-fix','#toSug']
           missing = [item for item in checks if item not in s]
           if missing: raise SystemExit('SegaMap v1.4 UI validation failed: ' + ', '.join(missing))
+          assert 'https://maurimove.meriammb.workers.dev' not in s
           assert 'id="gps"' not in s
           assert 'id="pick"' not in s
           assert 'Trouver le meilleur trajet' not in s
