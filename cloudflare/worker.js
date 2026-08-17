@@ -3,8 +3,10 @@ import route57 from "../data/transit/route-57.json";
 import route57a from "../data/transit/route-57a.json";
 import route119 from "../data/transit/route-119.json";
 import route123 from "../data/transit/route-123.json";
+import walkingData from "../data/transit/walking-transfers.json";
 
 const ROUTES = [route5, route57, route57a, route119, route123];
+const WALKING_TRANSFERS = walkingData.walking_connections || [];
 const STOPS_URL = "https://data.govmu.org/dataset/2ba9ca15-d2d4-415e-9b37-3148511da1b9/resource/11e30efe-7fb9-41bb-a718-a3f0a5525dd7/download/busstops.csv";
 const NOMINATIM = "https://nominatim.openstreetmap.org/search";
 const OSRM = "https://router.project-osrm.org/route/v1/driving";
@@ -73,6 +75,12 @@ function matchOfficial(name, stops) {
   if (ranked[0]?.[0] >= 300 && (!ranked[1] || ranked[0][0] - ranked[1][0] >= 12)) return ranked[0][1];
   return null;
 }
+function matchGraphNodes(name, nodes) {
+  const ranked = [...nodes.values()].map(n => [score(name, n.stop.name), n]).sort((a, b) => b[0] - a[0]);
+  if (ranked[0]?.[0] >= 1000) return ranked.filter(x => x[0] >= 1000).map(x => x[1]);
+  if (ranked[0]?.[0] >= 300 && (!ranked[1] || ranked[0][0] - ranked[1][0] >= 12)) return [ranked[0][1]];
+  return [];
+}
 async function geocode(q) {
   const u = new URL(NOMINATIM);
   u.searchParams.set("q", `${q}, Mauritius`);
@@ -99,7 +107,16 @@ function makeGraph(stops) {
       byName.get(k).push(node);
     });
   }
-  return { nodes, byName };
+  const walkingByName = new Map();
+  for (const transfer of WALKING_TRANSFERS) {
+    if (!transfer?.a || !transfer?.b || !Number.isFinite(Number(transfer.m))) continue;
+    for (const [from, to] of [[transfer.a, transfer.b], [transfer.b, transfer.a]]) {
+      const key = norm(from);
+      if (!walkingByName.has(key)) walkingByName.set(key, []);
+      walkingByName.get(key).push({ targetName: to, meters: Number(transfer.m), minutes: Number(transfer.min) || walkMinutes(Number(transfer.m)), region: transfer.region || null });
+    }
+  }
+  return { nodes, byName, walkingByName };
 }
 function busMinutes(direction, fromIndex, toIndex) {
   if (toIndex <= fromIndex) return Infinity;
@@ -117,23 +134,21 @@ function nearestNodes(point, graph, maxMeters = 1500) {
 }
 function transferNodes(node, graph) {
   const exact = graph.byName.get(norm(node.stop.name)) || [];
+  const explicit = [];
+  for (const edge of graph.walkingByName.get(norm(node.stop.name)) || []) {
+    const targets = matchGraphNodes(edge.targetName, graph.nodes);
+    for (const target of targets) explicit.push({ n: target, d: edge.meters, explicit: true, minutes: edge.minutes });
+  }
   const nearby = [...graph.nodes.values()]
     .map(n => ({ n, d: distance(node.point, n.point) }))
     .filter(x => x.d <= 150)
     .sort((a, b) => a.d - b.d)
-    .slice(0, 8)
-    .map(x => x.n);
-  return [...new Map([...exact, ...nearby].map(n => [n.id, n])).values()];
+    .slice(0, 8);
+  const merged = [...exact.map(n => ({ n, d: 0 })), ...explicit, ...nearby];
+  return [...new Map(merged.map(x => [x.n.id, x])).values()];
 }
 
-// Routing objective: prefer a logical itinerary with little walking and few changes,
-// rather than blindly choosing the fastest bus-only path. This is especially important
-// for Wolmar -> C-Care Tamarin, where the practical journey is 123 from Wolmar and then
-// a transfer onto line 5 around Junction Flic en Flac before the final walk.
 function routeCost(state) {
-  // Walking is deliberately expensive: 1 minute walking counts as ~4 minutes of
-  // journey cost. A transfer also carries a fixed penalty so needless line changes
-  // are not preferred over a clean direct ride with similar walking.
   return state.busMinutes + state.walkMinutes * 4 + state.transfers * 12;
 }
 function shortestPath(from, to, graph) {
@@ -174,15 +189,17 @@ function shortestPath(from, to, graph) {
     }
 
     for (const alt of transferNodes(node, graph)) {
-      if (alt.id === id || (alt.route.route_id === node.route.route_id && alt.direction.direction_id === node.direction.direction_id)) continue;
-      const walkMeters = distance(node.point, alt.point);
-      const walk = walkMinutes(walkMeters);
+      if (alt.n?.id === id || alt.id === id) continue;
+      const altNode = alt.n || alt;
+      if (altNode.route.route_id === node.route.route_id && altNode.direction.direction_id === node.direction.direction_id) continue;
+      const walkMeters = Number.isFinite(Number(alt.d)) && alt.d > 0 ? Number(alt.d) : distance(node.point, altNode.point);
+      const walk = Number.isFinite(Number(alt.minutes)) ? Math.max(1, Number(alt.minutes)) : walkMinutes(walkMeters);
       const state = { busMinutes: cur.busMinutes, walkMinutes: cur.walkMinutes + walk, transfers: cur.transfers + 1 };
       const nd = routeCost(state);
-      if (nd < (best.get(alt.id)?.cost ?? Infinity)) {
-        best.set(alt.id, { ...state, cost: nd });
-        prev.set(alt.id, { from: id, kind: "transfer", walkMeters });
-        queue.push([nd, alt.id]);
+      if (nd < (best.get(altNode.id)?.cost ?? Infinity)) {
+        best.set(altNode.id, { ...state, cost: nd });
+        prev.set(altNode.id, { from: id, kind: "transfer", walkMeters });
+        queue.push([nd, altNode.id]);
       }
     }
   }
@@ -197,15 +214,7 @@ function shortestPath(from, to, graph) {
   for (let i = 1; i < ids.length; i++) edges.push({ from: graph.nodes.get(ids[i - 1]), to: graph.nodes.get(ids[i]), kind: prev.get(ids[i])?.kind, walkMeters: prev.get(ids[i])?.walkMeters || 0 });
   const finalWalk = walkMinutes(distance(endNode.point, to));
   const state = best.get(targetId);
-  return {
-    ids,
-    nodes: ids.map(id => graph.nodes.get(id)),
-    edges,
-    minutes: state.busMinutes + state.walkMinutes + finalWalk,
-    transfers: state.transfers,
-    accessMeters: distance(from, startNode.point),
-    egressMeters: distance(endNode.point, to)
-  };
+  return { ids, nodes: ids.map(id => graph.nodes.get(id)), edges, minutes: state.busMinutes + state.walkMinutes + finalWalk, transfers: state.transfers, accessMeters: distance(from, startNode.point), egressMeters: distance(endNode.point, to) };
 }
 function buildLegs(path) {
   const legs = [];
@@ -247,7 +256,7 @@ export default {
   async fetch(request) {
     if (request.method === "OPTIONS") return new Response(null, { headers: cors() });
     const url = new URL(request.url);
-    if (url.pathname === "/health") return json({ ok: true, service: "segamap-routing", routes: ROUTES.map(r => r.route_id) });
+    if (url.pathname === "/health") return json({ ok: true, service: "segamap-routing", routes: ROUTES.map(r => r.route_id), walkingTransfers: WALKING_TRANSFERS.length });
     if (url.pathname !== "/api/route") return new Response("SegaMap routing API", { headers: cors({ "Content-Type": "text/plain" }) });
     try {
       const body = request.method === "POST" ? await request.json() : Object.fromEntries(url.searchParams);
