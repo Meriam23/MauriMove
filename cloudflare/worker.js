@@ -70,7 +70,9 @@ async function officialStops() {
 function matchOfficial(name, stops) {
   const ranked = stops.map(s => [score(name, s.name), s]).sort((a, b) => b[0] - a[0]);
   if (ranked[0]?.[0] >= 1000) return ranked[0][1];
-  if (ranked[0]?.[0] >= 420 && (!ranked[1] || ranked[0][0] - ranked[1][0] >= 20)) return ranked[0][1];
+  // The official feed and NLTA timetable use slightly different naming conventions.
+  // Accept a strong unique partial/token match rather than dropping the stop entirely.
+  if (ranked[0]?.[0] >= 300 && (!ranked[1] || ranked[0][0] - ranked[1][0] >= 12)) return ranked[0][1];
   return null;
 }
 async function geocode(q) {
@@ -103,7 +105,9 @@ function makeGraph(stops) {
 }
 function busMinutes(direction, fromIndex, toIndex) {
   if (toIndex <= fromIndex) return Infinity;
-  return Math.max(1, Number(direction.stops[toIndex].journey_minutes || 0) - Number(direction.stops[fromIndex].journey_minutes || 0));
+  const a = Number(direction.stops[fromIndex].journey_minutes || 0);
+  const b = Number(direction.stops[toIndex].journey_minutes || 0);
+  return Math.max(1, b - a);
 }
 function walkMinutes(meters) { return Math.max(1, Math.round(meters / 83)); }
 function nearestNodes(point, graph, maxMeters = 1500) {
@@ -112,6 +116,16 @@ function nearestNodes(point, graph, maxMeters = 1500) {
     .filter(x => x.d <= maxMeters)
     .sort((a, b) => a.d - b.d)
     .slice(0, 12);
+}
+function transferNodes(node, graph) {
+  const exact = graph.byName.get(norm(node.stop.name)) || [];
+  const nearby = [...graph.nodes.values()]
+    .map(n => ({ n, d: distance(node.point, n.point) }))
+    .filter(x => x.d <= 150)
+    .sort((a, b) => a.d - b.d)
+    .slice(0, 8)
+    .map(x => x.n);
+  return [...new Map([...exact, ...nearby].map(n => [n.id, n])).values()];
 }
 function shortestPath(from, to, graph) {
   const starts = nearestNodes(from, graph);
@@ -133,7 +147,6 @@ function shortestPath(from, to, graph) {
     const node = graph.nodes.get(id);
     if (!node) continue;
 
-    // Continue along the published direction in the timetable.
     const nextIndex = node.index + 1;
     if (nextIndex < node.direction.stops.length) {
       const nextId = `${node.route.route_id}|${node.direction.direction_id}|${nextIndex}`;
@@ -147,10 +160,11 @@ function shortestPath(from, to, graph) {
       }
     }
 
-    // Transfer between published services serving the same timetable stop.
-    for (const alt of graph.byName.get(norm(node.stop.name)) || []) {
-      if (alt.id === id) continue;
-      const nd = cost + 2;
+    // Allow transfers at the same published stop name OR at physically coincident official stops.
+    for (const alt of transferNodes(node, graph)) {
+      if (alt.id === id || (alt.route.route_id === node.route.route_id && alt.direction.direction_id === node.direction.direction_id)) continue;
+      const walk = distance(node.point, alt.point);
+      const nd = cost + Math.max(1, walkMinutes(walk));
       if (nd < (dist.get(alt.id) ?? Infinity)) {
         dist.set(alt.id, nd);
         prev.set(alt.id, { from: id, kind: "transfer" });
@@ -176,7 +190,7 @@ function buildLegs(path) {
   for (const edge of path.edges) {
     if (edge.kind === "transfer") {
       flush();
-      legs.push({ kind: "transfer", minutes: 2, from: edge.from.point, to: edge.to.point, from_name: edge.from.stop.name, to_name: edge.to.stop.name });
+      legs.push({ kind: "transfer", minutes: Math.max(1, walkMinutes(distance(edge.from.point, edge.to.point))), from: edge.from.point, to: edge.to.point, from_name: edge.from.stop.name, to_name: edge.to.stop.name });
       continue;
     }
     const routeId = String(edge.from.route.route_id);
@@ -218,6 +232,7 @@ export default {
       if (!Number.isFinite(Number(from.lat)) || !Number.isFinite(Number(from.lon)) || !Number.isFinite(Number(to.lat)) || !Number.isFinite(Number(to.lon))) throw new Error("Invalid origin or destination coordinates");
       const stops = await officialStops();
       const graph = makeGraph(stops);
+      if (graph.nodes.size < 20) throw new Error(`Transit graph has too few matched stops (${graph.nodes.size}); official stop matching failed`);
       const path = shortestPath(from, to, graph);
       if (!path) return json({ ok: false, error: "No bus itinerary found in the western network", from, to }, 404);
       const legs = buildLegs(path);
