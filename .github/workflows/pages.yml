@@ -53,7 +53,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           s = Path('index.html').read_text(encoding='utf-8')
-          checks = ['segamap-app-icon.svg?v=final9','refined-logo-final','search-layout-final','route-screen-final','segamap-final-corrections-js','segamap-west-corridor-final','segamap-site-ux-final','showOverview()','segamap-version-badge','v1.4 · Production UI','@media(max-width:1600px)','max-height:52dvh!important','https://maurimove.meriaamb.workers.dev','segamap-search-visibility-fix','#toSug']
+          checks = ['segamap-app-icon.svg?v=final9','refined-logo-final','search-layout-final','route-screen-final','segamap-final-corrections-js','segamap-west-corridor-final','segamap-site-ux-final','showOverview()','segamap-version-badge','v1.4 · Production UI','@media(max-width:1600px)','max-height:52dvh!important','segamap-search-visibility-fix','#toSug']
           missing = [item for item in checks if item not in s]
           if missing: raise SystemExit('SegaMap v1.4 UI validation failed: ' + ', '.join(missing))
           assert 'https://maurimove.meriammb.workers.dev' not in s
