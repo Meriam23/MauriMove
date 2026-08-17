@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#06143F">
-<link rel="manifest" href="./manifest.webmanifest?v=15">
-<link rel="apple-touch-icon" href="./segamap-logo.svg?v=15">
-<title>SegaMap 🇲🇺</title>
+<link rel="manifest" href="./manifest.webmanifest?v=16">
+<link rel="apple-touch-icon" href="./segamap-logo.svg?v=16">
+<title>SegaMap v1.0 🇲🇺</title>
+<style id="segamap-version-marker">.segamap-version{display:inline-flex;align-items:center;gap:5px;margin-left:7px;padding:3px 8px;border-radius:999px;background:#06143F;color:#fff;font-size:9px;font-weight:800;letter-spacing:.2px;vertical-align:middle}.segamap-version-dot{width:6px;height:6px;border-radius:50%;background:#00A651;display:inline-block}</style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 *{box-sizing:border-box}html,body,#map{margin:0;width:100%;height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;color:#101828}#map{position:fixed;inset:0}.panel{position:fixed;z-index:1000;left:14px;top:14px;width:min(560px,calc(100vw - 28px));max-height:calc(100vh - 28px);overflow:auto;background:#fffffff5;backdrop-filter:blur(18px);border-radius:26px;padding:16px;box-shadow:0 20px 70px #0004}.brand{display:flex;align-items:center;gap:9px;font-size:28px;font-weight:950}.logo{width:48px;height:48px;object-fit:contain}.name{color:#06143F}.sub,.small{font-size:12px;color:#667085}.sub{margin:2px 0 14px}.search{border:1px solid #e4e7ec;border-radius:18px;background:#fff}.field{position:relative;display:flex;gap:10px;padding:14px}.field+.field{border-top:1px solid #eef0f3}.dot{width:10px;height:10px;border-radius:50%;background:#ef233c;margin-top:5px;flex:none}.dot.blue{background:#0072ce}input{border:0;outline:0;width:100%;font-size:16px;background:transparent}.suggestions{position:absolute;z-index:3000;left:34px;right:10px;top:50px;background:#fff;border:1px solid #e4e7ec;border-radius:14px;box-shadow:0 15px 45px #0003;overflow:hidden}.suggestion{display:block;width:100%;border:0;background:#fff;text-align:left;padding:12px 14px;border-bottom:1px solid #f2f4f7}.suggestion b{font-size:13px}.suggestion span{display:block;font-size:11px;color:#667085;margin-top:3px}.actions{display:flex;gap:7px;margin-top:8px}.btn{flex:1;border:1px solid #d0d5dd;background:#fff;border-radius:12px;padding:10px 8px;font-weight:850}.go{width:100%;border:0;background:linear-gradient(90deg,#ef233c,#0072ce);color:#fff;border-radius:14px;padding:14px;margin-top:8px;font-weight:950;font-size:15px}.go:disabled{opacity:.6}.title{font-size:12px;font-weight:950;margin:14px 0 7px}.card{background:#fff;border:1px solid #e4e7ec;border-radius:16px;padding:12px}.step{padding:10px 0;border-bottom:1px solid #eee}.step:last-child{border:0}.badge{display:inline-block;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:950;background:#e8f5ee;color:#067647}.warn{background:#fff8df;color:#8a6500;border-radius:11px;padding:10px;font-size:11px;line-height:1.4;margin-top:8px}.ok{color:#067647;font-weight:900}.err{color:#b42318;font-weight:900}.follow{margin-top:10px;width:100%;border:0;background:#06143F;color:#fff;border-radius:12px;padding:11px;font-weight:900}.hidden{display:none!important}@media(max-width:760px){.panel{width:calc(100vw - 20px);left:10px;top:10px;max-height:calc(100vh - 20px)}}
@@ -15,7 +16,7 @@
 <body>
 <div id="map"></div>
 <section class="panel">
-  <div class="brand"><img class="logo" src="./segamap-logo.svg?v=15" alt="SegaMap"><span class="name">SegaMap</span><span>🇲🇺</span></div>
+  <div class="brand"><img class="logo" src="./segamap-logo.svg?v=16" alt="SegaMap"><span class="name">SegaMap</span><span class="segamap-version"><span class="segamap-version-dot"></span>v1.0 · Production</span></div>
   <div class="sub">Le transport mauricien, pensé pour toute l’île.</div>
   <div class="search">
     <div class="field"><span class="dot"></span><input id="from" value="Ma position" placeholder="Départ" autocomplete="off"><div id="fromSug" class="suggestions hidden"></div></div>
@@ -38,12 +39,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const map=L.map('map').setView([-20.30,57.50],11);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
 let userPos=null,layers=[],pickMode=false,watchId=null,currentTrip=null;
-const LOCAL=[
- ['c care','C-Care Tamarin',-20.35775,57.36850],['c-care tamarin','C-Care Tamarin',-20.35775,57.36850],['nautica','Nautica Commercial Centre',-20.35775,57.36850],
- ['cascavelle','Cascavelle Shopping Mall',-20.27819,57.40225],['carrefour flic en flac','Carrefour City Flic-en-Flac',-20.2749,57.3742],['port louis','Port Louis Victoria',-20.16194,57.49889],
- ['quatre bornes','Quatre Bornes Traffic Centre',-20.264,57.479],['rose hill','Rose Hill Bus Station',-20.233,57.469],['curepipe','Curepipe Bus Station',-20.318,57.526],['central flacq','Central Flacq Bus Station',-20.190,57.714],['mahebourg','Mahébourg Bus Station',-20.408,57.700],
- ['sofitel','Sofitel Mauritius L Imperial Resort And Spa',-20.311623,57.367472],['wolmar','Wolmar',-20.3125,57.362]
-];
+const LOCAL=[['c care','C-Care Tamarin',-20.35775,57.36850],['c-care tamarin','C-Care Tamarin',-20.35775,57.36850],['nautica','Nautica Commercial Centre',-20.35775,57.36850],['cascavelle','Cascavelle Shopping Mall',-20.27819,57.40225],['carrefour flic en flac','Carrefour City Flic-en-Flac',-20.2749,57.3742],['port louis','Port Louis Victoria',-20.16194,57.49889],['quatre bornes','Quatre Bornes Traffic Centre',-20.264,57.479],['rose hill','Rose Hill Bus Station',-20.233,57.469],['curepipe','Curepipe Bus Station',-20.318,57.526],['central flacq','Central Flacq Bus Station',-20.190,57.714],['mahebourg','Mahébourg Bus Station',-20.408,57.700],['sofitel','Sofitel Mauritius L Imperial Resort And Spa',-20.311623,57.367472],['wolmar','Wolmar',-20.3125,57.362]];
 function localSearch(q){const n=norm(q);if(!n)return[];return LOCAL.filter(x=>norm(x[0]).includes(n)||n.includes(norm(x[0]))||norm(x[1]).includes(n)).filter((x,i,a)=>a.findIndex(y=>y[1]===x[1])===i).map(x=>({label:x[1],address:x[1]+', Mauritius',lat:x[2],lon:x[3]})).slice(0,7)}
 async function getJSON(url,opt={},ms=12000){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);try{const r=await fetch(url,{...opt,signal:c.signal,cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}}
 async function searchPlace(q){const local=localSearch(q);if(local.length)return local;try{const d=await getJSON('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=7&countrycodes=mu&q='+encodeURIComponent(q+', Mauritius'),{headers:{'Accept-Language':'fr'}},7000);return d.map(x=>({label:x.name||x.display_name.split(',')[0],address:x.display_name,lat:+x.lat,lon:+x.lon}))}catch{return[]}}
