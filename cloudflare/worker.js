@@ -84,64 +84,113 @@ async function geocode(q) {
   if (!data[0]) throw new Error(`Could not locate ${q}`);
   return { lat: Number(data[0].lat), lon: Number(data[0].lon), name: data[0].display_name };
 }
-function routeStops() {
-  const out = new Map();
-  for (const route of ROUTES) for (const d of route.directions) for (const s of d.stops) {
-    const key = norm(s.name);
-    if (!out.has(key)) out.set(key, { key, name: s.name, routes: [] });
-    out.get(key).routes.push({ route, direction: d, stop: s });
+function makeGraph(stops) {
+  const nodes = new Map();
+  const byName = new Map();
+  for (const route of ROUTES) for (const direction of route.directions) {
+    direction.stops.forEach((stop, index) => {
+      const point = matchOfficial(stop.name, stops);
+      if (!point) return;
+      const id = `${route.route_id}|${direction.direction_id}|${index}`;
+      const node = { id, route, direction, index, stop, point };
+      nodes.set(id, node);
+      const k = norm(stop.name);
+      if (!byName.has(k)) byName.set(k, []);
+      byName.get(k).push(node);
+    });
   }
-  return out;
+  return { nodes, byName };
 }
-function nextDeparture(direction, stopIndex, arrivalMinutes) {
-  const service = direction.service.weekdays;
-  const freq = direction.frequency_weekdays;
-  const base = freq?.length ? freq : [{ from: service.first, to: service.last, minutes: 30 }];
-  let best = Infinity;
-  for (const p of base) {
-    let t = toMinutes(p.from) + Number(direction.stops[stopIndex].journey_minutes || 0);
-    const end = toMinutes(p.to) + Number(direction.stops[stopIndex].journey_minutes || 0);
-    while (t <= end) { if (t >= arrivalMinutes) { best = Math.min(best, t); break; } t += Number(p.minutes); }
+function busMinutes(direction, fromIndex, toIndex) {
+  if (toIndex <= fromIndex) return Infinity;
+  return Math.max(1, Number(direction.stops[toIndex].journey_minutes || 0) - Number(direction.stops[fromIndex].journey_minutes || 0));
+}
+function walkMinutes(meters) { return Math.max(1, Math.round(meters / 83)); }
+function nearestNodes(point, graph, maxMeters = 1500) {
+  return [...graph.nodes.values()]
+    .map(n => ({ n, d: distance(point, n.point) }))
+    .filter(x => x.d <= maxMeters)
+    .sort((a, b) => a.d - b.d)
+    .slice(0, 12);
+}
+function shortestPath(from, to, graph) {
+  const starts = nearestNodes(from, graph);
+  const targets = nearestNodes(to, graph);
+  if (!starts.length || !targets.length) return null;
+  const targetIds = new Set(targets.map(x => x.n.id));
+  const dist = new Map(), prev = new Map(), queue = [];
+  for (const s of starts) {
+    const c = walkMinutes(s.d);
+    dist.set(s.n.id, c);
+    queue.push([c, s.n.id]);
   }
-  return best;
-}
-function toMinutes(h) { const [a, b] = String(h).split(":").map(Number); return a * 60 + b; }
-function dijkstra(startKeys, targetKeys) {
-  const graph = routeStops();
-  const dist = new Map(), prev = new Map(), pq = [];
-  for (const k of startKeys) { dist.set(k, 0); pq.push([0, k]); }
-  const seen = new Set();
-  while (pq.length) {
-    pq.sort((a, b) => a[0] - b[0]);
-    const [cost, key] = pq.shift();
-    if (seen.has(key)) continue; seen.add(key);
-    if (targetKeys.has(key)) {
-      const path = []; let cur = key;
-      while (cur) { path.push(cur); cur = prev.get(cur)?.from; }
-      path.reverse(); return { path, minutes: cost };
-    }
-    const entries = graph.get(key)?.routes || [];
-    for (const e of entries) {
-      const i = e.direction.stops.findIndex(s => norm(s.name) === key);
-      if (i < 0 || i >= e.direction.stops.length - 1) continue;
-      const next = e.direction.stops[i + 1];
-      const nk = norm(next.name);
-      const ride = Math.max(1, Number(next.journey_minutes || 0) - Number(e.direction.stops[i].journey_minutes || 0));
-      const wait = cost === 0 ? 0 : 0;
-      const nd = cost + wait + ride;
-      if (nd < (dist.get(nk) ?? Infinity)) { dist.set(nk, nd); prev.set(nk, { from: key, route: e.route.route_id, direction: e.direction.direction_id }); pq.push([nd, nk]); }
-    }
-    // Transfers: same physical/official stop name can board any route at zero transfer cost.
-    for (const e of entries) {
-      const current = norm(e.stop.name);
-      if (current === key) {
-        for (const alt of e.direction.stops) {
-          if (norm(alt.name) === key) continue;
+  let targetId = null;
+  while (queue.length) {
+    queue.sort((a, b) => a[0] - b[0]);
+    const [cost, id] = queue.shift();
+    if (cost !== dist.get(id)) continue;
+    if (targetIds.has(id)) { targetId = id; break; }
+    const node = graph.nodes.get(id);
+    if (!node) continue;
+
+    // Continue along the published direction in the timetable.
+    const nextIndex = node.index + 1;
+    if (nextIndex < node.direction.stops.length) {
+      const nextId = `${node.route.route_id}|${node.direction.direction_id}|${nextIndex}`;
+      if (graph.nodes.has(nextId)) {
+        const nd = cost + busMinutes(node.direction, node.index, nextIndex);
+        if (nd < (dist.get(nextId) ?? Infinity)) {
+          dist.set(nextId, nd);
+          prev.set(nextId, { from: id, kind: "bus" });
+          queue.push([nd, nextId]);
         }
       }
     }
+
+    // Transfer between published services serving the same timetable stop.
+    for (const alt of graph.byName.get(norm(node.stop.name)) || []) {
+      if (alt.id === id) continue;
+      const nd = cost + 2;
+      if (nd < (dist.get(alt.id) ?? Infinity)) {
+        dist.set(alt.id, nd);
+        prev.set(alt.id, { from: id, kind: "transfer" });
+        queue.push([nd, alt.id]);
+      }
+    }
   }
-  return null;
+  if (!targetId) return null;
+  const ids = [];
+  let cur = targetId;
+  while (cur) { ids.push(cur); cur = prev.get(cur)?.from; }
+  ids.reverse();
+  const startNode = graph.nodes.get(ids[0]);
+  const endNode = graph.nodes.get(ids.at(-1));
+  const edges = [];
+  for (let i = 1; i < ids.length; i++) edges.push({ from: graph.nodes.get(ids[i - 1]), to: graph.nodes.get(ids[i]), kind: prev.get(ids[i])?.kind });
+  return { ids, nodes: ids.map(id => graph.nodes.get(id)), edges, minutes: (dist.get(targetId) || 0) + walkMinutes(distance(endNode.point, to)), accessMeters: distance(from, startNode.point), egressMeters: distance(endNode.point, to) };
+}
+function buildLegs(path) {
+  const legs = [];
+  let bus = null;
+  const flush = () => { if (bus) { legs.push(bus); bus = null; } };
+  for (const edge of path.edges) {
+    if (edge.kind === "transfer") {
+      flush();
+      legs.push({ kind: "transfer", minutes: 2, from: edge.from.point, to: edge.to.point, from_name: edge.from.stop.name, to_name: edge.to.stop.name });
+      continue;
+    }
+    const routeId = String(edge.from.route.route_id);
+    const directionId = Number(edge.from.direction.direction_id);
+    if (!bus || bus.route_id !== routeId || bus.direction_id !== directionId) {
+      flush();
+      bus = { kind: "bus", route_id: routeId, direction_id: directionId, minutes: 0, stops: [] };
+    }
+    if (!bus.stops.length) bus.stops.push({ name: edge.from.stop.name, lat: edge.from.point.lat, lon: edge.from.point.lon });
+    bus.stops.push({ name: edge.to.stop.name, lat: edge.to.point.lat, lon: edge.to.point.lon });
+    bus.minutes += busMinutes(edge.from.direction, edge.from.index, edge.to.index);
+  }
+  flush();
+  return legs;
 }
 async function roadGeometry(points) {
   if (points.length < 2) return { type: "LineString", coordinates: points.map(p => [p.lon, p.lat]) };
@@ -154,30 +203,30 @@ async function roadGeometry(points) {
   return j.routes[0].geometry;
 }
 function cors(h = {}) { return { ...h, "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Allow-Methods": "GET,POST,OPTIONS" }; }
+function json(data, status = 200) { return new Response(JSON.stringify(data), { status, headers: cors({ "Content-Type": "application/json" }) }); }
 
 export default {
   async fetch(request) {
     if (request.method === "OPTIONS") return new Response(null, { headers: cors() });
     const url = new URL(request.url);
-    if (url.pathname === "/health") return new Response(JSON.stringify({ ok: true, service: "segamap-routing", routes: ROUTES.map(r => r.route_id) }), { headers: cors({ "Content-Type": "application/json" }) });
+    if (url.pathname === "/health") return json({ ok: true, service: "segamap-routing", routes: ROUTES.map(r => r.route_id) });
     if (url.pathname !== "/api/route") return new Response("SegaMap routing API", { headers: cors({ "Content-Type": "text/plain" }) });
     try {
       const body = request.method === "POST" ? await request.json() : Object.fromEntries(url.searchParams);
       const from = body.from?.lat ? body.from : (body.fromLat ? { lat: Number(body.fromLat), lon: Number(body.fromLon), name: body.from } : await geocode(body.from));
       const to = body.to?.lat ? body.to : (body.toLat ? { lat: Number(body.toLat), lon: Number(body.toLon), name: body.to } : await geocode(body.to));
+      if (!Number.isFinite(Number(from.lat)) || !Number.isFinite(Number(from.lon)) || !Number.isFinite(Number(to.lat)) || !Number.isFinite(Number(to.lon))) throw new Error("Invalid origin or destination coordinates");
       const stops = await officialStops();
-      const routeMap = routeStops();
-      const candidates = [...routeMap.values()].map(s => ({ ...s, point: matchOfficial(s.name, stops) })).filter(s => s.point);
-      const nearest = p => candidates.map(s => ({ ...s, d: distance(p, s.point) })).sort((a, b) => a.d - b.d).slice(0, 6);
-      const starts = nearest(from), targets = nearest(to);
-      const targetKeys = new Set(targets.map(x => x.key));
-      const result = dijkstra(starts.map(x => x.key), targetKeys);
-      if (!result) return new Response(JSON.stringify({ ok: false, error: "No bus itinerary found in the western network", from, to, nearestFrom: starts.slice(0, 3).map(x => x.name), nearestTo: targets.slice(0, 3).map(x => x.name) }), { status: 404, headers: cors({ "Content-Type": "application/json" }) });
-      const pathStops = result.path.map(k => candidates.find(s => s.key === k)).filter(Boolean);
-      const geometry = await roadGeometry([from, ...pathStops.map(s => s.point), to]);
-      return new Response(JSON.stringify({ ok: true, network: "west", minutes: result.minutes, from, to, stops: pathStops.map(s => ({ name: s.name, lat: s.point.lat, lon: s.point.lon })), geometry }), { headers: cors({ "Content-Type": "application/json" }) });
+      const graph = makeGraph(stops);
+      const path = shortestPath(from, to, graph);
+      if (!path) return json({ ok: false, error: "No bus itinerary found in the western network", from, to }, 404);
+      const legs = buildLegs(path);
+      const access = { kind: "walk", minutes: walkMinutes(path.accessMeters), meters: Math.round(path.accessMeters), from, to: path.nodes[0].point };
+      const egress = { kind: "walk", minutes: walkMinutes(path.egressMeters), meters: Math.round(path.egressMeters), from: path.nodes.at(-1).point, to };
+      const geometry = await roadGeometry([from, ...path.nodes.map(n => n.point), to]);
+      return json({ ok: true, network: "west", approximate: true, note: "Timetable travel times are published schedule values; live traffic and live vehicle positions are not included.", minutes: path.minutes, from, to, legs: [access, ...legs, egress], geometry });
     } catch (e) {
-      return new Response(JSON.stringify({ ok: false, error: e?.message || "Routing error" }), { status: 500, headers: cors({ "Content-Type": "application/json" }) });
+      return json({ ok: false, error: e?.message || "Routing error" }, 500);
     }
   }
 };
